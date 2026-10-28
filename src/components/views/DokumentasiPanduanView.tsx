@@ -364,11 +364,11 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
   return (
     <div className="space-y-6 animate-fade-in print:space-y-4">
       {/* HEADER / HERO BAR */}
-      <div className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-xl p-5 sm:p-6 shadow-2xs transition-colors print:border-none print:shadow-none print:p-0">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 sm:p-6 shadow-2xs transition-colors print:border-none print:shadow-none print:p-0">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="space-y-1.5 max-w-3xl">
-            <div className="flex items-center gap-2 flex-wrap text-xs text-[#737373] dark:text-slate-400">
-              <span className="font-semibold text-[#1447e6] dark:text-blue-400 uppercase tracking-wider">
+            <div className="flex items-center gap-2 flex-wrap text-xs text-slate-500 dark:text-slate-400">
+              <span className="font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
                 Dokumentasi & Panduan Resmi
               </span>
               <span aria-hidden="true">·</span>
@@ -377,7 +377,7 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
               <span>Standar Badan Bahasa & UNESCO</span>
             </div>
             
-            <h1 className="text-2xl sm:text-3xl font-bold text-[#0a0a0a] dark:text-white tracking-tight leading-tight">
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight">
               Dokumentasi & Tata Cara Penggunaan Aplikasi
             </h1>
             
@@ -402,7 +402,7 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
             <a
               href="/docs/PRD_USER_FLOW_SISTEM_PEMETAAN_BAHASA.doc"
               download="PRD_USER_FLOW_SISTEM_PEMETAAN_BAHASA.doc"
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-white bg-[#1447e6] hover:bg-blue-700 shadow-2xs transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-2xs transition-all cursor-pointer"
               title="Unduh berkas dokumen Microsoft Word (.doc) lengkap"
             >
               <Download className="w-3.5 h-3.5" />
@@ -412,7 +412,7 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
             <button
               type="button"
               onClick={handlePrint}
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-[#0a0a0a] dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-[#f5f5f5] dark:hover:bg-slate-700 border border-[#e5e5e5] dark:border-slate-700 shadow-2xs transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-900 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 shadow-2xs transition-all cursor-pointer"
               title="Cetak atau simpan sebagai format PDF resmi"
             >
               <Printer className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
@@ -423,7 +423,7 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
               <button
                 type="button"
                 onClick={onOpenPRDModal}
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-[#1447e6] dark:text-blue-300 bg-blue-50 dark:bg-blue-950/50 hover:bg-blue-100 dark:hover:bg-blue-900/60 border border-blue-200 dark:border-blue-900/50 shadow-2xs transition-all cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-blue-600 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/50 hover:bg-blue-100 dark:hover:bg-blue-900/60 border border-blue-200 dark:border-blue-900/50 shadow-2xs transition-all cursor-pointer"
                 title="Buka Dokumen PRD dalam jendela modal"
               >
                 <FileText className="w-3.5 h-3.5" />
@@ -460,28 +460,28 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
         </div>
 
         {/* Live Search Filter Bar */}
-        <div className="mt-4 pt-4 border-t border-[#e5e5e5] dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 print:hidden">
+        <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 print:hidden">
           <div className="relative w-full sm:max-w-md">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#737373] dark:text-slate-400" />
+            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Cari topik panduan, seksi, atau kata kunci..."
-              className="w-full pl-9 pr-4 py-1.5 bg-[#fafafa] dark:bg-slate-800 border border-[#e5e5e5] dark:border-slate-700 rounded-lg text-xs text-[#0a0a0a] dark:text-white placeholder-[#737373] dark:placeholder-slate-500 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-9 pr-4 py-1.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-xs text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-500 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
             />
             {searchQuery && (
               <button 
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-[#737373] hover:text-[#0a0a0a] dark:text-slate-400 dark:hover:text-white"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
               >
                 ✕
               </button>
             )}
           </div>
 
-          <div className="flex items-center gap-1.5 text-xs text-[#737373] dark:text-slate-400 self-start sm:self-auto">
+          <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 self-start sm:self-auto">
             <span>Pintasan Cepat:</span>
             <button
               type="button"
@@ -941,14 +941,14 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-base font-bold text-[#0a0a0a] dark:text-white">
+              <h2 className="text-base font-bold text-slate-900 dark:text-white">
                 Tata Cara Penggunaan Aplikasi (Alur Kerja Bertahap)
               </h2>
-              <p className="text-xs text-[#737373] dark:text-slate-400 mt-0.5">
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                 Ikuti 8 langkah kerja di bawah ini untuk mengumpulkan, menganalisis, dan memvalidasi data geolinguistik secara optimal.
               </p>
             </div>
-            <span className="hidden sm:inline-block text-xs text-[#737373] dark:text-slate-400">
+            <span className="hidden sm:inline-block text-xs text-slate-500 dark:text-slate-400">
               Total {filteredSteps.length} Langkah Terpandu
             </span>
           </div>
@@ -957,26 +957,26 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
             {filteredSteps.map((step) => (
               <div 
                 key={step.number}
-                className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-xl p-4 sm:p-5 shadow-2xs transition-all hover:border-blue-300 dark:hover:border-blue-800"
+                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-5 shadow-2xs transition-all hover:border-blue-300 dark:hover:border-blue-800"
               >
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                   <div className="flex items-start gap-3">
-                    <span className="w-8 h-8 rounded-lg bg-[#1447e6] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-2xs">
+                    <span className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-2xs">
                       {step.number}
                     </span>
                     <div className="space-y-1">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <h3 className="text-sm sm:text-base font-bold text-[#0a0a0a] dark:text-white">
+                        <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white">
                           {step.title}
                         </h3>
-                        <span className="text-[10px] px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/60 text-[#1447e6] dark:text-blue-300 font-semibold border border-blue-100 dark:border-blue-900/40">
+                        <span className="text-[10px] px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-300 font-semibold border border-blue-100 dark:border-blue-900/40">
                           {step.category}
                         </span>
-                        <span className="text-xs text-[#737373] dark:text-slate-400">
+                        <span className="text-xs text-slate-500 dark:text-slate-400">
                           · {step.duration}
                         </span>
                       </div>
-                      <p className="text-xs text-[#737373] dark:text-slate-300 leading-relaxed">
+                      <p className="text-xs text-slate-500 dark:text-slate-300 leading-relaxed">
                         {step.description}
                       </p>
                     </div>
@@ -987,7 +987,7 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
                     <button
                       type="button"
                       onClick={() => onNavigateToView(step.actionView)}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-[#1447e6] dark:text-blue-300 bg-blue-50 dark:bg-blue-950/50 hover:bg-blue-100 dark:hover:bg-blue-900/60 border border-blue-200 dark:border-blue-900/40 transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-blue-600 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/50 hover:bg-blue-100 dark:hover:bg-blue-900/60 border border-blue-200 dark:border-blue-900/40 transition-colors cursor-pointer"
                     >
                       <span>{step.actionLabel}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -996,8 +996,8 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
                 </div>
 
                 {/* Instruction Bullets */}
-                <div className="mt-3.5 pt-3 border-t border-[#f5f5f5] dark:border-slate-800/80">
-                  <ul className="space-y-1.5 text-xs text-[#0a0a0a] dark:text-slate-300">
+                <div className="mt-3.5 pt-3 border-t border-slate-100 dark:border-slate-800/80">
+                  <ul className="space-y-1.5 text-xs text-slate-900 dark:text-slate-300">
                     {step.details.map((detail, idx) => (
                       <li key={idx} className="flex items-start gap-2">
                         <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 mt-0.5 shrink-0" />
@@ -1050,18 +1050,18 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div className="space-y-1.5 max-w-2xl">
                 <div className="flex items-center gap-2 flex-wrap text-xs">
-                  <span className="font-bold text-[#1447e6] dark:text-blue-400 uppercase tracking-wider bg-blue-100 dark:bg-blue-950 px-2 py-0.5 rounded">
+                  <span className="font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider bg-blue-100 dark:bg-blue-950 px-2 py-0.5 rounded">
                     Spesialisasi Geolinguistik & GIS
                   </span>
-                  <span className="text-[#737373] dark:text-slate-400">·</span>
+                  <span className="text-slate-500 dark:text-slate-400">·</span>
                   <span className="text-slate-700 dark:text-slate-300 font-medium">Metodologi Jean Guiter (1973)</span>
-                  <span className="text-[#737373] dark:text-slate-400">·</span>
+                  <span className="text-slate-500 dark:text-slate-400">·</span>
                   <span className="text-slate-700 dark:text-slate-300 font-medium">Peta Spasial Leaflet</span>
                 </div>
-                <h2 className="text-lg sm:text-xl font-bold text-[#0a0a0a] dark:text-white tracking-tight">
+                <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white tracking-tight">
                   Dokumentasi Fitur Khusus Menu Dialek & Peta (Geolinguistik Terkomputasi)
                 </h2>
-                <p className="text-xs sm:text-sm text-[#737373] dark:text-slate-300 leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-300 leading-relaxed">
                   Panduan komprehensif arsitektur geospasial, algoritma penarikan garis isoglos otomatis,
                   matriks segitiga dialektometri, serta integrasi 700+ bahasa Nusantara dari Glottolog & Vitalitas EGIDS.
                 </p>
@@ -1072,7 +1072,7 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
                 <button
                   type="button"
                   onClick={() => onNavigateToView('peta-survei')}
-                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-white bg-[#1447e6] hover:bg-blue-700 transition-colors shadow-2xs cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-2xs cursor-pointer"
                 >
                   <Compass className="w-3.5 h-3.5" />
                   <span>Buka Peta Isoglos</span>
@@ -1099,17 +1099,17 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
           </div>
 
           {/* INTERACTIVE SIMULATOR DIALEKTOMETRI JEAN GUITER */}
-          <div className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-xl p-5 shadow-2xs space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#e5e5e5] dark:border-slate-800">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-2xs space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-200 dark:border-slate-800">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-950 text-[#1447e6] dark:text-blue-400 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center">
                   <Sliders className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-[#0a0a0a] dark:text-white">
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                     Simulator Interaktif Formula Jean Guiter
                   </h3>
-                  <p className="text-[11px] text-[#737373] dark:text-slate-400">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
                     Ubah nilai selisih perbedaan kata (s) dan total glos pembanding (n) untuk melihat klasifikasi otomatis real-time.
                   </p>
                 </div>
@@ -1161,7 +1161,7 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
                         }}
                         className={`flex-1 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${
                           simN === val
-                            ? 'bg-[#1447e6] text-white border-[#1447e6]'
+                            ? 'bg-blue-600 text-white border-blue-600'
                             : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50'
                         }`}
                       >
@@ -1213,23 +1213,23 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
 
           {/* 6 FITUR UTAMA PETA & DIALEKTOMETRI GRID */}
           <div className="space-y-3">
-            <h3 className="text-sm font-bold text-[#0a0a0a] dark:text-white flex items-center gap-2">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
               <Globe2 className="w-4 h-4 text-blue-600" />
               <span>Rincian Fitur-Fitur Khusus Peta Virtual Isoglos (Leaflet GIS)</span>
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
               {/* Fitur 1: Algoritma Garis Pembagi Tegak Lurus */}
-              <div className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-xl p-4 shadow-2xs space-y-2 hover:border-blue-300 dark:hover:border-blue-800 transition-colors">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-2xs space-y-2 hover:border-blue-300 dark:hover:border-blue-800 transition-colors">
                 <div className="flex items-center gap-2">
                   <div className="w-7 h-7 rounded-lg bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-xs">
                     1
                   </div>
-                  <h4 className="text-xs sm:text-sm font-bold text-[#0a0a0a] dark:text-white">
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
                     Garis Pembagi Tegak Lurus (Bisector)
                   </h4>
                 </div>
-                <p className="text-xs text-[#737373] dark:text-slate-300 leading-relaxed">
+                <p className="text-xs text-slate-500 dark:text-slate-300 leading-relaxed">
                   Menghilangkan subjektivitas penarikan garis isoglos. Sistem menghitung titik tengah spasial
                   (midpoint) lintang & bujur antara dua desa, lalu menarik segmen garis ortogonal terproyeksi
                   dengan bentang 25–40 km di antara pasangan titik yang memiliki perbedaan leksikal.
@@ -1240,16 +1240,16 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
               </div>
 
               {/* Fitur 2: Convex Hull Poligon Teritori */}
-              <div className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-xl p-4 shadow-2xs space-y-2 hover:border-blue-300 dark:hover:border-blue-800 transition-colors">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-2xs space-y-2 hover:border-blue-300 dark:hover:border-blue-800 transition-colors">
                 <div className="flex items-center gap-2">
                   <div className="w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-xs">
                     2
                   </div>
-                  <h4 className="text-xs sm:text-sm font-bold text-[#0a0a0a] dark:text-white">
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
                     Selubung Poligon Teritori (Convex Hull)
                   </h4>
                 </div>
-                <p className="text-xs text-[#737373] dark:text-slate-300 leading-relaxed">
+                <p className="text-xs text-slate-500 dark:text-slate-300 leading-relaxed">
                   Menerapkan <em>Monotone Chain 2D Algorithm</em> untuk mengelilingi seluruh titik desa yang berbagi
                   bentuk kata yang sama. Wilayah diarsir transparan dengan palet tematik 10 warna,
                   sehingga kantong-kantong varian dialek langsung tampak kontras di atas peta.
@@ -1260,16 +1260,16 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
               </div>
 
               {/* Fitur 3: Tiga Mode Visualisasi Peta */}
-              <div className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-xl p-4 shadow-2xs space-y-2 hover:border-blue-300 dark:hover:border-blue-800 transition-colors">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-2xs space-y-2 hover:border-blue-300 dark:hover:border-blue-800 transition-colors">
                 <div className="flex items-center gap-2">
                   <div className="w-7 h-7 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-xs">
                     3
                   </div>
-                  <h4 className="text-xs sm:text-sm font-bold text-[#0a0a0a] dark:text-white">
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
                     3 Mode Visualisasi Geolinguistik
                   </h4>
                 </div>
-                <p className="text-xs text-[#737373] dark:text-slate-300 leading-relaxed">
+                <p className="text-xs text-slate-500 dark:text-slate-300 leading-relaxed">
                   <strong>Kata Terpilih</strong>: Analisis mikro per kata Swadesh 1–200.<br />
                   <strong>Berkas Global</strong>: Akumulasi garis pemisah; ketebalan garis mencerminkan bobot akumulasi perbedaan (*bundling*).<br />
                   <strong>Jaringan Kesamaan</strong>: Garis relasi titik yang memiliki kata identik.
@@ -1280,16 +1280,16 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
               </div>
 
               {/* Fitur 4: Tur Otomatis & Pemutar Audio */}
-              <div className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-xl p-4 shadow-2xs space-y-2 hover:border-blue-300 dark:hover:border-blue-800 transition-colors">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-2xs space-y-2 hover:border-blue-300 dark:hover:border-blue-800 transition-colors">
                 <div className="flex items-center gap-2">
                   <div className="w-7 h-7 rounded-lg bg-amber-100 dark:bg-amber-950 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold text-xs">
                     4
                   </div>
-                  <h4 className="text-xs sm:text-sm font-bold text-[#0a0a0a] dark:text-white">
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
                     Tur Otomatis & Sintesis Audio Fonetis
                   </h4>
                 </div>
-                <p className="text-xs text-[#737373] dark:text-slate-300 leading-relaxed">
+                <p className="text-xs text-slate-500 dark:text-slate-300 leading-relaxed">
                   Tombol <strong>"Putar Tur (Auto-Play)"</strong> menjalankan simulasi perpindahan kata Swadesh 1–200 secara otomatis per interval 2.5 detik untuk presentasi ilmiah. Setiap titik pengamatan memiliki tombol audio pemutar suara asli informan atau sintesis fonetis Web Speech API.
                 </p>
                 <div className="text-[10px] text-amber-600 dark:text-amber-400 font-semibold bg-amber-50 dark:bg-amber-950/60 p-1.5 rounded">
@@ -1298,16 +1298,16 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
               </div>
 
               {/* Fitur 5: Drawer Analisis Pasangan TP */}
-              <div className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-xl p-4 shadow-2xs space-y-2 hover:border-blue-300 dark:hover:border-blue-800 transition-colors">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-2xs space-y-2 hover:border-blue-300 dark:hover:border-blue-800 transition-colors">
                 <div className="flex items-center gap-2">
                   <div className="w-7 h-7 rounded-lg bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold text-xs">
                     5
                   </div>
-                  <h4 className="text-xs sm:text-sm font-bold text-[#0a0a0a] dark:text-white">
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
                     Drawer Analisis Pasangan Titik
                   </h4>
                 </div>
-                <p className="text-xs text-[#737373] dark:text-slate-300 leading-relaxed">
+                <p className="text-xs text-slate-500 dark:text-slate-300 leading-relaxed">
                   Mengklik garis isoglos di antara dua desa membuka panel samping interaktif berisi:
                   jarak spasial garis lurus dalam kilometer (km), persentase perbedaan Guiter (d%),
                   daftar kosakata yang sama, dan perbandingan bentuk kata yang berbeda.
@@ -1318,16 +1318,16 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
               </div>
 
               {/* Fitur 6: Multi-Basemap Kartografi */}
-              <div className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-xl p-4 shadow-2xs space-y-2 hover:border-blue-300 dark:hover:border-blue-800 transition-colors">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-2xs space-y-2 hover:border-blue-300 dark:hover:border-blue-800 transition-colors">
                 <div className="flex items-center gap-2">
                   <div className="w-7 h-7 rounded-lg bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold text-xs">
                     6
                   </div>
-                  <h4 className="text-xs sm:text-sm font-bold text-[#0a0a0a] dark:text-white">
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
                     Multi-Basemap & Lapisan Kartografi
                   </h4>
                 </div>
-                <p className="text-xs text-[#737373] dark:text-slate-300 leading-relaxed">
+                <p className="text-xs text-slate-500 dark:text-slate-300 leading-relaxed">
                   Mendukung 4 gaya peta dasar (Carto Light untuk publikasi cetak bersih, Carto Dark untuk proyektor, OpenStreetMap untuk detail jalan, dan Topografi untuk memeriksa bentang alam pegunungan/sungai yang menjadi rintangan alami dialek).
                 </p>
                 <div className="text-[10px] text-purple-600 dark:text-purple-400 font-semibold bg-purple-50 dark:bg-purple-950/60 p-1.5 rounded">
@@ -1338,13 +1338,13 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
           </div>
 
           {/* TABEL PERBANDINGAN KLASIFIKASI & MATRIKS SEGITIGA */}
-          <div className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-xl overflow-hidden shadow-2xs">
-            <div className="px-5 py-3.5 border-b border-[#e5e5e5] dark:border-slate-800 bg-[#fafafa] dark:bg-slate-800/50 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-2xs">
+            <div className="px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
-                <h3 className="font-bold text-xs sm:text-sm text-[#0a0a0a] dark:text-white">
+                <h3 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
                   Tabel Baku Skala Signifikansi Dialektometri (Jean Guiter, 1973)
                 </h3>
-                <p className="text-[11px] text-[#737373] dark:text-slate-400">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">
                   Pedoman penetapan status hubungan kebahasaan dan penarikan garis isoglos di lapangan.
                 </p>
               </div>
@@ -1355,7 +1355,7 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
 
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="bg-[#f5f5f5] dark:bg-slate-800/80 text-[#737373] dark:text-slate-400 border-b border-[#e5e5e5] dark:border-slate-800">
+                <thead className="bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800">
                   <tr>
                     <th className="py-2.5 px-4 font-semibold">Rentang Indeks (d)</th>
                     <th className="py-2.5 px-4 font-semibold">Klasifikasi Status</th>
@@ -1364,41 +1364,41 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
                     <th className="py-2.5 px-4 font-semibold">Contoh Kasus</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#e5e5e5] dark:divide-slate-800 text-[#0a0a0a] dark:text-slate-300">
+                <tbody className="divide-y divide-slate-200 dark:divide-slate-800 text-slate-900 dark:text-slate-300">
                   <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
                     <td className="py-3 px-4 font-mono font-bold text-emerald-600 dark:text-emerald-400">0% – 20%</td>
                     <td className="py-3 px-4 font-semibold">Dialek Sama (Homogen)</td>
-                    <td className="py-3 px-4 text-[#737373] dark:text-slate-400">100% Saling Memahami</td>
+                    <td className="py-3 px-4 text-slate-500 dark:text-slate-400">100% Saling Memahami</td>
                     <td className="py-3 px-4 text-slate-400">Tidak ditarik garis isoglos</td>
-                    <td className="py-3 px-4 text-[#737373] dark:text-slate-400">Dua desa berdampingan di Sukabumi Selatan</td>
+                    <td className="py-3 px-4 text-slate-500 dark:text-slate-400">Dua desa berdampingan di Sukabumi Selatan</td>
                   </tr>
                   <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
                     <td className="py-3 px-4 font-mono font-bold text-blue-600 dark:text-blue-400">21% – 30%</td>
                     <td className="py-3 px-4 font-semibold">Beda Wicara / Subdialek</td>
-                    <td className="py-3 px-4 text-[#737373] dark:text-slate-400">&gt; 90% (Sangat Lancar)</td>
+                    <td className="py-3 px-4 text-slate-500 dark:text-slate-400">&gt; 90% (Sangat Lancar)</td>
                     <td className="py-3 px-4 text-blue-600 dark:text-blue-400 font-semibold">Garis putus-putus tipis (Lemah)</td>
-                    <td className="py-3 px-4 text-[#737373] dark:text-slate-400">Sunda Priangan vs Sunda Pantura</td>
+                    <td className="py-3 px-4 text-slate-500 dark:text-slate-400">Sunda Priangan vs Sunda Pantura</td>
                   </tr>
                   <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
                     <td className="py-3 px-4 font-mono font-bold text-amber-600 dark:text-amber-400">31% – 50%</td>
                     <td className="py-3 px-4 font-semibold">Beda Dialek (Dialect)</td>
-                    <td className="py-3 px-4 text-[#737373] dark:text-slate-400">70% – 85% (Sebagian Paham)</td>
+                    <td className="py-3 px-4 text-slate-500 dark:text-slate-400">70% – 85% (Sebagian Paham)</td>
                     <td className="py-3 px-4 text-amber-600 dark:text-amber-400 font-semibold">Garis solid tegas berkelanjutan</td>
-                    <td className="py-3 px-4 text-[#737373] dark:text-slate-400">Sunda Priangan vs Sunda Banten</td>
+                    <td className="py-3 px-4 text-slate-500 dark:text-slate-400">Sunda Priangan vs Sunda Banten</td>
                   </tr>
                   <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
                     <td className="py-3 px-4 font-mono font-bold text-rose-600 dark:text-rose-400">51% – 80%</td>
                     <td className="py-3 px-4 font-semibold">Beda Bahasa (Language)</td>
-                    <td className="py-3 px-4 text-[#737373] dark:text-slate-400">&lt; 50% (Hambatan Signifikan)</td>
+                    <td className="py-3 px-4 text-slate-500 dark:text-slate-400">&lt; 50% (Hambatan Signifikan)</td>
                     <td className="py-3 px-4 text-rose-600 dark:text-rose-400 font-semibold">Garis batas bahasa ganda</td>
-                    <td className="py-3 px-4 text-[#737373] dark:text-slate-400">Bahasa Sunda vs Bahasa Jawa Banyumasan</td>
+                    <td className="py-3 px-4 text-slate-500 dark:text-slate-400">Bahasa Sunda vs Bahasa Jawa Banyumasan</td>
                   </tr>
                   <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
                     <td className="py-3 px-4 font-mono font-bold text-purple-600 dark:text-purple-400">&gt; 80%</td>
                     <td className="py-3 px-4 font-semibold">Beda Rumpun / Subkeluarga</td>
-                    <td className="py-3 px-4 text-[#737373] dark:text-slate-400">0% (Tidak Saling Paham)</td>
+                    <td className="py-3 px-4 text-slate-500 dark:text-slate-400">0% (Tidak Saling Paham)</td>
                     <td className="py-3 px-4 text-purple-600 dark:text-purple-400 font-semibold">Garis batas rumpun tebal</td>
-                    <td className="py-3 px-4 text-[#737373] dark:text-slate-400">Austronesia vs Papua (Trans-New Guinea)</td>
+                    <td className="py-3 px-4 text-slate-500 dark:text-slate-400">Austronesia vs Papua (Trans-New Guinea)</td>
                   </tr>
                 </tbody>
               </table>
@@ -1406,15 +1406,15 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
           </div>
 
           {/* FITUR KOMPARASI DUA SURVEI BERDAMPINGAN & MANUAL OVERRIDE */}
-          <div className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-xl p-5 shadow-2xs space-y-4">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-2xs space-y-4">
             <div className="flex items-center gap-2">
               <TableProperties className="w-4 h-4 text-indigo-600" />
-              <h3 className="text-sm font-bold text-[#0a0a0a] dark:text-white">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                 Komparasi Survei Berdampingan (Side-by-Side) & Manual Override
               </h3>
             </div>
 
-            <p className="text-xs text-[#737373] dark:text-slate-300 leading-relaxed">
+            <p className="text-xs text-slate-500 dark:text-slate-300 leading-relaxed">
               Pada menu <strong>Komparasi & Dialektometri</strong>, peneliti dapat memperbandingkan dua survei lapangan aktif langsung baris-per-baris untuk 200 kosakata Swadesh. Sistem mengklasifikasikan pasangan kata ke dalam 4 kategori dengan penanda warna:
             </p>
 
@@ -1441,8 +1441,8 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
           {/* ========================================================================= */}
           {/* PANDUAN PENGGUNA & USER FLOW LENGKAP: 12 MODUL BENTO DIALEKTOMETRI */}
           {/* ========================================================================= */}
-          <div className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-xl p-5 sm:p-6 shadow-2xs space-y-6">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-[#e5e5e5] dark:border-slate-800">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 sm:p-6 shadow-2xs space-y-6">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-slate-200 dark:border-slate-800">
               <div className="space-y-1">
                 <div className="flex items-center gap-2 flex-wrap text-xs">
                   <span className="px-2 py-0.5 rounded font-bold uppercase tracking-wider bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300">
@@ -1453,10 +1453,10 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
                   <span className="text-slate-400">·</span>
                   <span className="text-slate-600 dark:text-slate-400 font-medium">Metodologi Standar Guiter (1973)</span>
                 </div>
-                <h3 className="text-base sm:text-lg font-bold text-[#0a0a0a] dark:text-white">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
                   Panduan Operasional & Diagram Alur Kerja (12 Modul Visualisasi Dialek)
                 </h3>
-                <p className="text-xs text-[#737373] dark:text-slate-300 leading-relaxed max-w-3xl">
+                <p className="text-xs text-slate-500 dark:text-slate-300 leading-relaxed max-w-3xl">
                   Setiap instrumen pada 12 Modul Analisis dirancang khusus untuk menjawab pertanyaan riset dialektologi yang spesifik: mulai dari pembuktian spasial garis isoglos, korelasi jarak kilometer fisik, hingga silsilah filogenetik dan kedalaman waktu pemisahan bahasa purba.
                 </p>
               </div>
@@ -1479,7 +1479,7 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
                 <div className="w-6 h-6 rounded-md bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-xs">
                   <Workflow className="w-3.5 h-3.5" />
                 </div>
-                <h4 className="text-xs sm:text-sm font-bold text-[#0a0a0a] dark:text-white">
+                <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
                   Diagram Alur Kerja Terintegrasi (User Flow 6 Fase)
                 </h4>
               </div>
@@ -1608,7 +1608,7 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
                   <div className="w-6 h-6 rounded-md bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-xs">
                     <Layers2 className="w-3.5 h-3.5" />
                   </div>
-                  <h4 className="text-xs sm:text-sm font-bold text-[#0a0a0a] dark:text-white">
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
                     Katalog Lengkap & Spesifikasi 12 Modul Analisis
                   </h4>
                 </div>
@@ -1886,7 +1886,7 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
 
             {/* MATRIKS PERANAN (ROLE RESPONSIBILITY) */}
             <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3">
-              <h4 className="text-xs sm:text-sm font-bold text-[#0a0a0a] dark:text-white flex items-center gap-2">
+              <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <Users className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                 <span>Matriks Tanggung Jawab Peran Terhadap 12 Modul Analisis</span>
               </h4>
@@ -1929,10 +1929,10 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
       {activeTab === 'peran' && (
         <div className="space-y-5">
           <div>
-            <h2 className="text-base font-bold text-[#0a0a0a] dark:text-white">
+            <h2 className="text-base font-bold text-slate-900 dark:text-white">
               Panduan Operasional Berdasarkan Hak Akses & Peran (RBAC)
             </h2>
-            <p className="text-xs text-[#737373] dark:text-slate-400 mt-0.5">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               Pilih peran Anda untuk membaca petunjuk kerja spesifik dan tanggung jawab di sistem.
             </p>
           </div>
@@ -1954,79 +1954,79 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
                   onClick={() => setActiveRole(r.id as any)}
                   className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
                     isActive
-                      ? 'bg-blue-50/80 dark:bg-blue-950/50 border-[#1447e6] dark:border-blue-500 shadow-2xs'
-                      : 'bg-white dark:bg-slate-900 border-[#e5e5e5] dark:border-slate-800 hover:border-slate-300'
+                      ? 'bg-blue-50/80 dark:bg-blue-950/50 border-blue-600 dark:border-blue-500 shadow-2xs'
+                      : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-slate-300'
                   }`}
                 >
-                  <Icon className={`w-5 h-5 mb-1.5 ${isActive ? 'text-[#1447e6] dark:text-blue-400' : 'text-[#737373]'}`} />
-                  <div className="font-bold text-xs text-[#0a0a0a] dark:text-white">{r.label}</div>
-                  <div className="text-[10px] text-[#737373] dark:text-slate-400 mt-0.5">{r.desc}</div>
+                  <Icon className={`w-5 h-5 mb-1.5 ${isActive ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500'}`} />
+                  <div className="font-bold text-xs text-slate-900 dark:text-white">{r.label}</div>
+                  <div className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">{r.desc}</div>
                 </button>
               );
             })}
           </div>
 
           {/* Role Detailed Content */}
-          <div className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-xl p-5 shadow-2xs">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-2xs">
             {activeRole === 'surveyor' && (
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-lg bg-blue-100 dark:bg-blue-950 text-[#1447e6] flex items-center justify-center font-bold">
+                  <div className="w-9 h-9 rounded-lg bg-blue-100 dark:bg-blue-950 text-blue-600 flex items-center justify-center font-bold">
                     <Compass className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-sm text-[#0a0a0a] dark:text-white">
+                    <h3 className="font-bold text-sm text-slate-900 dark:text-white">
                       Protokol & Tata Cara Surveyor Lapangan
                     </h3>
-                    <p className="text-xs text-[#737373] dark:text-slate-400">
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
                       Pedoman pengumpulan data di titik pengamatan (desa lokasi survei)
                     </p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                  <div className="p-3.5 bg-[#fafafa] dark:bg-slate-800/60 rounded-lg border border-[#e5e5e5] dark:border-slate-700/60 space-y-2">
-                    <div className="font-bold text-[#0a0a0a] dark:text-slate-200 flex items-center gap-1.5">
+                  <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-lg border border-slate-200 dark:border-slate-700/60 space-y-2">
+                    <div className="font-bold text-slate-900 dark:text-slate-200 flex items-center gap-1.5">
                       <CheckSquare className="w-3.5 h-3.5 text-blue-600" />
                       <span>1. Persiapan Pra-Lapangan</span>
                     </div>
-                    <ul className="space-y-1 text-[#737373] dark:text-slate-300 list-disc list-inside">
+                    <ul className="space-y-1 text-slate-500 dark:text-slate-300 list-disc list-inside">
                       <li>Buka aplikasi di peramban saat masih ada koneksi internet agar PWA tercache sempurna.</li>
                       <li>Pasang PWA ke layar utama ponsel melalui tombol "Pasang Aplikasi" di navbar atau sidebar.</li>
                       <li>Pastikan baterai perangkat penuh dan izin akses mikrofon peramban telah diaktifkan.</li>
                     </ul>
                   </div>
 
-                  <div className="p-3.5 bg-[#fafafa] dark:bg-slate-800/60 rounded-lg border border-[#e5e5e5] dark:border-slate-700/60 space-y-2">
-                    <div className="font-bold text-[#0a0a0a] dark:text-slate-200 flex items-center gap-1.5">
+                  <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-lg border border-slate-200 dark:border-slate-700/60 space-y-2">
+                    <div className="font-bold text-slate-900 dark:text-slate-200 flex items-center gap-1.5">
                       <CheckSquare className="w-3.5 h-3.5 text-blue-600" />
                       <span>2. Etika Triangulasi Informan (Seksi 14)</span>
                     </div>
-                    <ul className="space-y-1 text-[#737373] dark:text-slate-300 list-disc list-inside">
+                    <ul className="space-y-1 text-slate-500 dark:text-slate-300 list-disc list-inside">
                       <li>Wawancarai minimal 3 narasumber penutur asli yang lahir dan menetap di desa tersebut.</li>
                       <li>Pilih informan dari rentang usia berbeda untuk membandingkan variasi tutur antargenerasi.</li>
                       <li>Catat bahasa ibu dan bahasa kedua yang dikuasai untuk menghindari interferensi bahasa.</li>
                     </ul>
                   </div>
 
-                  <div className="p-3.5 bg-[#fafafa] dark:bg-slate-800/60 rounded-lg border border-[#e5e5e5] dark:border-slate-700/60 space-y-2">
-                    <div className="font-bold text-[#0a0a0a] dark:text-slate-200 flex items-center gap-1.5">
+                  <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-lg border border-slate-200 dark:border-slate-700/60 space-y-2">
+                    <div className="font-bold text-slate-900 dark:text-slate-200 flex items-center gap-1.5">
                       <CheckSquare className="w-3.5 h-3.5 text-blue-600" />
                       <span>3. Perekaman Audio Kosakata (Seksi 15)</span>
                     </div>
-                    <ul className="space-y-1 text-[#737373] dark:text-slate-300 list-disc list-inside">
+                    <ul className="space-y-1 text-slate-500 dark:text-slate-300 list-disc list-inside">
                       <li>Lakukan perekaman di ruangan tenang bebas deru angin atau bising lalu lintas.</li>
                       <li>Minta narasumber melafalkan kata secara santai dan alami tanpa hiperkoreksi artifisial.</li>
                       <li>Putar ulang audio segera setelah merekam untuk memastikan suara terdengar jelas.</li>
                     </ul>
                   </div>
 
-                  <div className="p-3.5 bg-[#fafafa] dark:bg-slate-800/60 rounded-lg border border-[#e5e5e5] dark:border-slate-700/60 space-y-2">
-                    <div className="font-bold text-[#0a0a0a] dark:text-slate-200 flex items-center gap-1.5">
+                  <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-lg border border-slate-200 dark:border-slate-700/60 space-y-2">
+                    <div className="font-bold text-slate-900 dark:text-slate-200 flex items-center gap-1.5">
                       <CheckSquare className="w-3.5 h-3.5 text-blue-600" />
                       <span>4. Sinkronisasi Saat Menemukan Sinyal</span>
                     </div>
-                    <ul className="space-y-1 text-[#737373] dark:text-slate-300 list-disc list-inside">
+                    <ul className="space-y-1 text-slate-500 dark:text-slate-300 list-disc list-inside">
                       <li>Ketika kembali mendapatkan jaringan internet, periksa indikator awan di navbar atas.</li>
                       <li>Klik ikon awan dan tekan tombol "Sinkronkan Sekarang" untuk mengunggah antrean offline.</li>
                       <li>Unduh berkas cadangan JSON dari menu Datasets sebagai arsip salinan pengaman.</li>
@@ -2043,21 +2043,21 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
                     <ShieldCheck className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-sm text-[#0a0a0a] dark:text-white">
+                    <h3 className="font-bold text-sm text-slate-900 dark:text-white">
                       Pedoman Verifikator & Kurator Linguistik Senior
                     </h3>
-                    <p className="text-xs text-[#737373] dark:text-slate-400">
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
                       Prosedur telaah keabsahan ilmiah data sebelum disahkan sebagai rujukan nasional
                     </p>
                   </div>
                 </div>
 
-                <div className="space-y-2.5 text-xs text-[#737373] dark:text-slate-300">
+                <div className="space-y-2.5 text-xs text-slate-500 dark:text-slate-300">
                   <p>
                     Sebagai verifikator, Anda memiliki otoritas mengesahkan data dengan status <strong>✓ Tervalidasi</strong> yang akan memicu pin hijau pada peta Leaflet dan laporan agregat nasional.
                   </p>
-                  <div className="p-3 bg-[#fafafa] dark:bg-slate-800 rounded-lg border border-[#e5e5e5] dark:border-slate-700 space-y-1.5">
-                    <div className="font-bold text-[#0a0a0a] dark:text-slate-200">Kriteria Pengesahan Data:</div>
+                  <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 space-y-1.5">
+                    <div className="font-bold text-slate-900 dark:text-slate-200">Kriteria Pengesahan Data:</div>
                     <div className="flex items-center gap-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                       <span>Semua 16 seksi instrumen memiliki tingkat kelengkapan minimal 90%.</span>
@@ -2086,16 +2086,16 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
                     <Users className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-sm text-[#0a0a0a] dark:text-white">
+                    <h3 className="font-bold text-sm text-slate-900 dark:text-white">
                       Panduan Administrator Sistem & Koordinator Riset
                     </h3>
-                    <p className="text-xs text-[#737373] dark:text-slate-400">
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
                       Manajemen pengguna, alokasi wilayah survei, dan pencadangan koleksi database
                     </p>
                   </div>
                 </div>
 
-                <div className="space-y-2 text-xs text-[#737373] dark:text-slate-300">
+                <div className="space-y-2 text-xs text-slate-500 dark:text-slate-300">
                   <p>
                     Admin bertanggung jawab atas integritas ekosistem data survei kebahasaan lintas tim:
                   </p>
@@ -2115,16 +2115,16 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
                     <BookOpen className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-sm text-[#0a0a0a] dark:text-white">
+                    <h3 className="font-bold text-sm text-slate-900 dark:text-white">
                       Panduan Peneliti Tamu / Akademisi (Viewer)
                     </h3>
-                    <p className="text-xs text-[#737373] dark:text-slate-400">
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
                       Eksplorasi data geospasial, statistik kognat, dan komparasi dialektometri
                     </p>
                   </div>
                 </div>
 
-                <div className="space-y-2 text-xs text-[#737373] dark:text-slate-300">
+                <div className="space-y-2 text-xs text-slate-500 dark:text-slate-300">
                   <p>
                     Mode Tamu dirancang untuk peneliti, akademisi, dan mahasiswa yang membutuhkan data empiris tanpa hak mengubah instrumen:
                   </p>
@@ -2144,10 +2144,10 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
       {activeTab === 'dialektometri' && (
         <div className="space-y-5">
           <div>
-            <h2 className="text-base font-bold text-[#0a0a0a] dark:text-white">
+            <h2 className="text-base font-bold text-slate-900 dark:text-white">
               Formulasi Matematis & Metodologi Dialektometri (Jean Guiter, 1973)
             </h2>
-            <p className="text-xs text-[#737373] dark:text-slate-400 mt-0.5">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               Standar kuantitatif geolinguistik komparatif untuk mengukur derajat perbedaan dialek dan bahasa.
             </p>
           </div>
@@ -2156,7 +2156,7 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
           <div className="bg-gradient-to-r from-blue-50/80 via-white to-indigo-50/50 dark:from-slate-900 dark:via-slate-900 dark:to-indigo-950/30 border border-blue-200 dark:border-blue-900/60 rounded-xl p-5 shadow-2xs">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-blue-100 dark:border-blue-900/40">
               <div className="flex items-center gap-2">
-                <span className="font-mono font-bold text-lg sm:text-xl text-[#1447e6] dark:text-blue-400">
+                <span className="font-mono font-bold text-lg sm:text-xl text-blue-600 dark:text-blue-400">
                   d = (s / n) × 100%
                 </span>
                 <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
@@ -2174,36 +2174,36 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
               </button>
             </div>
 
-            <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-[#0a0a0a] dark:text-slate-300">
+            <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-slate-900 dark:text-slate-300">
               <div className="p-2.5 bg-white/80 dark:bg-slate-800/60 rounded-lg border border-blue-100/80 dark:border-slate-700">
-                <span className="font-bold text-[#1447e6] dark:text-blue-400">d (Derajat Beda)</span>:
-                <p className="text-[#737373] dark:text-slate-400 mt-0.5">Persentase perbedaan dialektometri hasil hitungan.</p>
+                <span className="font-bold text-blue-600 dark:text-blue-400">d (Derajat Beda)</span>:
+                <p className="text-slate-500 dark:text-slate-400 mt-0.5">Persentase perbedaan dialektometri hasil hitungan.</p>
               </div>
               <div className="p-2.5 bg-white/80 dark:bg-slate-800/60 rounded-lg border border-blue-100/80 dark:border-slate-700">
-                <span className="font-bold text-[#1447e6] dark:text-blue-400">s (Selisih Beda)</span>:
-                <p className="text-[#737373] dark:text-slate-400 mt-0.5">Jumlah perbedaan bentuk leksikal antar dua titik pengamatan.</p>
+                <span className="font-bold text-blue-600 dark:text-blue-400">s (Selisih Beda)</span>:
+                <p className="text-slate-500 dark:text-slate-400 mt-0.5">Jumlah perbedaan bentuk leksikal antar dua titik pengamatan.</p>
               </div>
               <div className="p-2.5 bg-white/80 dark:bg-slate-800/60 rounded-lg border border-blue-100/80 dark:border-slate-700">
-                <span className="font-bold text-[#1447e6] dark:text-blue-400">n (Total Glos)</span>:
-                <p className="text-[#737373] dark:text-slate-400 mt-0.5">Jumlah keseluruhan glos konsep yang diperbandingkan (misal: 200 Swadesh).</p>
+                <span className="font-bold text-blue-600 dark:text-blue-400">n (Total Glos)</span>:
+                <p className="text-slate-500 dark:text-slate-400 mt-0.5">Jumlah keseluruhan glos konsep yang diperbandingkan (misal: 200 Swadesh).</p>
               </div>
             </div>
           </div>
 
           {/* Classification Scale Table */}
-          <div className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-xl overflow-hidden shadow-2xs">
-            <div className="px-4 py-3 border-b border-[#e5e5e5] dark:border-slate-800 bg-[#fafafa] dark:bg-slate-800/50 flex items-center justify-between">
-              <h3 className="font-bold text-xs sm:text-sm text-[#0a0a0a] dark:text-white">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-2xs">
+            <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex items-center justify-between">
+              <h3 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
                 Tabel Skala Klasifikasi Hubungan Kebahasaan
               </h3>
-              <span className="text-[10px] text-[#737373] dark:text-slate-400">
+              <span className="text-[10px] text-slate-500 dark:text-slate-400">
                 Standar Badan Bahasa & SIL International
               </span>
             </div>
 
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="bg-[#f5f5f5] dark:bg-slate-800/80 text-[#737373] dark:text-slate-400 border-b border-[#e5e5e5] dark:border-slate-800">
+                <thead className="bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800">
                   <tr>
                     <th className="py-2.5 px-4 font-semibold">Rentang Indeks (d)</th>
                     <th className="py-2.5 px-4 font-semibold">Klasifikasi Status</th>
@@ -2211,35 +2211,35 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
                     <th className="py-2.5 px-4 font-semibold text-center">Garis Isoglos</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#e5e5e5] dark:divide-slate-800 text-[#0a0a0a] dark:text-slate-300">
+                <tbody className="divide-y divide-slate-200 dark:divide-slate-800 text-slate-900 dark:text-slate-300">
                   <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
                     <td className="py-3 px-4 font-mono font-bold text-emerald-600 dark:text-emerald-400">0% – 20%</td>
                     <td className="py-3 px-4 font-semibold">Dialek Sama (Homogen)</td>
-                    <td className="py-3 px-4 text-[#737373] dark:text-slate-400">Tidak ada perbedaan dialek yang nyata; variasi hanya berupa idiolek perorangan atau varian bebas.</td>
+                    <td className="py-3 px-4 text-slate-500 dark:text-slate-400">Tidak ada perbedaan dialek yang nyata; variasi hanya berupa idiolek perorangan atau varian bebas.</td>
                     <td className="py-3 px-4 text-center text-slate-400">Tidak ada</td>
                   </tr>
                   <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
                     <td className="py-3 px-4 font-mono font-bold text-blue-600 dark:text-blue-400">21% – 30%</td>
                     <td className="py-3 px-4 font-semibold">Beda Wicara / Subdialek</td>
-                    <td className="py-3 px-4 text-[#737373] dark:text-slate-400">Variasi fonetik dan leksikal minor; derajat saling memahami (*mutual intelligibility*) masih sangat tinggi.</td>
+                    <td className="py-3 px-4 text-slate-500 dark:text-slate-400">Variasi fonetik dan leksikal minor; derajat saling memahami (*mutual intelligibility*) masih sangat tinggi.</td>
                     <td className="py-3 px-4 text-center text-blue-500 font-semibold">Isoglos Lemah</td>
                   </tr>
                   <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
                     <td className="py-3 px-4 font-mono font-bold text-amber-600 dark:text-amber-400">31% – 50%</td>
                     <td className="py-3 px-4 font-semibold">Beda Dialek (Dialect)</td>
-                    <td className="py-3 px-4 text-[#737373] dark:text-slate-400">Perbedaan dialek yang tegas secara leksikal dan fonologis; membentuk batas wilayah dialek yang nyata.</td>
+                    <td className="py-3 px-4 text-slate-500 dark:text-slate-400">Perbedaan dialek yang tegas secara leksikal dan fonologis; membentuk batas wilayah dialek yang nyata.</td>
                     <td className="py-3 px-4 text-center text-amber-500 font-semibold">Isoglos Tegas</td>
                   </tr>
                   <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
                     <td className="py-3 px-4 font-mono font-bold text-rose-600 dark:text-rose-400">51% – 80%</td>
                     <td className="py-3 px-4 font-semibold">Beda Bahasa (Language)</td>
-                    <td className="py-3 px-4 text-[#737373] dark:text-slate-400">Perbedaan leksikon sangat masif sehingga diklasifikasikan sebagai bahasa yang berbeda (*different languages*).</td>
+                    <td className="py-3 px-4 text-slate-500 dark:text-slate-400">Perbedaan leksikon sangat masif sehingga diklasifikasikan sebagai bahasa yang berbeda (*different languages*).</td>
                     <td className="py-3 px-4 text-center text-rose-500 font-semibold">Batas Bahasa</td>
                   </tr>
                   <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
                     <td className="py-3 px-4 font-mono font-bold text-purple-600 dark:text-purple-400">&gt; 80%</td>
                     <td className="py-3 px-4 font-semibold">Beda Rumpun / Subkeluarga</td>
-                    <td className="py-3 px-4 text-[#737373] dark:text-slate-400">Perbedaan leksikon ekstrem yang mengindikasikan percabangan keluarga bahasa terpisah secara historis.</td>
+                    <td className="py-3 px-4 text-slate-500 dark:text-slate-400">Perbedaan leksikon ekstrem yang mengindikasikan percabangan keluarga bahasa terpisah secara historis.</td>
                     <td className="py-3 px-4 text-center text-purple-500 font-semibold">Batas Rumpun</td>
                   </tr>
                 </tbody>
@@ -2254,10 +2254,10 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
-              <h2 className="text-base font-bold text-[#0a0a0a] dark:text-white">
+              <h2 className="text-base font-bold text-slate-900 dark:text-white">
                 Rincian Panduan Pengisian 16 Bagian Instrumen Pemetaan Bahasa
               </h2>
-              <p className="text-xs text-[#737373] dark:text-slate-400 mt-0.5">
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                 Katalog lengkap kolom input, fungsi penelitian, dan petunjuk pengisian di lapangan.
               </p>
             </div>
@@ -2265,7 +2265,7 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
             <button
               type="button"
               onClick={() => onNavigateToView('form-screen')}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-[#1447e6] hover:bg-blue-700 transition-colors self-start sm:self-auto cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-colors self-start sm:self-auto cursor-pointer"
             >
               <span>Buka Formulir Sekarang</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -2276,22 +2276,22 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
             {sectionsList.map((sec) => (
               <div 
                 key={sec.num}
-                className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-xl p-3.5 sm:p-4 shadow-2xs hover:border-blue-300 dark:hover:border-blue-800 transition-colors"
+                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3.5 sm:p-4 shadow-2xs hover:border-blue-300 dark:hover:border-blue-800 transition-colors"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-md bg-blue-50 dark:bg-blue-950 text-[#1447e6] dark:text-blue-300 font-bold text-xs flex items-center justify-center border border-blue-200 dark:border-blue-900/40">
+                    <span className="w-6 h-6 rounded-md bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-300 font-bold text-xs flex items-center justify-center border border-blue-200 dark:border-blue-900/40">
                       {sec.num}
                     </span>
-                    <h3 className="font-bold text-xs sm:text-sm text-[#0a0a0a] dark:text-white">
+                    <h3 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
                       {sec.title}
                     </h3>
                   </div>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#f5f5f5] dark:bg-slate-800 text-[#737373] dark:text-slate-400 font-medium">
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-medium">
                     {sec.cat}
                   </span>
                 </div>
-                <p className="text-xs text-[#737373] dark:text-slate-300 mt-2 leading-relaxed">
+                <p className="text-xs text-slate-500 dark:text-slate-300 mt-2 leading-relaxed">
                   {sec.desc}
                 </p>
               </div>
@@ -2304,10 +2304,10 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
       {activeTab === 'faq' && (
         <div className="space-y-4">
           <div>
-            <h2 className="text-base font-bold text-[#0a0a0a] dark:text-white">
+            <h2 className="text-base font-bold text-slate-900 dark:text-white">
               Tanya Jawab (FAQ) & Tips Penanganan Kendala di Lapangan
             </h2>
-            <p className="text-xs text-[#737373] dark:text-slate-400 mt-0.5">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               Solusi praktis kendala offline, izin audio mikrofon, sinkronisasi, dan proteksi kehilangan data.
             </p>
           </div>
@@ -2316,15 +2316,15 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
             {filteredFaqs.map((faq, idx) => (
               <div 
                 key={idx}
-                className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-xl p-4 sm:p-5 shadow-2xs space-y-2"
+                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-5 shadow-2xs space-y-2"
               >
                 <div className="flex items-start gap-2.5">
-                  <HelpCircle className="w-4 h-4 text-[#1447e6] dark:text-blue-400 mt-0.5 shrink-0" />
-                  <h3 className="text-xs sm:text-sm font-bold text-[#0a0a0a] dark:text-white">
+                  <HelpCircle className="w-4 h-4 text-blue-600 dark:text-blue-400 mt-0.5 shrink-0" />
+                  <h3 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
                     {faq.q}
                   </h3>
                 </div>
-                <p className="text-xs text-[#737373] dark:text-slate-300 leading-relaxed pl-6.5">
+                <p className="text-xs text-slate-500 dark:text-slate-300 leading-relaxed pl-6.5">
                   {faq.a}
                 </p>
               </div>
@@ -2332,10 +2332,10 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
           </div>
 
           {/* Keyboard Shortcuts Card */}
-          <div className="mt-5 p-4 bg-[#fafafa] dark:bg-slate-800/60 border border-[#e5e5e5] dark:border-slate-700/60 rounded-xl">
+          <div className="mt-5 p-4 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 rounded-xl">
             <div className="flex items-center gap-2 mb-2">
               <Keyboard className="w-4 h-4 text-slate-700 dark:text-slate-300" />
-              <h3 className="text-xs font-bold text-[#0a0a0a] dark:text-white">Pintasan Keyboard (Keyboard Shortcuts)</h3>
+              <h3 className="text-xs font-bold text-slate-900 dark:text-white">Pintasan Keyboard (Keyboard Shortcuts)</h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
               <div className="flex items-center justify-between p-2 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-800">
@@ -2359,37 +2359,37 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
       {activeTab === 'unduhan' && (
         <div className="space-y-4">
           <div>
-            <h2 className="text-base font-bold text-[#0a0a0a] dark:text-white">
+            <h2 className="text-base font-bold text-slate-900 dark:text-white">
               Pusat Unduhan Berkas & Dokumen Resmi
             </h2>
-            <p className="text-xs text-[#737373] dark:text-slate-400 mt-0.5">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               Unduh berkas spesifikasi teknis, template spreadsheet riset, dan arsip dokumen resmi.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
             {/* Card 1: Word Document */}
-            <div className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-xl p-4 shadow-2xs flex flex-col justify-between">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-2xs flex flex-col justify-between">
               <div className="space-y-2">
                 <div className="w-9 h-9 rounded-lg bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center">
                   <FileText className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-xs sm:text-sm text-[#0a0a0a] dark:text-white">
+                  <h3 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
                     Dokumen PRD & User Flow (.DOC Word)
                   </h3>
-                  <p className="text-[11px] text-[#737373] dark:text-slate-400 mt-1">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
                     Format resmi Microsoft Word (.doc) berisi PRD lengkap, katalog 100% fitur, dan 8 diagram alur pengguna.
                   </p>
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-[#f5f5f5] dark:border-slate-800 flex items-center justify-between">
-                <span className="text-[10px] text-[#737373] dark:text-slate-400">Format .DOC</span>
+              <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <span className="text-[10px] text-slate-500 dark:text-slate-400">Format .DOC</span>
                 <a
                   href="/docs/PRD_USER_FLOW_SISTEM_PEMETAAN_BAHASA.doc"
                   download="PRD_USER_FLOW_SISTEM_PEMETAAN_BAHASA.doc"
-                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-white bg-[#1447e6] hover:bg-blue-700 transition-colors"
+                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-colors"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Unduh .DOC</span>
@@ -2398,23 +2398,23 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
             </div>
 
             {/* Card 2: Print PDF */}
-            <div className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-xl p-4 shadow-2xs flex flex-col justify-between">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-2xs flex flex-col justify-between">
               <div className="space-y-2">
                 <div className="w-9 h-9 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
                   <Printer className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-xs sm:text-sm text-[#0a0a0a] dark:text-white">
+                  <h3 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
                     Cetak Dokumen Resmi ke PDF
                   </h3>
-                  <p className="text-[11px] text-[#737373] dark:text-slate-400 mt-1">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
                     Cetak atau simpan halaman panduan ini langsung menjadi dokumen PDF resmi berformat bersih (clean print).
                   </p>
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-[#f5f5f5] dark:border-slate-800 flex items-center justify-between">
-                <span className="text-[10px] text-[#737373] dark:text-slate-400">Format .PDF</span>
+              <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <span className="text-[10px] text-slate-500 dark:text-slate-400">Format .PDF</span>
                 <button
                   type="button"
                   onClick={handlePrint}
@@ -2427,26 +2427,26 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
             </div>
 
             {/* Card 3: Dialek & Peta Word Document */}
-            <div className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-xl p-4 shadow-2xs flex flex-col justify-between hover:border-blue-300 dark:hover:border-blue-800 transition-colors">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-2xs flex flex-col justify-between hover:border-blue-300 dark:hover:border-blue-800 transition-colors">
               <div className="space-y-2">
                 <div className="w-9 h-9 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
                   <Compass className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-xs sm:text-sm text-[#0a0a0a] dark:text-white flex items-center gap-1.5">
+                  <h3 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white flex items-center gap-1.5">
                     <span>Panduan Khusus Dialek & Peta (.DOC)</span>
                     <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 font-bold">
                       Baru
                     </span>
                   </h3>
-                  <p className="text-[11px] text-[#737373] dark:text-slate-400 mt-1">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
                     Dokumen spesifikasi geolinguistik lengkap: rumus Jean Guiter, algoritma pembagi tegak lurus, matriks segitiga, dan sebaran Glottolog.
                   </p>
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-[#f5f5f5] dark:border-slate-800 flex items-center justify-between">
-                <span className="text-[10px] text-[#737373] dark:text-slate-400">Format .DOC</span>
+              <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <span className="text-[10px] text-slate-500 dark:text-slate-400">Format .DOC</span>
                 <a
                   href="/docs/PANDUAN_FITUR_DIALEK_DAN_PETA.doc"
                   download="PANDUAN_FITUR_DIALEK_DAN_PETA.doc"
@@ -2459,23 +2459,23 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
             </div>
 
             {/* Card 4: Excel Swadesh */}
-            <div className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-xl p-4 shadow-2xs flex flex-col justify-between">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-2xs flex flex-col justify-between">
               <div className="space-y-2">
                 <div className="w-9 h-9 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                   <FileSpreadsheet className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-xs sm:text-sm text-[#0a0a0a] dark:text-white">
+                  <h3 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
                     Ekspor Buku Kerja Excel (.XLSX)
                   </h3>
-                  <p className="text-[11px] text-[#737373] dark:text-slate-400 mt-1">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
                     Spreadsheet multi-sheet resmi berisi Profil Wilayah, 200 Kosakata Swadesh, Bidang Budaya, Frasa, dan Narasumber.
                   </p>
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-[#f5f5f5] dark:border-slate-800 flex items-center justify-between">
-                <span className="text-[10px] text-[#737373] dark:text-slate-400">Format .XLSX</span>
+              <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <span className="text-[10px] text-slate-500 dark:text-slate-400">Format .XLSX</span>
                 <button
                   type="button"
                   onClick={onOpenExport}
@@ -2488,27 +2488,27 @@ export const DokumentasiPanduanView: React.FC<DokumentasiPanduanViewProps> = ({
             </div>
 
             {/* Card 5: GeoJSON & GIS Export */}
-            <div className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-xl p-4 shadow-2xs flex flex-col justify-between">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-2xs flex flex-col justify-between">
               <div className="space-y-2">
                 <div className="w-9 h-9 rounded-lg bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center">
                   <Globe2 className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-xs sm:text-sm text-[#0a0a0a] dark:text-white">
+                  <h3 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
                     Akses Langsung Peta Virtual Isoglos
                   </h3>
-                  <p className="text-[11px] text-[#737373] dark:text-slate-400 mt-1">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
                     Buka antarmuka peta interaktif Leaflet untuk menguji garis pembagi ortogonal, tur otomatis Swadesh, dan analisis spasial.
                   </p>
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-[#f5f5f5] dark:border-slate-800 flex items-center justify-between">
-                <span className="text-[10px] text-[#737373] dark:text-slate-400">Modul GIS</span>
+              <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <span className="text-[10px] text-slate-500 dark:text-slate-400">Modul GIS</span>
                 <button
                   type="button"
                   onClick={() => onNavigateToView('peta-survei')}
-                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-[#1447e6] dark:text-blue-300 bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-blue-600 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 transition-colors cursor-pointer"
                 >
                   <Compass className="w-3.5 h-3.5" />
                   <span>Buka Peta</span>

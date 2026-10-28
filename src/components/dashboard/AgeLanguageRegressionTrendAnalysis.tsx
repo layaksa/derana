@@ -387,7 +387,7 @@ export const AgeLanguageRegressionTrendAnalysis: React.FC<AgeLanguageRegressionT
       </div>
 
       {/* 2. PANEL KONTROL & FILTER VARIABEL */}
-      <div className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xs space-y-4 transition-colors">
+      <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xs space-y-4 transition-colors">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
           {/* Pilihan Variabel Bahasa (Sumbu Y) */}
           <div className="space-y-1.5 flex-1">
@@ -538,7 +538,7 @@ export const AgeLanguageRegressionTrendAnalysis: React.FC<AgeLanguageRegressionT
       {/* 3. KARTU STATISTIK REGRESI LINIER (KPI GRID) */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
         {/* Card 1: Persamaan Regresi */}
-        <div className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-xs">
+        <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-xs">
           <div className="flex items-center justify-between text-slate-500 dark:text-slate-400">
             <span className="text-xs font-semibold">Persamaan Regresi Linier</span>
             <div className="p-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
@@ -556,7 +556,7 @@ export const AgeLanguageRegressionTrendAnalysis: React.FC<AgeLanguageRegressionT
         </div>
 
         {/* Card 2: Koefisien Determinasi R² */}
-        <div className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-xs">
+        <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-xs">
           <div className="flex items-center justify-between text-slate-500 dark:text-slate-400">
             <span className="text-xs font-semibold">Koefisien Determinasi (R²)</span>
             <div className="p-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400">
@@ -575,7 +575,7 @@ export const AgeLanguageRegressionTrendAnalysis: React.FC<AgeLanguageRegressionT
         </div>
 
         {/* Card 3: Laju Per Dekade (Per 10 Tahun) */}
-        <div className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-xs">
+        <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-xs">
           <div className="flex items-center justify-between text-slate-500 dark:text-slate-400">
             <span className="text-xs font-semibold">Laju Perubahan per Dekade</span>
             <div className={`p-1.5 rounded-lg ${
@@ -600,7 +600,7 @@ export const AgeLanguageRegressionTrendAnalysis: React.FC<AgeLanguageRegressionT
         </div>
 
         {/* Card 4: Signifikansi Statistik & Uji t */}
-        <div className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-xs">
+        <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-xs">
           <div className="flex items-center justify-between text-slate-500 dark:text-slate-400">
             <span className="text-xs font-semibold">Uji Signifikansi Regresi</span>
             <div className={`p-1.5 rounded-lg ${
@@ -624,7 +624,7 @@ export const AgeLanguageRegressionTrendAnalysis: React.FC<AgeLanguageRegressionT
       </div>
 
       {/* 4. AREA VISUALISASI UTAMA RECHARTS */}
-      <div className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xs space-y-4 transition-colors">
+      <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xs space-y-4 transition-colors">
         {/* Header Grafik */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 gap-3">
           <div>
@@ -988,7 +988,7 @@ export const AgeLanguageRegressionTrendAnalysis: React.FC<AgeLanguageRegressionT
         </div>
 
         {/* Kolom 3: Kalkulator Prediksi Nilai Variabel Berdasarkan Usia */}
-        <div className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-slate-800 rounded-2xl p-5 sm:p-6 space-y-4 shadow-xs">
+        <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 sm:p-6 space-y-4 shadow-xs">
           <div className="flex items-center gap-2">
             <div className="p-2 rounded-xl bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400">
               <Sparkles className="w-4 h-4" />
@@ -1043,7 +1043,7 @@ export const AgeLanguageRegressionTrendAnalysis: React.FC<AgeLanguageRegressionT
       </div>
 
       {/* 6. TABEL RINGKASAN KOHORT GENERASI */}
-      <div className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xs space-y-4 transition-colors">
+      <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xs space-y-4 transition-colors">
         <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
           <div>
             <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
@@ -1095,7 +1095,7 @@ export const AgeLanguageRegressionTrendAnalysis: React.FC<AgeLanguageRegressionT
       </div>
 
       {/* 7. TABEL DETAIL NARASUMBER INDIVIDUAL */}
-      <div className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xs space-y-4 transition-colors">
+      <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xs space-y-4 transition-colors">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 gap-3">
           <div>
             <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">

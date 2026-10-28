@@ -155,13 +155,13 @@ export const CommandSearchModal: React.FC<CommandSearchModalProps> = ({
       onClick={onClose}
     >
       <div 
-        className="w-full max-w-xl bg-white dark:bg-slate-900 rounded-lg border border-[#e5e5e5] dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col max-h-[75vh] transition-colors"
+        className="w-full max-w-xl bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col max-h-[75vh] transition-colors"
         onClick={e => e.stopPropagation()}
         onKeyDown={handleKeyDown}
       >
         {/* Search Input Bar */}
-        <div className="flex items-center gap-3 px-3.5 py-3 border-b border-[#e5e5e5] dark:border-slate-800 bg-white dark:bg-slate-900 transition-colors">
-          <Search className="w-5 h-5 text-[#737373] dark:text-slate-400 shrink-0" />
+        <div className="flex items-center gap-3 px-3.5 py-3 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transition-colors">
+          <Search className="w-5 h-5 text-slate-500 dark:text-slate-400 shrink-0" />
           <input
             ref={inputRef}
             type="text"
@@ -171,26 +171,26 @@ export const CommandSearchModal: React.FC<CommandSearchModalProps> = ({
               setSelectedIndex(0);
             }}
             placeholder="Ketik untuk mencari menu, seksi kuesioner, atau data..."
-            className="flex-1 bg-transparent border-none outline-hidden text-sm text-[#0a0a0a] dark:text-slate-100 placeholder-[#737373] dark:placeholder-slate-500"
+            className="flex-1 bg-transparent border-none outline-hidden text-sm text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-500"
           />
           {query && (
             <button
               type="button"
               onClick={() => setQuery('')}
-              className="p-1 rounded hover:bg-[#f5f5f5] dark:hover:bg-slate-800 text-[#737373] dark:text-slate-400"
+              className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400"
             >
               <X className="w-4 h-4" />
             </button>
           )}
-          <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded bg-[#f5f5f5] dark:bg-slate-800 border border-[#e5e5e5] dark:border-slate-700 text-[10px] text-[#737373] dark:text-slate-400 font-mono">
+          <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[10px] text-slate-500 dark:text-slate-400 font-mono">
             ESC
           </kbd>
         </div>
 
         {/* Results List */}
-        <div className="flex-1 overflow-y-auto p-2 divide-y divide-[#f5f5f5] dark:divide-slate-800/60">
+        <div className="flex-1 overflow-y-auto p-2 divide-y divide-slate-100 dark:divide-slate-800/60">
           {filteredItems.length === 0 ? (
-            <div className="py-8 text-center text-xs text-[#737373] dark:text-slate-400">
+            <div className="py-8 text-center text-xs text-slate-500 dark:text-slate-400">
               Tidak ditemukan hasil untuk "{query}"
             </div>
           ) : (
@@ -214,15 +214,15 @@ export const CommandSearchModal: React.FC<CommandSearchModalProps> = ({
                   onMouseEnter={() => setSelectedIndex(idx)}
                   className={`w-full flex items-center justify-between p-2.5 rounded-md text-left transition-colors ${
                     isSelected 
-                      ? 'bg-blue-50 dark:bg-blue-950/60 text-[#1447e6] dark:text-blue-300' 
-                      : 'hover:bg-[#f5f5f5] dark:hover:bg-slate-800/80 text-[#0a0a0a] dark:text-slate-200'
+                      ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-300' 
+                      : 'hover:bg-slate-100 dark:hover:bg-slate-800/80 text-slate-900 dark:text-slate-200'
                   }`}
                 >
                   <div className="flex items-center gap-3 min-w-0 pr-2">
                     <div className={`p-1.5 rounded-md shrink-0 ${
                       isSelected 
-                        ? 'bg-blue-100 dark:bg-blue-900/60 text-[#1447e6] dark:text-blue-300' 
-                        : 'bg-[#f5f5f5] dark:bg-slate-800 text-[#737373] dark:text-slate-400'
+                        ? 'bg-blue-100 dark:bg-blue-900/60 text-blue-600 dark:text-blue-300' 
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
                     }`}>
                       <Icon className="w-4 h-4" />
                     </div>
@@ -230,13 +230,13 @@ export const CommandSearchModal: React.FC<CommandSearchModalProps> = ({
                       <p className="text-xs font-semibold truncate leading-tight">
                         {item.title}
                       </p>
-                      <p className="text-[11px] text-[#737373] dark:text-slate-400 truncate leading-tight mt-0.5">
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate leading-tight mt-0.5">
                         {item.desc}
                       </p>
                     </div>
                   </div>
                   <ArrowRight className={`w-3.5 h-3.5 shrink-0 transition-opacity ${
-                    isSelected ? 'opacity-100 text-[#1447e6] dark:text-blue-400' : 'opacity-0'
+                    isSelected ? 'opacity-100 text-blue-600 dark:text-blue-400' : 'opacity-0'
                   }`} />
                 </button>
               );
@@ -245,10 +245,10 @@ export const CommandSearchModal: React.FC<CommandSearchModalProps> = ({
         </div>
 
         {/* Footer shortcuts */}
-        <div className="px-3.5 py-2 bg-white dark:bg-[#121212] border-t border-[#e5e5e5] dark:border-[#444444] flex items-center justify-between text-[11px] text-[#737373] dark:text-[#B0B0B0]">
+        <div className="px-3.5 py-2 bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-300">
           <div className="flex items-center gap-3">
-            <span><kbd className="font-mono bg-white dark:bg-[#1E1E1E] px-1 py-0.5 border border-[#e5e5e5] dark:border-[#444444] rounded text-[10px] text-slate-800 dark:text-[#E0E0E0]">↑↓</kbd> Navigasi</span>
-            <span><kbd className="font-mono bg-white dark:bg-[#1E1E1E] px-1 py-0.5 border border-[#e5e5e5] dark:border-[#444444] rounded text-[10px] text-slate-800 dark:text-[#E0E0E0]">↵</kbd> Buka</span>
+            <span><kbd className="font-mono bg-white dark:bg-slate-900 px-1 py-0.5 border border-slate-200 dark:border-slate-700 rounded text-[10px] text-slate-800 dark:text-slate-200">↑↓</kbd> Navigasi</span>
+            <span><kbd className="font-mono bg-white dark:bg-slate-900 px-1 py-0.5 border border-slate-200 dark:border-slate-700 rounded text-[10px] text-slate-800 dark:text-slate-200">↵</kbd> Buka</span>
           </div>
           <span className="hidden sm:inline">Derana Quick Navigator</span>
         </div>

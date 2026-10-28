@@ -140,22 +140,22 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
     <div className="space-y-6">
       
       {/* Top Banner */}
-      <div className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-[#444444] rounded-2xl p-5 sm:p-6 shadow-xs transition-colors">
+      <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 sm:p-6 shadow-xs transition-colors">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3.5">
-            <div className="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-[#1E1E1E] text-indigo-600 dark:text-sky-400 flex items-center justify-center shrink-0 border border-indigo-100 dark:border-[#444444] shadow-xs">
+            <div className="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-slate-900 text-indigo-600 dark:text-sky-400 flex items-center justify-center shrink-0 border border-indigo-100 dark:border-slate-700 shadow-xs">
               <Database className="w-6 h-6" />
             </div>
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-[#E0E0E0]">
+                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-200">
                   Datasets & Hasil Survei Kebahasaan
                 </h1>
-                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-indigo-50 dark:bg-[#1E1E1E] text-indigo-700 dark:text-sky-300 border border-indigo-200/80 dark:border-[#444444]">
+                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-indigo-50 dark:bg-slate-900 text-indigo-700 dark:text-sky-300 border border-indigo-200/80 dark:border-slate-700">
                   Per Provinsi
                 </span>
               </div>
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-[#B0B0B0] mt-1">
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1">
                 Kelola korpus dan pangkalan data instrumen dialektologi yang dikelompokkan berdasarkan wilayah provinsi dan titik desa.
               </p>
             </div>
@@ -173,7 +173,7 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
             <button
               type="button"
               onClick={onOpenExport}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-50 dark:bg-[#1E1E1E] hover:bg-slate-100 dark:hover:bg-[#444444] text-slate-700 dark:text-[#B0B0B0] border border-slate-200 dark:border-[#444444] rounded-xl text-xs font-medium transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium transition-colors cursor-pointer"
             >
               <Download className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Ekspor Data</span>
@@ -205,7 +205,7 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-50 dark:bg-[#1E1E1E] hover:bg-slate-100 dark:hover:bg-[#444444] text-slate-700 dark:text-[#B0B0B0] border border-slate-200 dark:border-[#444444] rounded-xl text-xs font-medium transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium transition-colors cursor-pointer"
               title="Unggah berkas survei JSON untuk diimpor ke sistem"
             >
               <Upload className="w-3.5 h-3.5" />
@@ -215,17 +215,17 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
         </div>
 
         {/* Search and Filters Bar */}
-        <div className="mt-5 pt-4 border-t border-slate-100 dark:border-[#444444] flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-3">
           
           {/* Search */}
           <div className="relative w-full sm:w-80">
-            <Search className="w-4 h-4 text-slate-400 dark:text-[#888888] absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-slate-400 dark:text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
               placeholder="Cari provinsi, desa, kecamatan, bahasa..."
-              className="w-full pl-9 pr-3 py-2 bg-slate-50 dark:bg-[#1E1E1E] border border-slate-200 dark:border-[#444444] rounded-xl text-xs text-slate-900 dark:text-[#E0E0E0] placeholder-slate-400 dark:placeholder-[#888888] focus:outline-hidden focus:border-indigo-600 dark:focus:border-sky-400 transition-colors"
+              className="w-full pl-9 pr-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-400 focus:outline-hidden focus:border-indigo-600 dark:focus:border-sky-400 transition-colors"
             />
           </div>
 
@@ -233,14 +233,14 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
           <div className="flex flex-wrap items-center gap-2.5 w-full sm:w-auto justify-between sm:justify-end">
             
             {/* View Mode Toggle */}
-            <div className="inline-flex items-center bg-slate-100 dark:bg-[#1E1E1E] p-1 rounded-xl border border-slate-200 dark:border-[#444444] text-xs">
+            <div className="inline-flex items-center bg-slate-100 dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
               <button
                 type="button"
                 onClick={() => setLayoutMode('grouped_province')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer flex items-center gap-1.5 ${
                   layoutMode === 'grouped_province'
-                    ? 'bg-white dark:bg-[#121212] text-indigo-700 dark:text-sky-300 shadow-2xs'
-                    : 'text-slate-600 dark:text-[#B0B0B0] hover:text-slate-900 dark:hover:text-white'
+                    ? 'bg-white dark:bg-slate-950 text-indigo-700 dark:text-sky-300 shadow-2xs'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 <Globe2 className="w-3.5 h-3.5" />
@@ -251,8 +251,8 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
                 onClick={() => setLayoutMode('map')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer flex items-center gap-1.5 ${
                   layoutMode === 'map'
-                    ? 'bg-white dark:bg-[#121212] text-blue-600 dark:text-blue-400 shadow-2xs'
-                    : 'text-slate-600 dark:text-[#B0B0B0] hover:text-slate-900 dark:hover:text-white'
+                    ? 'bg-white dark:bg-slate-950 text-blue-600 dark:text-blue-400 shadow-2xs'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                 }`}
                 title="Tampilkan peta sebaran titik survei lapangan Leaflet"
               >
@@ -264,8 +264,8 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
                 onClick={() => setLayoutMode('table')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer flex items-center gap-1.5 ${
                   layoutMode === 'table'
-                    ? 'bg-white dark:bg-[#121212] text-indigo-700 dark:text-sky-300 shadow-2xs'
-                    : 'text-slate-600 dark:text-[#B0B0B0] hover:text-slate-900 dark:hover:text-white'
+                    ? 'bg-white dark:bg-slate-950 text-indigo-700 dark:text-sky-300 shadow-2xs'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 <Layers className="w-3.5 h-3.5" />
@@ -274,14 +274,14 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
             </div>
 
             {/* Status Filter */}
-            <div className="inline-flex items-center bg-slate-100 dark:bg-[#1E1E1E] p-1 rounded-xl border border-slate-200 dark:border-[#444444] text-xs">
+            <div className="inline-flex items-center bg-slate-100 dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
               <button
                 type="button"
                 onClick={() => setFilterStatus('all')}
                 className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
                   filterStatus === 'all' 
-                    ? 'bg-white dark:bg-[#121212] text-indigo-700 dark:text-sky-300 shadow-2xs' 
-                    : 'text-slate-600 dark:text-[#B0B0B0] hover:text-slate-900 dark:hover:text-white'
+                    ? 'bg-white dark:bg-slate-950 text-indigo-700 dark:text-sky-300 shadow-2xs' 
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 Semua ({surveys.length})
@@ -291,8 +291,8 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
                 onClick={() => setFilterStatus('verified')}
                 className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
                   filterStatus === 'verified' 
-                    ? 'bg-white dark:bg-[#121212] text-emerald-600 dark:text-emerald-400 shadow-2xs' 
-                    : 'text-slate-600 dark:text-[#B0B0B0] hover:text-slate-900 dark:hover:text-white'
+                    ? 'bg-white dark:bg-slate-950 text-emerald-600 dark:text-emerald-400 shadow-2xs' 
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 Terverifikasi
@@ -302,8 +302,8 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
                 onClick={() => setFilterStatus('unverified')}
                 className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
                   filterStatus === 'unverified' 
-                    ? 'bg-white dark:bg-[#121212] text-amber-600 dark:text-amber-400 shadow-2xs' 
-                    : 'text-slate-600 dark:text-[#B0B0B0] hover:text-slate-900 dark:hover:text-white'
+                    ? 'bg-white dark:bg-slate-950 text-amber-600 dark:text-amber-400 shadow-2xs' 
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 Draf
@@ -314,9 +314,9 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
         </div>
 
         {/* BILAH FILTER PER PROVINSI */}
-        <div className="mt-4 pt-3 border-t border-slate-100 dark:border-[#444444]">
+        <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700">
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-[#888888] flex items-center gap-1.5">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400 flex items-center gap-1.5">
               <Globe2 className="w-3.5 h-3.5 text-indigo-500 dark:text-sky-400" />
               <span>Filter Berdasarkan Wilayah Provinsi:</span>
             </span>
@@ -329,14 +329,14 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 border ${
                 selectedProvince === 'all'
                   ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-                  : 'bg-slate-50 dark:bg-[#1E1E1E] text-slate-700 dark:text-[#B0B0B0] border-slate-200 dark:border-[#444444] hover:border-indigo-300'
+                  : 'bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-indigo-300'
               }`}
             >
               <span>Semua Provinsi</span>
               <span className={`px-1.5 py-0.2 rounded-full text-[10px] ${
                 selectedProvince === 'all'
                   ? 'bg-white/20 text-white'
-                  : 'bg-slate-200 dark:bg-[#444444] text-slate-700 dark:text-[#B0B0B0]'
+                  : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300'
               }`}>
                 {surveys.length} Titik
               </span>
@@ -352,7 +352,7 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
                   className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 border ${
                     isSelected
                       ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-                      : 'bg-slate-50 dark:bg-[#1E1E1E] text-slate-700 dark:text-[#B0B0B0] border-slate-200 dark:border-[#444444] hover:border-indigo-300'
+                      : 'bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-indigo-300'
                   }`}
                 >
                   <MapPin className="w-3 h-3" />
@@ -376,10 +376,10 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
       {layoutMode === 'grouped_province' && (
         <div className="space-y-8">
           {groupedByProvince.length === 0 ? (
-            <div className="bg-white dark:bg-[#121212] border border-dashed border-slate-300 dark:border-[#444444] rounded-2xl p-10 text-center">
+            <div className="bg-white dark:bg-slate-950 border border-dashed border-slate-300 dark:border-slate-700 rounded-2xl p-10 text-center">
               <Database className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-              <p className="text-sm font-bold text-slate-800 dark:text-[#E0E0E0]">Tidak ada dataset survei untuk filter ini.</p>
-              <p className="text-xs text-slate-500 dark:text-[#B0B0B0] mt-1">Coba sesuaikan pencarian atau pilih provinsi lain.</p>
+              <p className="text-sm font-bold text-slate-800 dark:text-slate-200">Tidak ada dataset survei untuk filter ini.</p>
+              <p className="text-xs text-slate-500 dark:text-slate-300 mt-1">Coba sesuaikan pencarian atau pilih provinsi lain.</p>
             </div>
           ) : (
             groupedByProvince.map(group => {
@@ -391,24 +391,24 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
               return (
                 <div 
                   key={group.provinceName}
-                  className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-[#444444] rounded-2xl p-5 sm:p-6 shadow-xs space-y-5 transition-colors"
+                  className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 sm:p-6 shadow-xs space-y-5 transition-colors"
                 >
                   {/* Province Header */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 dark:border-[#444444] gap-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-700 gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-[#1E1E1E] text-indigo-600 dark:text-sky-400 flex items-center justify-center font-bold text-sm border border-indigo-100 dark:border-[#444444]">
+                      <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-slate-900 text-indigo-600 dark:text-sky-400 flex items-center justify-center font-bold text-sm border border-indigo-100 dark:border-slate-700">
                         <Globe2 className="w-5 h-5" />
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-[#E0E0E0]">
+                          <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-200">
                             Provinsi {group.provinceName}
                           </h2>
                           <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
                             {verifiedInGroup} / {group.items.length} Terverifikasi
                           </span>
                         </div>
-                        <p className="text-xs text-slate-500 dark:text-[#B0B0B0] mt-0.5">
+                        <p className="text-xs text-slate-500 dark:text-slate-300 mt-0.5">
                           Rata-rata kelengkapan instrumen: <strong>{avgProgressInGroup}%</strong>
                         </p>
                       </div>
@@ -424,7 +424,7 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
                         <FileText className="w-3.5 h-3.5" />
                         <span>Unduh PDF Wilayah</span>
                       </button>
-                      <span className="text-xs font-semibold px-3 py-1 rounded-xl bg-slate-50 dark:bg-[#1E1E1E] border border-slate-200 dark:border-[#444444] text-slate-700 dark:text-[#B0B0B0]">
+                      <span className="text-xs font-semibold px-3 py-1 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300">
                         {group.items.length} Titik Pengamatan
                       </span>
                     </div>
@@ -440,16 +440,16 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
                       return (
                         <div
                           key={s.id}
-                          className={`bg-slate-50/70 dark:bg-[#1E1E1E]/60 border rounded-xl p-4 flex flex-col justify-between transition-all hover:shadow-sm ${
+                          className={`bg-slate-50/70 dark:bg-slate-900/60 border rounded-xl p-4 flex flex-col justify-between transition-all hover:shadow-sm ${
                             isCurrent
                               ? 'border-indigo-600 dark:border-sky-400 ring-2 ring-indigo-500/10'
-                              : 'border-slate-200 dark:border-[#444444]'
+                              : 'border-slate-200 dark:border-slate-700'
                           }`}
                         >
                           <div>
                             {/* Card Top Strip */}
                             <div className="flex items-start justify-between gap-2 mb-2">
-                              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-sky-300 border border-indigo-200/60 dark:border-[#444444] truncate max-w-[170px]">
+                              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-sky-300 border border-indigo-200/60 dark:border-slate-700 truncate max-w-[170px]">
                                 {s.bahasa || s.data?.titikPengamatan?.bahasaDigunakan || 'Bahasa Daerah'}
                               </span>
                               
@@ -469,33 +469,33 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
                             </div>
 
                             {/* Survey Title & Location */}
-                            <h3 className="text-sm font-bold text-slate-900 dark:text-[#E0E0E0] leading-snug line-clamp-2 mb-1">
+                            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-200 leading-snug line-clamp-2 mb-1">
                               Desa {s.desa || s.data?.titikPengamatan?.namaDesa || 'Tanpa Nama'}
                             </h3>
-                            <p className="text-xs text-slate-500 dark:text-[#B0B0B0] flex items-center gap-1 mb-3">
+                            <p className="text-xs text-slate-500 dark:text-slate-300 flex items-center gap-1 mb-3">
                               <MapPin className="w-3.5 h-3.5 text-indigo-500 shrink-0" />
                               <span className="truncate">Kec. {s.kecamatan || '-'}, Kab. {s.kabupatenKota || '-'}</span>
                             </p>
 
                             {/* Metrics pill strip */}
                             <div className="grid grid-cols-2 gap-2 text-[11px] mb-3">
-                              <div className="p-2 rounded-lg bg-white dark:bg-[#121212] border border-slate-200/80 dark:border-[#444444]">
+                              <div className="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-200/80 dark:border-slate-700">
                                 <span className="text-slate-400 block text-[10px]">Swadesh Terisi</span>
-                                <strong className="text-slate-800 dark:text-[#E0E0E0]">{swadeshCount} Kata</strong>
+                                <strong className="text-slate-800 dark:text-slate-200">{swadeshCount} Kata</strong>
                               </div>
-                              <div className="p-2 rounded-lg bg-white dark:bg-[#121212] border border-slate-200/80 dark:border-[#444444]">
+                              <div className="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-200/80 dark:border-slate-700">
                                 <span className="text-slate-400 block text-[10px]">Narasumber</span>
-                                <strong className="text-slate-800 dark:text-[#E0E0E0]">{narasumberCount} Penutur</strong>
+                                <strong className="text-slate-800 dark:text-slate-200">{narasumberCount} Penutur</strong>
                               </div>
                             </div>
 
                             {/* Progress bar */}
                             <div className="space-y-1 mb-3">
                               <div className="flex justify-between text-[11px]">
-                                <span className="text-slate-500 dark:text-[#B0B0B0]">Kelengkapan:</span>
-                                <span className="font-bold text-slate-800 dark:text-[#E0E0E0]">{s.progress || 0}%</span>
+                                <span className="text-slate-500 dark:text-slate-300">Kelengkapan:</span>
+                                <span className="font-bold text-slate-800 dark:text-slate-200">{s.progress || 0}%</span>
                               </div>
-                              <div className="w-full h-1.5 bg-slate-200 dark:bg-[#444444] rounded-full overflow-hidden">
+                              <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
                                 <div 
                                   className={`h-full ${(s.progress || 0) >= 80 ? 'bg-emerald-500' : 'bg-indigo-600 dark:bg-sky-400'}`}
                                   style={{ width: `${s.progress || 0}%` }}
@@ -505,14 +505,14 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
                           </div>
 
                           {/* Card Footer Actions */}
-                          <div className="pt-3 border-t border-slate-200 dark:border-[#444444] flex items-center justify-between gap-2">
+                          <div className="pt-3 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between gap-2">
                             <button
                               type="button"
                               onClick={() => onSelectSurvey(s.id)}
                               className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center gap-1 ${
                                 isCurrent
                                   ? 'bg-indigo-600 text-white shadow-2xs'
-                                  : 'bg-white dark:bg-[#121212] text-indigo-600 dark:text-sky-400 hover:bg-indigo-50 border border-slate-200 dark:border-[#444444]'
+                                  : 'bg-white dark:bg-slate-950 text-indigo-600 dark:text-sky-400 hover:bg-indigo-50 border border-slate-200 dark:border-slate-700'
                               }`}
                             >
                               <span>{isCurrent ? 'Sedang Aktif' : 'Buka Kuesioner'}</span>
@@ -522,7 +522,7 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
                             <button
                               type="button"
                               onClick={() => onDuplicate(s.id)}
-                              className="p-1.5 rounded-lg text-slate-500 dark:text-[#B0B0B0] hover:bg-white dark:hover:bg-[#121212] border border-slate-200 dark:border-[#444444] transition-colors cursor-pointer"
+                              className="p-1.5 rounded-lg text-slate-500 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-950 border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer"
                               title="Duplikasi Survei"
                             >
                               <Copy className="w-3.5 h-3.5" />
@@ -531,7 +531,7 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
                             <button
                               type="button"
                               onClick={() => onDelete(s.id)}
-                              className="p-1.5 rounded-lg text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 border border-slate-200 dark:border-[#444444] transition-colors cursor-pointer"
+                              className="p-1.5 rounded-lg text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer"
                               title="Hapus Survei"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
@@ -565,10 +565,10 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
 
       {/* VIEW MODE 2: TABLE VIEW */}
       {layoutMode === 'table' && (
-        <div className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-[#444444] rounded-2xl shadow-xs overflow-hidden transition-colors">
+        <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-xs overflow-hidden transition-colors">
           <div className="overflow-x-auto">
             <table className="w-full text-xs text-left">
-              <thead className="bg-slate-50 dark:bg-[#1E1E1E] text-slate-500 dark:text-[#B0B0B0] border-b border-slate-200 dark:border-[#444444] font-semibold uppercase tracking-wider text-[11px]">
+              <thead className="bg-slate-50 dark:bg-slate-900 text-slate-500 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700 font-semibold uppercase tracking-wider text-[11px]">
                 <tr>
                   <th className="px-4 py-3">Provinsi</th>
                   <th className="px-4 py-3">Titik Desa</th>
@@ -579,10 +579,10 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
                   <th className="px-4 py-3 text-right">Aksi</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-[#444444]">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
                 {filteredSurveys.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="px-4 py-8 text-center text-slate-500 dark:text-[#B0B0B0]">
+                    <td colSpan={7} className="px-4 py-8 text-center text-slate-500 dark:text-slate-300">
                       Tidak ada dataset titik pengamatan yang cocok.
                     </td>
                   </tr>
@@ -592,44 +592,44 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
                     return (
                       <tr 
                         key={s.id}
-                        className={`hover:bg-slate-50/80 dark:hover:bg-[#1E1E1E]/80 transition-colors ${
+                        className={`hover:bg-slate-50/80 dark:hover:bg-slate-900/80 transition-colors ${
                           isCurrent ? 'bg-indigo-50/40 dark:bg-indigo-950/20' : ''
                         }`}
                       >
-                        <td className="px-4 py-3.5 font-semibold text-slate-800 dark:text-[#E0E0E0]">
-                          <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 dark:bg-[#1E1E1E] text-indigo-700 dark:text-sky-300 border border-slate-200 dark:border-[#444444]">
+                        <td className="px-4 py-3.5 font-semibold text-slate-800 dark:text-slate-200">
+                          <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 dark:bg-slate-900 text-indigo-700 dark:text-sky-300 border border-slate-200 dark:border-slate-700">
                             {s.provinsi || s.data?.titikPengamatan?.provinsi || 'Jawa Barat'}
                           </span>
                         </td>
-                        <td className="px-4 py-3.5 font-medium text-slate-900 dark:text-[#E0E0E0]">
+                        <td className="px-4 py-3.5 font-medium text-slate-900 dark:text-slate-200">
                           <div className="flex items-center gap-2">
                             <MapPin className="w-4 h-4 text-indigo-600 dark:text-sky-400 shrink-0" />
                             <div>
                               <p className="font-bold">Desa {s.desa || s.data?.titikPengamatan?.namaDesa || 'Tanpa Nama'}</p>
-                              <p className="text-[11px] text-slate-500 dark:text-[#B0B0B0]">
+                              <p className="text-[11px] text-slate-500 dark:text-slate-300">
                                 Kec. {s.kecamatan || '-'}, Kab. {s.kabupatenKota || '-'}
                               </p>
                             </div>
                           </div>
                         </td>
-                        <td className="px-4 py-3.5 text-slate-900 dark:text-[#E0E0E0]">
+                        <td className="px-4 py-3.5 text-slate-900 dark:text-slate-200">
                           <span className="font-semibold text-indigo-600 dark:text-sky-400">
                             {s.bahasa || s.data?.titikPengamatan?.bahasaDigunakan || 'Belum Diisi'}
                           </span>
                         </td>
                         <td className="px-4 py-3.5">
                           <div className="flex items-center gap-2">
-                            <div className="w-16 h-1.5 bg-slate-200 dark:bg-[#444444] rounded-full overflow-hidden">
+                            <div className="w-16 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
                               <div 
                                 className={`h-full ${(s.progress ?? 0) >= 80 ? 'bg-emerald-500' : 'bg-indigo-600 dark:bg-sky-400'}`}
                                 style={{ width: `${s.progress ?? 0}%` }}
                               />
                             </div>
-                            <span className="font-semibold text-slate-800 dark:text-[#E0E0E0]">{s.progress ?? 0}%</span>
+                            <span className="font-semibold text-slate-800 dark:text-slate-200">{s.progress ?? 0}%</span>
                           </div>
                         </td>
-                        <td className="px-4 py-3.5 text-slate-500 dark:text-[#B0B0B0]">
-                          <p className="text-slate-900 dark:text-[#E0E0E0] font-medium">{s.createdByName || 'Surveyor'}</p>
+                        <td className="px-4 py-3.5 text-slate-500 dark:text-slate-300">
+                          <p className="text-slate-900 dark:text-slate-200 font-medium">{s.createdByName || 'Surveyor'}</p>
                           <p className="text-[10px]">{(s.updatedAt || s.createdAt || '').slice(0, 10)}</p>
                         </td>
                         <td className="px-4 py-3.5">
@@ -651,14 +651,14 @@ export const DatasetsView: React.FC<DatasetsViewProps> = ({
                             <button
                               type="button"
                               onClick={() => onSelectSurvey(s.id)}
-                              className="px-2.5 py-1 bg-indigo-50 dark:bg-[#1E1E1E] hover:bg-indigo-100 text-indigo-700 dark:text-sky-300 rounded-md font-semibold text-[11px] transition-colors cursor-pointer"
+                              className="px-2.5 py-1 bg-indigo-50 dark:bg-slate-900 hover:bg-indigo-100 text-indigo-700 dark:text-sky-300 rounded-md font-semibold text-[11px] transition-colors cursor-pointer"
                             >
                               Buka
                             </button>
                             <button
                               type="button"
                               onClick={() => onDuplicate(s.id)}
-                              className="p-1 rounded text-slate-400 hover:text-slate-700 dark:hover:text-[#E0E0E0] cursor-pointer"
+                              className="p-1 rounded text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 cursor-pointer"
                               title="Duplikasi"
                             >
                               <Copy className="w-3.5 h-3.5" />

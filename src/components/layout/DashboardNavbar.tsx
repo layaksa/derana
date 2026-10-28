@@ -132,7 +132,7 @@ export const DashboardNavbar: React.FC<DashboardNavbarProps> = ({
     : 'AD';
 
   return (
-    <header className="bg-[var(--background)]/98 dark:bg-slate-900/98 sticky top-0 z-30 flex h-14 shrink-0 items-center justify-between gap-3 border-b border-[var(--border)] dark:border-slate-800 px-4 sm:px-6 transition-colors">
+    <header className="bg-[var(--md-surface)]/95 backdrop-blur-md sticky top-0 z-30 flex h-16 shrink-0 items-center justify-between gap-3 px-3 sm:px-5 transition-colors">
       {/* Left: Sidebar trigger + Screen breadcrumb */}
       <div className="flex items-center gap-2 min-w-0">
         <button
@@ -144,7 +144,7 @@ export const DashboardNavbar: React.FC<DashboardNavbarProps> = ({
               onToggleDesktopSidebar();
             }
           }}
-          className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors focus:outline-hidden cursor-pointer"
+          className="w-10 h-10 inline-flex items-center justify-center rounded-full hover:bg-[var(--md-on-surface)]/[0.08] text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)] transition-colors cursor-pointer"
           aria-label="Toggle Menu Sidebar"
           title="Buka/Tutup Menu"
         >
@@ -166,7 +166,7 @@ export const DashboardNavbar: React.FC<DashboardNavbarProps> = ({
         <button
           type="button"
           onClick={onOpenSearch}
-          className="w-full flex items-center justify-between px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/70 hover:bg-slate-200/60 dark:hover:bg-slate-800 border border-transparent text-xs text-slate-500 dark:text-slate-300 transition-colors group cursor-pointer"
+          className="w-full h-12 flex items-center justify-between pl-4 pr-3 rounded-full bg-[var(--md-surface-container-high)] hover:bg-[var(--md-surface-container-highest)] text-sm text-[var(--md-on-surface-variant)] transition-colors group cursor-pointer"
         >
           <div className="flex items-center gap-2">
             <Search className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 group-hover:text-slate-700 dark:group-hover:text-slate-200" />
@@ -300,26 +300,26 @@ export const DashboardNavbar: React.FC<DashboardNavbarProps> = ({
           <button
             type="button"
             onClick={() => setIsNotificationOpen(!isNotificationOpen)}
-            className="p-1.5 rounded-md hover:bg-[#f5f5f5] dark:hover:bg-slate-800 text-[#737373] dark:text-slate-400 hover:text-[#0a0a0a] dark:hover:text-slate-100 relative transition-colors"
+            className="p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 relative transition-colors"
             title="Pemberitahuan"
           >
             <Bell className="w-4 h-4" />
-            <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[#1447e6] ring-2 ring-white dark:ring-slate-900" />
+            <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-blue-600 ring-2 ring-white dark:ring-slate-900" />
           </button>
 
           {isNotificationOpen && (
-            <div className="absolute right-0 mt-1.5 w-72 bg-white dark:bg-slate-900 rounded-md border border-[#e5e5e5] dark:border-slate-800 shadow-lg p-3 z-50 text-xs">
-              <div className="flex items-center justify-between pb-2 border-b border-[#e5e5e5] dark:border-slate-800">
-                <span className="font-semibold text-[#0a0a0a] dark:text-slate-100">Pemberitahuan Sistem</span>
-                <span className="text-[10px] text-[#1447e6] dark:text-blue-400">Baru</span>
+            <div className="absolute right-0 mt-1.5 w-72 bg-white dark:bg-slate-900 rounded-md border border-slate-200 dark:border-slate-800 shadow-lg p-3 z-50 text-xs">
+              <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+                <span className="font-semibold text-slate-900 dark:text-slate-100">Pemberitahuan Sistem</span>
+                <span className="text-[10px] text-blue-600 dark:text-blue-400">Baru</span>
               </div>
               <div className="py-2 space-y-2">
                 <div className="p-2 rounded bg-blue-50 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/60 text-[11px] text-blue-900 dark:text-blue-200">
                   <p className="font-medium">Penyimpanan Aktif</p>
                   <p className="text-blue-700 dark:text-blue-300 mt-0.5">Semua data kuesioner otomatis dicadangkan ke IndexedDB / LocalStorage.</p>
                 </div>
-                <div className="p-2 rounded bg-[#f5f5f5] dark:bg-slate-800 text-[11px] text-[#737373] dark:text-slate-300">
-                  <p className="font-medium text-[#0a0a0a] dark:text-slate-100">Mode Tampilan</p>
+                <div className="p-2 rounded bg-slate-100 dark:bg-slate-800 text-[11px] text-slate-500 dark:text-slate-300">
+                  <p className="font-medium text-slate-900 dark:text-slate-100">Mode Tampilan</p>
                   <p className="mt-0.5">Anda dapat beralih antara Mode Terang (Light Mode), Gelap (Dark Mode), atau Otomatis mengikuti Sistem.</p>
                 </div>
               </div>
@@ -332,38 +332,38 @@ export const DashboardNavbar: React.FC<DashboardNavbarProps> = ({
           <button
             type="button"
             onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
-            className="w-8 h-8 rounded-full bg-[#1447e6] text-[#eff6ff] flex items-center justify-center text-xs font-semibold shadow-2xs hover:ring-2 hover:ring-blue-300 dark:hover:ring-blue-500 transition-all cursor-pointer"
+            className="w-8 h-8 rounded-full bg-blue-600 text-blue-50 flex items-center justify-center text-xs font-semibold shadow-2xs hover:ring-2 hover:ring-blue-300 dark:hover:ring-blue-500 transition-all cursor-pointer"
             title="Akun Pengguna"
           >
             {initials}
           </button>
 
           {isUserDropdownOpen && (
-            <div className="absolute right-0 mt-1.5 w-60 bg-white dark:bg-slate-900 rounded-md border border-[#e5e5e5] dark:border-slate-800 shadow-lg py-1 z-50 text-xs animate-in fade-in zoom-in-95 duration-100">
-              <div className="px-3 py-2 border-b border-[#e5e5e5] dark:border-slate-800">
-                <p className="font-semibold text-[#0a0a0a] dark:text-slate-100 truncate">
+            <div className="absolute right-0 mt-1.5 w-60 bg-white dark:bg-slate-900 rounded-md border border-slate-200 dark:border-slate-800 shadow-lg py-1 z-50 text-xs animate-in fade-in zoom-in-95 duration-100">
+              <div className="px-3 py-2 border-b border-slate-200 dark:border-slate-800">
+                <p className="font-semibold text-slate-900 dark:text-slate-100 truncate">
                   {currentUser?.name || 'Admin Derana'}
                 </p>
-                <p className="text-[11px] text-[#737373] dark:text-slate-400 truncate">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
                   {currentUser?.email || 'admin@derana.id'}
                 </p>
-                <span className="inline-block mt-1 text-[10px] uppercase font-bold px-1.5 py-0.2 rounded bg-blue-100 dark:bg-blue-900/60 text-[#1447e6] dark:text-blue-300">
+                <span className="inline-block mt-1 text-[10px] uppercase font-bold px-1.5 py-0.2 rounded bg-blue-100 dark:bg-blue-900/60 text-blue-600 dark:text-blue-300">
                   {currentUser?.role || 'SURVEYOR'}
                 </span>
               </div>
 
               {/* Quick theme selector in user menu */}
-              <div className="px-3 py-2 border-b border-[#e5e5e5] dark:border-slate-800">
-                <p className="text-[11px] font-medium text-[#737373] dark:text-slate-400 mb-1.5">
+              <div className="px-3 py-2 border-b border-slate-200 dark:border-slate-800">
+                <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1.5">
                   {t('navbar.theme', 'Tema Tampilan')}
                 </p>
                 <ThemeToggle variant="segmented" />
               </div>
 
               {/* Pilihan Bahasa in user menu */}
-              <div className="px-3 py-2 border-b border-[#e5e5e5] dark:border-slate-800">
+              <div className="px-3 py-2 border-b border-slate-200 dark:border-slate-800">
                 <div className="flex items-center justify-between mb-1.5">
-                  <p className="text-[11px] font-medium text-[#737373] dark:text-slate-400">
+                  <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
                     {t('navbar.language', 'Pilihan Bahasa')}
                   </p>
                   <span className="text-[10px] font-bold text-blue-600 dark:text-sky-400">
@@ -374,8 +374,8 @@ export const DashboardNavbar: React.FC<DashboardNavbarProps> = ({
               </div>
 
               {/* Install PWA Option in User Menu */}
-              <div className="px-3 py-2 border-b border-[#e5e5e5] dark:border-slate-800">
-                <p className="text-[11px] font-medium text-[#737373] dark:text-slate-400 mb-1.5">
+              <div className="px-3 py-2 border-b border-slate-200 dark:border-slate-800">
+                <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1.5">
                   {t('navbar.pwa', 'Akses Offline (PWA)')}
                 </p>
                 <PWAInstallButton variant="button" className="w-full justify-center text-xs" />
@@ -388,9 +388,9 @@ export const DashboardNavbar: React.FC<DashboardNavbarProps> = ({
                     onOpenProfile();
                     setIsUserDropdownOpen(false);
                   }}
-                  className="w-full flex items-center gap-2 px-3 py-1.5 text-left hover:bg-[#f5f5f5] dark:hover:bg-slate-800 text-[#0a0a0a] dark:text-slate-200"
+                  className="w-full flex items-center gap-2 px-3 py-1.5 text-left hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-900 dark:text-slate-200"
                 >
-                  <User className="w-3.5 h-3.5 text-[#737373] dark:text-slate-400" />
+                  <User className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                   <span>{t('navbar.profile', 'Profil Peneliti')}</span>
                 </button>
                 <button
@@ -399,14 +399,14 @@ export const DashboardNavbar: React.FC<DashboardNavbarProps> = ({
                     onOpenUserManagement();
                     setIsUserDropdownOpen(false);
                   }}
-                  className="w-full flex items-center gap-2 px-3 py-1.5 text-left hover:bg-[#f5f5f5] dark:hover:bg-slate-800 text-[#0a0a0a] dark:text-slate-200"
+                  className="w-full flex items-center gap-2 px-3 py-1.5 text-left hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-900 dark:text-slate-200"
                 >
-                  <Settings className="w-3.5 h-3.5 text-[#737373] dark:text-slate-400" />
+                  <Settings className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                   <span>{t('navbar.userManagement', 'Manajemen Pengguna')}</span>
                 </button>
               </div>
 
-              <div className="border-t border-[#e5e5e5] dark:border-slate-800 pt-1">
+              <div className="border-t border-slate-200 dark:border-slate-800 pt-1">
                 <button
                   type="button"
                   onClick={() => {
