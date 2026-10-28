@@ -17,7 +17,7 @@ import {
   X,
   AlertCircle
 } from 'lucide-react';
-import firebaseConfig from '../../firebase-applet-config.json';
+import { firebaseConfig } from '../lib/firebase';
 import { AppUser } from '../types/auth';
 
 export interface DebugDashboardProps {
