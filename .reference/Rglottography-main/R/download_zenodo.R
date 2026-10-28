@@ -1,0 +1,22 @@
+#' Download a Glottography dataset from Zenodo
+#'
+#' Download a ZIP archive from a Zenodo URL to a local file path
+#' #'
+#' @param url Character string specifying the Zenodo URL of the file to download.
+#' @param zip_path Character string specifying the local file path where the
+#'   downloaded file should be saved.
+#' @param timeout Numeric. The download timeout in seconds (default is 1200).
+#'
+#' @return `NULL`. The function is called for downloading
+#'   the file.
+#' @keywords internal
+#' @noRd
+#'
+.download_zenodo <- function(url, zip_path, timeout = 1200) {
+
+  old_timeout <- getOption("timeout")
+  on.exit(options(timeout = old_timeout))
+  options(timeout = timeout)
+  utils::download.file(url, zip_path, mode = "wb", quiet = TRUE)
+  return(NULL)
+}

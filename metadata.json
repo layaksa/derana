@@ -1,0 +1,8 @@
+{
+  "name": "Sistem Pemetaan Bahasa & Dialektometri",
+  "description": "Sistem instrumen pemetaan bahasa, dialektometri, visualisasi peta tematik perbedaan leksikal spasial, profil narasumber, dan sinkronisasi basis data geolinguistik.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,620 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+<meta charset="utf-8">
+<title>Product Requirement Document (PRD) & User Flow - Sistem Pemetaan Bahasa & Dialektometri</title>
+<!--[if gte mso 9]>
+<xml>
+<w:WordDocument>
+<w:View>Print</w:View>
+<w:Zoom>100</w:Zoom>
+<w:DoNotOptimizeForBrowser/>
+</w:WordDocument>
+</xml>
+<![endif]-->
+<style>
+  @page {
+    size: A4 portrait;
+    margin: 2.5cm 2.5cm 2.5cm 2.5cm;
+    mso-page-orientation: portrait;
+  }
+  body {
+    font-family: 'Calibri', 'Arial', sans-serif;
+    font-size: 11pt;
+    line-height: 1.5;
+    color: #1a1a1a;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+  }
+  .cover-page {
+    text-align: center;
+    page-break-after: always;
+    padding-top: 80px;
+    padding-bottom: 60px;
+  }
+  .badge-tag {
+    display: inline-block;
+    padding: 6px 16px;
+    background-color: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+    border-radius: 20px;
+    font-size: 10pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+  }
+  h1.doc-title {
+    font-size: 26pt;
+    color: #1e3a8a;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 15px 0 10px 0;
+  }
+  h2.doc-subtitle {
+    font-size: 14pt;
+    color: #475569;
+    font-weight: normal;
+    margin-bottom: 40px;
+  }
+  .meta-box {
+    margin: 50px auto;
+    width: 85%;
+    border: 1px solid #cbd5e1;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    padding: 15px 20px;
+    text-align: left;
+    font-size: 10pt;
+  }
+  .meta-box table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .meta-box td {
+    padding: 6px 10px;
+    border: none;
+  }
+  .meta-box td.label {
+    font-weight: bold;
+    color: #334155;
+    width: 35%;
+  }
+  .meta-box td.value {
+    color: #0f172a;
+  }
+  h1 {
+    font-size: 18pt;
+    color: #1e3a8a;
+    border-bottom: 2px solid #2563eb;
+    padding-bottom: 5px;
+    margin-top: 35px;
+    margin-bottom: 15px;
+    page-break-after: avoid;
+  }
+  h2 {
+    font-size: 14pt;
+    color: #0f172a;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    border-left: 4px solid #3b82f6;
+    padding-left: 8px;
+    page-break-after: avoid;
+  }
+  h3 {
+    font-size: 12pt;
+    color: #334155;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    page-break-after: avoid;
+  }
+  p {
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-align: justify;
+  }
+  table.content-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0 25px 0;
+    font-size: 10pt;
+    page-break-inside: auto;
+  }
+  table.content-table th {
+    background-color: #1e3a8a;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 8px 10px;
+    text-align: left;
+    border: 1px solid #1e3a8a;
+  }
+  table.content-table td {
+    padding: 8px 10px;
+    border: 1px solid #cbd5e1;
+    vertical-align: top;
+  }
+  table.content-table tr:nth-child(even) {
+    background-color: #f8fafc;
+  }
+  .callout-box {
+    background-color: #f0fdf4;
+    border-left: 4px solid #16a34a;
+    padding: 12px 16px;
+    margin: 15px 0;
+    font-size: 10.5pt;
+  }
+  .callout-info {
+    background-color: #eff6ff;
+    border-left: 4px solid #2563eb;
+    padding: 12px 16px;
+    margin: 15px 0;
+    font-size: 10.5pt;
+  }
+  .flowchart-container {
+    background-color: #0f172a;
+    color: #f8fafc;
+    font-family: 'Courier New', monospace;
+    font-size: 9pt;
+    padding: 15px;
+    border-radius: 6px;
+    margin: 15px 0;
+    white-space: pre;
+    line-height: 1.3;
+    overflow-x: auto;
+  }
+  code {
+    font-family: 'Courier New', monospace;
+    background-color: #f1f5f9;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-size: 9.5pt;
+    color: #be185d;
+  }
+  .formula-box {
+    text-align: center;
+    background-color: #f8fafc;
+    border: 1px dashed #64748b;
+    padding: 12px;
+    margin: 15px 0;
+    font-size: 13pt;
+    font-weight: bold;
+    color: #1e3a8a;
+  }
+  .footer-note {
+    margin-top: 50px;
+    padding-top: 15px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 9pt;
+    color: #64748b;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover-page">
+  <div class="badge-tag">Dokumen Rekayasa Perangkat Lunak & Riset Geolinguistik</div>
+  <h1 class="doc-title">PRODUCT REQUIREMENT DOCUMENT (PRD)<br>& DETAILED USER FLOW</h1>
+  <h2 class="doc-subtitle">Sistem Pemetaan Bahasa & Dialektometri Terpadu (Derana Panel Enterprise)<br>Platform Geolinguistik Komparatif, Swadesh 200, Audio Recorder, GIS Leaflet & Revitalisasi Bahasa</h2>
+
+  <div class="meta-box">
+    <table>
+      <tr>
+        <td class="label">Nama Produk:</td>
+        <td class="value">Sistem Pemetaan Bahasa & Dialektometri (Derana Panel)</td>
+      </tr>
+      <tr>
+        <td class="label">Versi Dokumen:</td>
+        <td class="value">v2.4 (Enterprise Production Edition)</td>
+      </tr>
+      <tr>
+        <td class="label">Status Rilis:</td>
+        <td class="value">Disetujui & Terdeploy (Production Ready)</td>
+      </tr>
+      <tr>
+        <td class="label">Target Standar:</td>
+        <td class="value">Badan Pengembangan dan Pembinaan Bahasa Kemendikbudristek & UNESCO</td>
+      </tr>
+      <tr>
+        <td class="label">Penulis & Arsitek:</td>
+        <td class="value">Tim Pengembang Perangkat Lunak & Dialektologi Derana</td>
+      </tr>
+      <tr>
+        <td class="label">Teknologi Inti:</td>
+        <td class="value">React 19, TypeScript, Leaflet GIS, Firebase Firestore, Express, Gemini AI, PWA</td>
+      </tr>
+      <tr>
+        <td class="label">Tanggal Terbit:</td>
+        <td class="value">Oktober 2026</td>
+      </tr>
+    </table>
+  </div>
+
+  <p style="text-align: center; color: #64748b; font-size: 10pt; margin-top: 40px;">
+    <i>Dokumen ini memuat spesifikasi arsitektur, diagram alur pengguna (user flow), formulasi dialektometri Guiter,<br>serta kebutuhan fungsional dan non-fungsional aplikasi pemetaan bahasa daerah Nusantara.</i>
+  </p>
+</div>
+
+<!-- SECTION 1 -->
+<h1>1. PENDAHULUAN & LATAR BELAKANG (EXECUTIVE SUMMARY)</h1>
+
+<h3>1.1 Latar Belakang Masalah</h3>
+<p>
+Indonesia memiliki kekayaan linguistik luar biasa dengan lebih dari 718 bahasa daerah. Namun, proses pemetaan geolinguistik dan penentuan batas dialek (isoglos) selama puluhan tahun menghadapi hambatan operasional yang signifikan di lapangan:
+</p>
+<ul>
+  <li><b>Kerapuhan Pengisian Kuesioner Fisik Kertas:</b> Kuesioner setebal puluhan halaman rentan rusak akibat hujan, kelembapan hutan tropis, maupun perjalanan medan ekstrem di daerah kepulauan.</li>
+  <li><b>Wilayah Tanpa Akses Internet (Daerah 3T):</b> Aplikasi berbasis web konvensional tidak dapat digunakan di pedalaman tanpa sinyal internet, menyebabkan tertundanya penginputan data berbulan-bulan.</li>
+  <li><b>Inkonsistensi Koordinat Geografis:</b> Sering terjadi kesalahan pencatatan GPS antara batas administrasi desa toponimi dengan titik wawancara lapangan.</li>
+  <li><b>Kalkulasi Dialektometri Manual yang Sangat Memakan Waktu:</b> Membandingkan 200 kosakata Swadesh secara manual antar puluhan titik pengamatan membutuhkan ribuan pasangan hitungan rumus Guiter yang rentan kesalahan manusia (human error).</li>
+  <li><b>Ketiadaan Dokumentasi Audio Terintegrasi:</b> Sering kali pelafalan autentik penutur asli tidak terekam bersamaan dengan glos bentuk kata lokal dan transkripsi fonetis IPA (International Phonetic Alphabet).</li>
+</ul>
+
+<h3>1.2 Visi & Solusi Produk (Derana Panel Enterprise)</h3>
+<p>
+<b>Sistem Pemetaan Bahasa & Dialektometri</b> dibangun sebagai solusi perangkat lunak terintegrasi yang menghadirkan:
+</p>
+<ul>
+  <li><b>Arsitektur Offline-First & PWA Installable:</b> Beroperasi penuh tanpa koneksi internet dengan penyimpanan lokal ganda (LocalStorage & IndexedDB via OfflineSyncManager) dan sinkronisasi otomatis ke Firebase Firestore saat terhubung kembali.</li>
+  <li><b>Instrumen Pemetaan 16 Bagian Komprehensif:</b> Mencakup seluruh aspek geografis, sosial, demografi, etnik, pendidikan, keagamaan, usia desa, folklore, data 3 narasumber triangulasi, leksikon Swadesh 200, 18 bidang kosakata budaya (A–R), struktur frasa, serta 50 kalimat berglos per kata.</li>
+  <li><b>Kalkulasi Otomatis Rumus Dialektometri Guiter:</b> Mengalkulasi seketika persentase perbedaan leksikal <code>d = (s / n) * 100%</code>, mengelompokkan status hubungan kebahasaan, dan membentuk Matriks Segitiga Pembanding antar titik survei.</li>
+  <li><b>Peta Interaktif Leaflet GIS Multi-Basemap & Pemfilteran Penanda:</b> Menyajikan visualisasi geospasial titik survei dengan lapisan basemap (Carto, OSM, Esri Satelit, Google Maps Roads & Google Satelit) serta pemfilteran penanda berdasarkan status validasi verifikasi dan rentang usia narasumber.</li>
+  <li><b>Deteksi Kata Serapan Berbasis Gemini AI:</b> Memanfaatkan model <code>gemini-3.8-flash</code> untuk mendeteksi etimologi kata serapan (Sanskerta, Arab, Belanda, Portugis, Hokkien, Melayu) langsung dari formulir kuesioner.</li>
+  <li><b>Modul Revitalisasi Bahasa (Model C Maluku & RAP) & UNESCO Vitality:</b> Instrumen monev Indeks Ketahanan & Revitalisasi Bahasa Daerah (IKRBD), Rencana Aksi Pengimbasan (RAP), dan 9 kriteria vitalitas bahasa UNESCO.</li>
+</ul>
+
+<!-- SECTION 2 -->
+<h1>2. USER PERSONA & MATRIKS HAK AKSES (RBAC)</h1>
+
+<table class="content-table">
+  <thead>
+    <tr>
+      <th style="width: 20%;">Peran Pengguna</th>
+      <th style="width: 35%;">Profil & Tanggung Jawab</th>
+      <th style="width: 45%;">Hak Akses & Batasan Otorisasi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>Admin Sistem</b></td>
+      <td>Koordinator riset kebahasaan, tim teknologi informasi Balai/Kantor Bahasa.</td>
+      <td>• Akses mutlak ke seluruh survei lintas surveyor.<br>• Manajemen pengguna dan penetapan peran (role assignment).<br>• Menghapus dan memvalidasi survei secara permanen.<br>• Konfigurasi sinkronisasi Firebase & ekspor agregat nasional.</td>
+    </tr>
+    <tr>
+      <td><b>Verifikator / Kurator Linguistik</b></td>
+      <td>Peneliti dialektologi senior, pakar linguistik komparatif historis.</td>
+      <td>• Menelaah keabsahan 16 seksi instrumen.<br>• Memberikan tanda tangan dan status <i>✓ Tervalidasi</i>.<br>• Menilai keakuratan analisis dialektometri dan etimologi serapan.<br>• Menambah catatan batas isoglos lapangan.</td>
+    </tr>
+    <tr>
+      <td><b>Surveyor Lapangan (Peneliti)</b></td>
+      <td>Petugas pendata lapangan yang berinteraksi langsung dengan informan desa.</td>
+      <td>• Membuat survei titik pengamatan baru.<br>• Mengisi 16 seksi instrumen di lokasi pengamatan.<br>• Merekam audio suara informan per kata leksikon.<br>• Mengedit dan menyimpan data secara lokal (offline).<br>• Melakukan sinkronisasi ke cloud saat menemukan sinyal.</td>
+    </tr>
+    <tr>
+      <td><b>Viewer / Tamu (Akademisi)</b></td>
+      <td>Mahasiswa, pemerhati bahasa daerah, pemangku kebijakan daerah.</td>
+      <td>• Mode hanya-baca (Read-Only) pada dashboard statistik.<br>• Melihat peta persebaran spasial titik survei.<br>• Melihat matriks komparasi dialektometri tanpa hak edit.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- SECTION 3 -->
+<h1>3. ARSITEKTUR TEKNOLOGI & TOPOLOGI SISTEM</h1>
+
+<table class="content-table">
+  <thead>
+    <tr>
+      <th style="width: 25%;">Komponen Sistem</th>
+      <th style="width: 35%;">Teknologi / Pustaka</th>
+      <th style="width: 40%;">Fungsi & Peran Utama</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>Frontend UI Framework</b></td>
+      <td>React 19, TypeScript, Vite 8</td>
+      <td>Single Page Application (SPA) reaktif, performa tinggi dengan rendering modular berbasis komponen.</td>
+    </tr>
+    <tr>
+      <td><b>Styling & Tipografi</b></td>
+      <td>Tailwind CSS v4, Lucide Icons</td>
+      <td>Desain modern terstandar dengan dukungan Mode Terang dan Mode Gelap (Dark Mode).</td>
+    </tr>
+    <tr>
+      <td><b>Geospatial Mapping (GIS)</b></td>
+      <td>Leaflet 1.9, @types/leaflet</td>
+      <td>Peta interaktif multi-basemap (Carto, OSM, Esri, Google Maps Roads & Satellite) dengan animasi smooth crossfade.</td>
+    </tr>
+    <tr>
+      <td><b>Visualisasi Data & Grafik</b></td>
+      <td>Recharts, D3.js</td>
+      <td>Grafik batang kelengkapan seksi, distribusi usia narasumber, pie chart validasi, dan matriks leksikal.</td>
+    </tr>
+    <tr>
+      <td><b>Backend Server & API</b></td>
+      <td>Node.js 22, Express, TypeScript (TSX)</td>
+      <td>API proxy cerdas deteksi kata serapan AI, health-check endpoint, dan penyaji aset statis produksi.</td>
+    </tr>
+    <tr>
+      <td><b>Kecerdasan Artifisial (AI)</b></td>
+      <td>Google Gen AI SDK (Gemini 3.8 Flash)</td>
+      <td>Analisis komparatif etimologis kata serapan bahasa daerah dari rumpun Austronesia vs serapan asing.</td>
+    </tr>
+    <tr>
+      <td><b>Cloud Database & Auth</b></td>
+      <td>Firebase Firestore, Firebase Auth</td>
+      <td>Penyimpanan cloud dokumen survei dengan sinkronisasi multi-perangkat dan otentikasi Google OAuth 2.0.</td>
+    </tr>
+    <tr>
+      <td><b>Offline Engine & PWA</b></td>
+      <td>Vite Plugin PWA, Workbox, Service Worker</td>
+      <td>Caching aset aplikasi, instalabilitas desktop/mobile, dan antrean sinkronisasi mutasi data offline.</td>
+    </tr>
+    <tr>
+      <td><b>Pengolahan Leksikon</b></td>
+      <td>SheetJS (XLSX), Web Audio API</td>
+      <td>Impor/ekspor berkas Excel kosakata serta perekaman suara audio langsung dari mikrofon peramban.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- SECTION 4 -->
+<h1>4. USER FLOW LENGKAP & DETAIL (STEP-BY-STEP)</h1>
+
+<div class="flowchart-container">
+[ALUR 1: AUTENTIKASI]  --> Login Google OAuth / Firebase Auth --> Validasi Peran (RBAC)
+                                       │
+                                       ▼
+[ALUR 2: DASBOR NAVIGASI] --> Lihat Ringkasan KPI --> Buka Peta Titik Survei Leaflet
+                                       │
+                                       ▼
+[ALUR 3: MANAJEMEN SURVEI] --> Buat Survei Baru / Sampel / Impor JSON --> Set Survei Aktif
+                                       │
+                                       ▼
+[ALUR 4: 16 SEKSI KUESIONER]
+├── Seksi 1: Identitas Titik Pengamatan & Toponimi
+├── Seksi 2: Situasi Kebahasaan 4 Mata Angin (Batas Wilayah)
+├── Seksi 3: Situasi Geografis, Morfologi & Peta Validasi GPS
+├── Seksi 4: Demografi Penduduk & Penutur Bahasa
+├── Seksi 5–8: Sosioekonomi, Pendidikan & Agama
+├── Seksi 9–10: Mobilitas Penduduk & Transportasi
+├── Seksi 11–13: Usia, Sejarah Desa & Tradisi Lisan (Folklore)
+├── Seksi 14: Data 3 Informan Triangulasi (Usia, Pekerjaan, Bahasa Dikuasai)
+├── Seksi 15: Swadesh 200, Budaya (A-R), Perekaman Audio & Deteksi AI Serapan
+└── Seksi 16: Dialektometri Guiter & Titik Pembanding
+                                       │
+                                       ▼
+[ALUR 5: ANALISIS & KOMPARASI] --> Komparasi 2-3 Bahasa --> Matriks Segitiga Pembanding
+                                       │
+                                       ▼
+[ALUR 6: REVITALISASI & VITALITAS] --> Kuesioner IKRBD Model C Maluku --> RAP & UNESCO
+                                       │
+                                       ▼
+[ALUR 7: VERIFIKASI & DISTRIBUSI] --> Kurasi Peneliti (Verifikasi) --> Ekspor JSON/Excel/DOC
+</div>
+
+<h3>4.1 Rincian Alur Pengisian 16 Seksi Instrumen</h3>
+<ol>
+  <li><b>Seksi 1 (Titik Pengamatan):</b> Surveyor menginput nama desa, bahasa yang digunakan, nama lain bahasa, kecamatan, kabupaten, provinsi, pulau, dan koordinat lintang/bujur. Sinkronisasi otomatis memetakan koordinat ke Seksi 3.</li>
+  <li><b>Seksi 2 (Situasi Kebahasaan):</b> Surveyor mencatat desa dan bahasa tetangga yang berbatasan di sisi Timur, Barat, Utara, dan Selatan.</li>
+  <li><b>Seksi 3 (Situasi Geografis & Morfologi):</b> Menentukan jarak dari pantai, letak pedalaman/pantai, dan topografi (dataran, perbukitan, pegunungan, pesisir). Dilengkapi peta Leaflet mini untuk memastikan akurasi pin GPS dengan animasi transisi halus antar-basemap.</li>
+  <li><b>Seksi 4 (Penduduk & Penutur):</b> Mengisi data demografi pria/wanita, kelompok umur, serta perincian khusus jumlah penutur aktif bahasa yang bersangkutan.</li>
+  <li><b>Seksi 5 (Mata Pencaharian):</b> Mendata mata pencaharian dominan (petani, nelayan, pedagang, buruh, pegawai).</li>
+  <li><b>Seksi 6 & 7 (Pendidikan & Sarana):</b> Mendokumentasikan persentase kelulusan pendidikan warga dan fasilitas fisik sekolah yang tersedia di desa.</li>
+  <li><b>Seksi 8 (Agama):</b> Mendata komposisi pemeluk agama warga desa.</li>
+  <li><b>Seksi 9 & 10 (Mobilitas & Transportasi):</b> Menilai status kelancaran interaksi desa (lancar/terisolir) dan moda transportasi yang menjangkau desa.</li>
+  <li><b>Seksi 11 & 12 (Usia & Sejarah Desa):</b> Mencatat estimasi usia berdirinya desa, toponimi asal nama desa, dan riwayat migrasi leluhur penutur.</li>
+  <li><b>Seksi 13 (Folklore & Sastra Lisan):</b> Mendokumentasikan cerita rakyat dominan (mitos, legenda, dongeng) beserta fungsi tradisinya.</li>
+  <li><b>Seksi 14 (Data Narasumber):</b> Menginput profil lengkap 3 informan lokal (nama, usia, pekerjaan, lama tinggal, bahasa ibu, bahasa kedua, dan media sosial).</li>
+  <li><b>Seksi 15 (Kosakata Swadesh 200, Budaya & Audio):</b>
+    <ul>
+      <li>Surveyor mengisi 200 bentuk kata lokal dan simbol IPA.</li>
+      <li>Surveyor menekan tombol rekam mikrofon untuk mengambil audio suara pelafalan informan.</li>
+      <li>Surveyor dapat menggunakan tombol <b>"Deteksi Serapan (Gemini AI)"</b> untuk mengetahui apakah kata tersebut merupakan serapan Melayu, Sanskerta, Arab, Belanda, Portugis, atau kosakata warisan Proto-Austronesia asli.</li>
+      <li>Mengisi 18 bidang kosakata budaya (A–R) dan struktur kalimat sederhana (S-P-O-K).</li>
+    </ul>
+  </li>
+  <li><b>Seksi 16 (Dialektometri Guiter & Titik Pembanding):</b>
+    Menentukan Titik Acuan dan menambahkan titik pembanding. Sistem otomatis menghitung indeks dialektometri dan menyimpulkan status dialek/bahasa.
+  </li>
+</ol>
+
+<!-- SECTION 5 -->
+<h1>5. FORMULASI MATEMATIS DIALEKTOMETRI (METODE GUITER)</h1>
+
+<p>
+Dialektometri adalah metode statistik komparatif untuk mengukur derajat perbedaan atau kesamaan kebahasaan antartitik pengamatan secara kuantitatif. Sistem mengadopsi formula standar <b>Jean Guiter</b>:
+</p>
+
+<div class="formula-box">
+  d = (s / n) &times; 100%
+</div>
+
+<p>Keterangan variabel:</p>
+<ul>
+  <li><b>d</b>: Persentase perbedaan kebahasaan (Indeks Dialektometri)</li>
+  <li><b>s</b>: Jumlah perbedaan leksikal (jumlah glos yang berbeda bentuk antara titik pengamatan yang dibandingkan)</li>
+  <li><b>n</b>: Jumlah seluruh glos yang diperbandingkan (misal: 200 glos Swadesh)</li>
+</ul>
+
+<h3>5.1 Skala Klasifikasi Status Kebahasaan</h3>
+<table class="content-table">
+  <thead>
+    <tr>
+      <th style="width: 25%;">Rentang Persentase (d)</th>
+      <th style="width: 30%;">Klasifikasi Hubungan</th>
+      <th style="width: 45%;">Interpretasi Geolinguistik</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>0% &le; d &le; 20%</b></td>
+      <td><span style="color: #15803d; font-weight: bold;">Tidak Ada Perbedaan (Dialek Sama)</span></td>
+      <td>Kedua titik pengamatan bertutur dalam dialek yang sama secara homogen; variasi hanya berupa idiolek atau varian bebas.</td>
+    </tr>
+    <tr>
+      <td><b>21% &le; d &le; 30%</b></td>
+      <td><span style="color: #0284c7; font-weight: bold;">Perbedaan Wicara / Subdialek</span></td>
+      <td>Terdapat variasi fonologis dan leksikal minor, namun saling pemahaman (mutual intelligibility) masih sangat tinggi.</td>
+    </tr>
+    <tr>
+      <td><b>31% &le; d &le; 50%</b></td>
+      <td><span style="color: #d97706; font-weight: bold;">Perbedaan Dialek</span></td>
+      <td>Terjadi perbedaan dialek yang nyata secara leksikal dan fonologis; memenuhi kriteria batas isoglos dialek yang tegas.</td>
+    </tr>
+    <tr>
+      <td><b>51% &le; d &le; 80%</b></td>
+      <td><span style="color: #dc2626; font-weight: bold;">Perbedaan Bahasa</span></td>
+      <td>Tingkat perbedaan sangat signifikan sehingga kedua tuturan diklasifikasikan sebagai bahasa yang berbeda (*different languages*).</td>
+    </tr>
+    <tr>
+      <td><b>d &gt; 80%</b></td>
+      <td><span style="color: #7e22ce; font-weight: bold;">Perbedaan Rumpun / Subkeluarga</span></td>
+      <td>Perbedaan leksikal ekstrem yang mengindikasikan asal-usul sub-rumpun bahasa yang terpisah jauh secara historis.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- SECTION 6 -->
+<h1>6. SPESIFIKASI FITUR GEOSPASIAL (LEAFLET GIS) & FILTERING</h1>
+
+<p>
+Modul <b>Peta Titik Survei Lapangan</b> merupakan salah satu fitur inti sistem dengan spesifikasi teknis sebagai berikut:
+</p>
+
+<h3>6.1 Lapisan Peta Dasar (Multi-Basemap Layering)</h3>
+<ul>
+  <li><b>CARTO Light (Terang):</b> Peta kontras tinggi, ideal untuk visualisasi titik dan label nama desa.</li>
+  <li><b>OpenStreetMap (OSM Standard):</b> Peta rincian toponimi jalan dan pemukiman terbuka.</li>
+  <li><b>CARTO Dark Matter (Gelap):</b> Peta mode malam yang memberikan kontras maksimal pada penanda warna cerah.</li>
+  <li><b>Google Maps Jalan:</b> Peta jalan resmi Google dengan data infrastruktur presisi.</li>
+  <li><b>Google Maps Satelit / Hibrida:</b> Citra satelit resolusi tinggi yang dikombinasikan dengan batas wilayah administratif dan label nama jalan.</li>
+  <li><b>Esri World Imagery:</b> Citra satelit bentang alam untuk mengamati morfologi hutan, sungai, dan pesisir.</li>
+</ul>
+
+<h3>6.2 Fitur Pemfilteran Penanda Spasial (Advanced Marker Filtering)</h3>
+<p>
+Memenuhi kebutuhan analisis spesifik di lapangan, peta dilengkapi bilah filter interaktif:
+</p>
+<table class="content-table">
+  <thead>
+    <tr>
+      <th style="width: 25%;">Kategori Filter</th>
+      <th style="width: 35%;">Opsi Pilihan</th>
+      <th style="width: 40%;">Dampak pada Penanda Peta</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>Status Verifikasi Survei</b></td>
+      <td>
+        • <b>Semua:</b> Menampilkan seluruh titik.<br>
+        • <b>✓ Tervalidasi:</b> Hanya survei yang sudah diverifikasi.<br>
+        • <b>Belum Diverifikasi:</b> Survei yang masih dalam proses telaah.
+      </td>
+      <td>Marker yang tidak memenuhi kriteria langsung disembunyikan. Peta melakukan auto-fit bounds ke penanda yang tersisa.</td>
+    </tr>
+    <tr>
+      <td><b>Rentang Usia Narasumber</b></td>
+      <td>
+        • <b>Semua Usia</b><br>
+        • <b>&lt; 25 Tahun (Generasi Muda)</b><br>
+        • <b>25–50 Tahun (Dewasa Produktif)</b><br>
+        • <b>&gt; 50 Tahun (Tetua / Sepuh Penutur)</b>
+      </td>
+      <td>Memungkinkan peneliti mengamati perbedaan persebaran tuturan antara generasi muda (indikasi pergeseran bahasa) vs generasi tetua (penutur bahasa arkais).</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- SECTION 7 -->
+<h1>7. KEBUTUHAN FUNGSIONAL & NON-FUNGSIONAL (FR & NFR)</h1>
+
+<h3>7.1 Matriks Kebutuhan Fungsional (Functional Requirements)</h3>
+<table class="content-table">
+  <thead>
+    <tr>
+      <th style="width: 12%;">Kode</th>
+      <th style="width: 28%;">Nama Fitur</th>
+      <th style="width: 60%;">Deskripsi Fungsional & Acceptance Criteria</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>FR-01</b></td>
+      <td>Manajemen Multi-Survei</td>
+      <td>Mampu membuat, menduplikasi, menghapus, dan mencari survei. Menyimpan data lokal dan cloud Firestore secara konsisten.</td>
+    </tr>
+    <tr>
+      <td><b>FR-02</b></td>
+      <td>Kuesioner 16 Seksi</td>
+      <td>Menyediakan form komprehensif dengan mode stepper 16 layar dan mode gulir penuh. Validasi kolom otomatis dan progress real-time.</td>
+    </tr>
+    <tr>
+      <td><b>FR-03</b></td>
+      <td>Perekaman Audio Terintegrasi</td>
+      <td>Merekam suara pelafalan per kata Swadesh/budaya menggunakan Web Audio API. Durasi rekaman tersimpan otomatis.</td>
+    </tr>
+    <tr>
+      <td><b>FR-04</b></td>
+      <td>Deteksi Kata Serapan AI</td>
+      <td>Memanggil endpoint <code>/api/ai/deteksi-kata-serapan</code> (Gemini 3.8 Flash) untuk mengidentifikasi bahasa asal kata serapan.</td>
+    </tr>
+    <tr>
+      <td><b>FR-05</b></td>
+      <td>Kalkulator Dialektometri Guiter</td>
+      <td>Menghitung formula <code>d = (s/n)*100%</code> dan menyusun segitiga pembanding antar titik pengamatan secara instan.</td>
+    </tr>
+    <tr>
+      <td><b>FR-06</b></td>
+      <td>Leaflet GIS & Filtering</td>
+      <td>Peta multi-basemap dengan penanda berkode warna, filter status validasi, dan filter rentang usia informan.</td>
+    </tr>
+    <tr>
+      <td><b>FR-07</b></td>
+      <td>Komparasi 2–3 Bahasa</td>
+      <td>Menyandingkan glos kata antar 2 atau 3 bahasa, memetakan perbedaan fonemis vs leksikal, dan ekspor ke Excel/CSV.</td>
+    </tr>
+    <tr>
+      <td><b>FR-08</b></td>
+      <td>Modul Revitalisasi (IKRBD & RAP)</td>
+      <td>Kuesioner 5 dimensi Indeks Ketahanan & Revitalisasi Bahasa Daerah Model C Maluku dan penyusunan Rencana Aksi Pengimbasan.</td>
+    </tr>
+    <tr>
+      <td><b>FR-09</b></td>
+      <td>Offline-First & PWA</td>
+      <td>Mendukung mode offline penuh dengan Service Worker dan mekanisme auto-sync antrean mutasi data saat terhubung kembali.</td>
+    </tr>
+    <tr>
+      <td><b>FR-10</b></td>
+      <td>Ekspor Multi-Format Resmi</td>
+      <td>Mengekspor data ke JSON, Excel (XLSX), CSV, dan dokumen spesifikasi resmi Word (.doc) / cetak PDF.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>7.2 Kebutuhan Non-Fungsional (Non-Functional Requirements)</h3>
+<ul>
+  <li><b>Kecepatan & Performa:</b> Waktu render awal < 1.5 detik, komputasi dialektometri client-side < 100 ms untuk 200 glos.</li>
+  <li><b>Keandalan Data:</b> Fitur auto-save otomatis setiap 500 ms; data lokal aman dari penutupan tab peramban secara tiba-tiba.</li>
+  <li><b>Keamanan:</b> Token otentikasi JWT aman, aturan keamanan Firestore granular (RBAC), kunci API Gemini dirahasiakan di server.</li>
+  <li><b>Ketahanan Perangkat:</b> Desain responsif dari smartphone layar kecil (rasio 9:16/9:19), tablet, laptop hingga PC desktop.</li>
+</ul>
+
+<!-- SECTION 8 -->
+<h1>8. ROADMAP PRODUK & PENGEMBANGAN MASA DEPAN</h1>
+<ul>
+  <li><b>Versi Saat Ini (v2.4 - Production):</b> Instrumen 16 seksi terintegrasi, Leaflet GIS multi-basemap dengan filter validasi dan usia, kalkulator Guiter otomatis, perekam audio, Gemini AI serapan leksikal, serta modul Revitalisasi Model C & Vitalitas UNESCO.</li>
+  <li><b>Tahap Lanjutan (v2.5 - Q1 2027):</b> Visualisasi poligon batas dialek dinamis (Voronoi Diagrams) berbasis D3-Geo dan WebGL.</li>
+  <li><b>Tahap Lanjutan (v3.0 - Q2 2027):</b> Integrasi Automatic Speech Recognition (ASR) untuk transkripsi fonetis IPA otomatis dari rekaman suara, serta sinkronisasi langsung ke Pusat Data Pokok Kebahasaan (Dapobas) Nasional.</li>
+</ul>
+
+<div class="footer-note">
+  <b>SISTEM PEMETAAN BAHASA & DIALEKTOMETRI (DERANA PANEL ENTERPRISE)</b><br>
+  Dokumen Resmi Spesifikasi Produk (PRD) & Detailed User Flow &bull; Hak Cipta &copy; 2026 Balai Bahasa & Tim Pengembang Derana
+</div>
+
+</body>
+</html>

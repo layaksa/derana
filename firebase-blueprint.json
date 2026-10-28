@@ -1,0 +1,198 @@
+{
+  "entities": {
+    "Survey": {
+      "title": "Survey",
+      "description": "Dokumen survei pemetaan bahasa, titik pengamatan geospasial, kosakata Swadesh, dan data dialektometri.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID unik dokumen survei",
+          "maxLength": 128
+        },
+        "title": {
+          "type": "string",
+          "description": "Judul atau label survei",
+          "maxLength": 200
+        },
+        "desa": {
+          "type": "string",
+          "description": "Nama desa titik pengamatan",
+          "maxLength": 100
+        },
+        "bahasa": {
+          "type": "string",
+          "description": "Nama bahasa yang diteliti",
+          "maxLength": 100
+        },
+        "kecamatan": {
+          "type": "string",
+          "description": "Kecamatan titik pengamatan",
+          "maxLength": 100
+        },
+        "kabupatenKota": {
+          "type": "string",
+          "description": "Kabupaten atau kota",
+          "maxLength": 100
+        },
+        "provinsi": {
+          "type": "string",
+          "description": "Provinsi lokasi survei",
+          "maxLength": 100
+        },
+        "progress": {
+          "type": "number",
+          "description": "Persentase pengisian survei (0-100)"
+        },
+        "completedSectionsCount": {
+          "type": "number",
+          "description": "Jumlah seksi yang sudah terisi lengkap"
+        },
+        "totalSectionsCount": {
+          "type": "number",
+          "description": "Total seksi instrumen (16)"
+        },
+        "isVerified": {
+          "type": "boolean",
+          "description": "Status verifikasi oleh verifikator atau administrator"
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "UID pengguna pembuat dokumen",
+          "maxLength": 128
+        },
+        "createdByName": {
+          "type": "string",
+          "description": "Nama lengkap pembuat survei",
+          "maxLength": 150
+        },
+        "createdByEmail": {
+          "type": "string",
+          "description": "Email pembuat survei",
+          "maxLength": 150
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Waktu pembuatan dokumen (ISO string)",
+          "maxLength": 50
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Waktu pembaruan dokumen terakhir (ISO string)",
+          "maxLength": 50
+        }
+      },
+      "required": ["id", "title", "desa", "bahasa", "createdAt"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Profil pengguna, peran RBAC (admin/peneliti/verifikator/kontributor)",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "User ID",
+          "maxLength": 128
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Nama pengguna",
+          "maxLength": 100
+        },
+        "email": {
+          "type": "string",
+          "description": "Alamat email pengguna",
+          "maxLength": 120
+        },
+        "role": {
+          "type": "string",
+          "description": "Hak akses sistem",
+          "enum": ["admin", "user"]
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Waktu update profil",
+          "maxLength": 50
+        }
+      },
+      "required": ["uid", "email", "displayName", "role"]
+    },
+    "VitalitasResponse": {
+      "title": "VitalitasResponse",
+      "description": "Hasil instrumen kuesioner vitalitas dan daya hidup bahasa daerah responden",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "respondenNama": { "type": "string", "maxLength": 150 },
+        "bahasaDaerah": { "type": "string", "maxLength": 150 },
+        "desa": { "type": "string", "maxLength": 150 },
+        "vitalitasStatus": { "type": "string", "maxLength": 100 }
+      },
+      "required": ["id", "bahasaDaerah"]
+    },
+    "SastraLisanRecord": {
+      "title": "SastraLisanRecord",
+      "description": "Hasil pengisian kuesioner sastra lisan, rekaman narasumber, dan analisis motif Stith Thompson",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "namaSastraLisan": { "type": "string", "maxLength": 200 },
+        "namaNarasumber": { "type": "string", "maxLength": 150 },
+        "bahasa": { "type": "string", "maxLength": 150 }
+      },
+      "required": ["id", "namaSastraLisan"]
+    },
+    "RevitalisasiMonevRecord": {
+      "title": "RevitalisasiMonevRecord",
+      "description": "Instrumen Monitoring dan Evaluasi Revitalisasi Bahasa Daerah (RBD) Model C Maluku dengan Indeks Kinerja IKRBD 5 Dimensi",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "bahasaDaerah": { "type": "string", "maxLength": 150 },
+        "desa": { "type": "string", "maxLength": 150 },
+        "kabupatenKota": { "type": "string", "maxLength": 150 },
+        "petugasMonev": { "type": "string", "maxLength": 150 },
+        "ikrbdScore": { "type": "number" },
+        "kategori": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "bahasaDaerah"]
+    },
+    "RevitalisasiRAPRecord": {
+      "title": "RevitalisasiRAPRecord",
+      "description": "Format Rencana Aksi Pengimbasan (RAP) Program Revitalisasi Bahasa Daerah",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "bahasaDaerah": { "type": "string", "maxLength": 150 },
+        "createdAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "bahasaDaerah"]
+    }
+  },
+  "firestore": {
+    "/surveys/{surveyId}": {
+      "schema": "Survey",
+      "description": "Koleksi dokumen instrumen survei kebahasaan dan data dialektometri titik pengamatan"
+    },
+    "/vitalitas/{vitalitasId}": {
+      "schema": "VitalitasResponse",
+      "description": "Koleksi kuesioner kondisi kebahasaan dan status vitalitas daya hidup bahasa"
+    },
+    "/sastra_lisan/{recordId}": {
+      "schema": "SastraLisanRecord",
+      "description": "Koleksi kuesioner sastra lisan serta hasil analisis motif dan klasifikasi jenis"
+    },
+    "/revitalisasi_monev/{recordId}": {
+      "schema": "RevitalisasiMonevRecord",
+      "description": "Koleksi hasil monev IKRBD Model C revitalisasi bahasa daerah"
+    },
+    "/revitalisasi_rap/{recordId}": {
+      "schema": "RevitalisasiRAPRecord",
+      "description": "Koleksi dokumen rencana aksi pengimbasan (RAP) pengajar utama revitalisasi bahasa"
+    },
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Koleksi profil pengguna dan peran hak akses dalam aplikasi"
+    }
+  }
+}

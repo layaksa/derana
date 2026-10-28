@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+  <meta charset="utf-8">
+  <title>Panduan Fitur Khusus Dialek & Peta (GIS Geolinguistik)</title>
+  <!--[if gte mso 9]>
+  <xml>
+    <w:WordDocument>
+      <w:View>Print</w:View>
+      <w:Zoom>100</w:Zoom>
+      <w:DoNotOptimizeForBrowser/>
+    </w:WordDocument>
+  </xml>
+  <![endif]-->
+  <style>
+    body {
+      font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+      line-height: 1.5;
+      color: #1a1a1a;
+      background-color: #ffffff;
+      margin: 36pt 48pt;
+    }
+    h1 {
+      font-size: 22pt;
+      color: #1447e6;
+      border-bottom: 2pt solid #1447e6;
+      padding-bottom: 6pt;
+      margin-top: 18pt;
+      margin-bottom: 8pt;
+    }
+    h2 {
+      font-size: 15pt;
+      color: #0f172a;
+      border-bottom: 1pt solid #cbd5e1;
+      padding-bottom: 4pt;
+      margin-top: 16pt;
+      margin-bottom: 6pt;
+    }
+    h3 {
+      font-size: 12pt;
+      color: #1e293b;
+      margin-top: 12pt;
+      margin-bottom: 4pt;
+    }
+    p, li {
+      font-size: 10pt;
+      color: #334155;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2pt 6pt;
+      font-size: 8.5pt;
+      font-weight: bold;
+      border-radius: 4pt;
+      background-color: #eff6ff;
+      color: #1d4ed8;
+      border: 1pt solid #bfdbfe;
+    }
+    .callout {
+      background-color: #f8fafc;
+      border-left: 4pt solid #1447e6;
+      padding: 10pt 12pt;
+      margin: 12pt 0;
+      border-radius: 0 4pt 4pt 0;
+    }
+    .formula-box {
+      background-color: #f0fdf4;
+      border: 1.5pt solid #86efac;
+      padding: 10pt 14pt;
+      margin: 10pt 0;
+      border-radius: 6pt;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 13pt;
+      font-weight: bold;
+      color: #166534;
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12pt 0;
+      font-size: 9.5pt;
+    }
+    th {
+      background-color: #f1f5f9;
+      color: #0f172a;
+      font-weight: bold;
+      text-align: left;
+      padding: 6pt 8pt;
+      border: 1pt solid #cbd5e1;
+    }
+    td {
+      padding: 5pt 8pt;
+      border: 1pt solid #e2e8f0;
+      vertical-align: top;
+    }
+    tr:nth-child(even) td {
+      background-color: #f8fafc;
+    }
+    .footer {
+      margin-top: 36pt;
+      padding-top: 10pt;
+      border-top: 1pt solid #e2e8f0;
+      font-size: 8pt;
+      color: #94a3b8;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div style="text-align: right; margin-bottom: 12pt;">
+    <span class="badge">DOKUMEN RESMI PANDUAN TEKNIS</span>
+    <span class="badge" style="background-color: #f0fdf4; color: #166534; border-color: #bbf7d0;">VERSI 2.5 MASTER</span>
+  </div>
+
+  <h1>PANDUAN LENGKAP FITUR KHUSUS MENU DIALEK & PETA (GIS GEOLINGUISTIK)</h1>
+  <p style="font-size: 11pt; color: #64748b; font-style: italic;">
+    Sistem Pemetaan Bahasa & Dialektometri Terkomputasi (Derana Panel Enterprise)<br>
+    Standar: Metodologi Dialektometri Jean Guiter (1973), Pemetaan Isoglos Geospasial Leaflet GIS, & Vitalitas Bahasa EGIDS/UNESCO
+  </p>
+
+  <div class="callout">
+    <strong>Ringkasan Eksekutif:</strong> Dokumen ini merupakan pedoman komprehensif bagi peneliti, akademisi dialektologi, dan surveyor lapangan mengenai arsitektur, algoritma matematis, tata cara penggunaan, serta interpretasi visual fitur-fitur spasial dan dialektometri pada modul <strong>Peta Virtual Isoglos</strong>, <strong>Matriks Dialektometri Jean Guiter</strong>, dan <strong>Peta Sebaran Bahasa Glottolog</strong>.
+  </div>
+
+  <h2>1. Landasan Teori Geolinguistik & Dialektometri Terkomputasi</h2>
+  <p>
+    Geolinguistik (dialektologi spasial) memetakan variasi bahasa menurut sebaran geografis. Modul Dialek & Peta mengintegrasikan metode perhitungan kuantitatif objektif Jean Guiter dengan teknologi <em>Web-based Geographic Information System (GIS)</em> interaktif menggunakan pustaka Leaflet.js.
+  </p>
+
+  <h2>2. Fitur-Fitur Khusus Peta Virtual Isoglos (Leaflet GIS)</h2>
+  
+  <h3>2.1 Algoritma Garis Pembagi Tegak Lurus (Perpendicular Bisector)</h3>
+  <p>
+    Untuk menentukan batas isoglos objektif antara dua titik pengamatan (TP A dan TP B), sistem menghitung titik tengah (<em>midpoint</em>) koordinat lintang dan bujur, lalu menarik segmen garis tegak lurus (ortogonal) dengan penyesuaian proyeksi merkator bujur terhadap lintang rata-rata (cos lat). Segmen garis ini direntangkan sepanjang 25–40 km di antara dua desa.
+  </p>
+
+  <h3>2.2 Algoritma Convex Hull 2D (Territory Polygons)</h3>
+  <p>
+    Untuk wilayah dengan bentuk leksikal homogen di lebih dari dua desa, sistem menggunakan <em>Monotone Chain Algorithm</em> untuk membentuk poligon cembung (<em>Convex Hull</em>) yang diarsir transparan dengan palet warna tematik konsisten, memperlihatkan kantong kesatuan dialek secara instan.
+  </p>
+
+  <h3>2.3 Tiga (3) Mode Visualisasi Peta</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">Mode Visualisasi</th>
+        <th style="width: 45%;">Mekanisme & Formula Teknis</th>
+        <th style="width: 30%;">Kegunaan Riset</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1. Kata Terpilih (Single Gloss)</strong></td>
+        <td>Memvisualisasikan distribusi varian bentuk lokal untuk 1 kata Swadesh tertentu. Sistem memberikan warna otomatis untuk setiap variasi kata dan menarik garis pembagi tegak lurus antar kata yang berbeda.</td>
+        <td>Analisis mikro fonologis dan variasi leksikal kata demi kata.</td>
+      </tr>
+      <tr>
+        <td><strong>2. Berkas Global (Bundle of Isoglosses)</strong></td>
+        <td>Mengakumulasikan seluruh garis pemisah leksikal dari seluruh kosakata korpus (200 Swadesh). Ketebalan garis sebanding dengan jumlah kata yang berbeda antara dua titik.</td>
+        <td>Mendeteksi batas dialek atau batas bahasa makro (semakin tebal berkas, semakin tegas pemisahnya).</td>
+      </tr>
+      <tr>
+        <td><strong>3. Jaringan Kesamaan (Concordance Network)</strong></td>
+        <td>Menghubungkan titik-titik pengamatan yang berbagi bentuk kata identik dengan garis jejaring relasi (*co-lexical links*).</td>
+        <td>Meneliti migrasi bahasa, rute perdagangan tradisional, dan kekerabatan dialek kepulauan.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>2.4 Pengalih Lapisan & Multi-Basemap</h3>
+  <p>
+    Tersedia 4 gaya peta dasar (Carto Light, Carto Dark Matter, OpenStreetMap, dan Kontur Topografi) yang dapat dipadukan dengan toggle lapisan data: Poligon Teritori Varian, Garis Batas Bisector, Jaringan Keterhubungan, dan Label Titik Pengamatan.
+  </p>
+
+  <h3>2.5 Fitur Tur Otomatis (Auto-Play Tour) & Pemutar Audio</h3>
+  <p>
+    Pengguna dapat menekan tombol <strong>"Putar Tur (Auto-Play)"</strong> untuk memutar simulasi perpindahan kata Swadesh nomor 1 sampai 200 secara otomatis setiap 2.5 detik. Setiap penanda desa juga dilengkapi tombol audio pemutar suara asli informan atau sintesis fonetis lokal via Web Speech API.
+  </p>
+
+  <h2>3. Modul Dialektometri & Formula Jean Guiter (1973)</h2>
+  
+  <div class="formula-box">
+    d = (s / n) × 100%
+  </div>
+  <p style="text-align: center; font-size: 9.5pt; color: #475569;">
+    Di mana: <strong>d</strong> = Derajat perbedaan dialektometri (%), <strong>s</strong> = Jumlah perbedaan bentuk kata, <strong>n</strong> = Total glos yang diperbandingkan.
+  </p>
+
+  <h3>3.1 Tabel Skala Klasifikasi Hubungan Kebahasaan</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Rentang Indeks (d)</th>
+        <th>Klasifikasi Status</th>
+        <th>Interpretasi Sosiolinguistik</th>
+        <th>Visual Garis Isoglos</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="color: #16a34a; font-weight: bold;">0% – 20%</td>
+        <td><strong>Dialek Sama (Homogen)</strong></td>
+        <td>Perbedaan idiolek perorangan atau varian bebas. Mutual intelligibility 100%.</td>
+        <td>Tidak ada isoglos</td>
+      </tr>
+      <tr>
+        <td style="color: #2563eb; font-weight: bold;">21% – 30%</td>
+        <td><strong>Beda Wicara / Subdialek</strong></td>
+        <td>Variasi fonetis minor; derajat saling memahami sangat tinggi (>90%).</td>
+        <td>Isoglos putus-putus (Lemah)</td>
+      </tr>
+      <tr>
+        <td style="color: #d97706; font-weight: bold;">31% – 50%</td>
+        <td><strong>Beda Dialek (Dialect)</strong></td>
+        <td>Perbedaan leksikal dan fonologis nyata; batas dialek definitif.</td>
+        <td>Isoglos tegas (Solid)</td>
+      </tr>
+      <tr>
+        <td style="color: #dc2626; font-weight: bold;">51% – 80%</td>
+        <td><strong>Beda Bahasa (Language)</strong></td>
+        <td>Perbedaan kosakata masif; diklasifikasikan sebagai bahasa yang berbeda.</td>
+        <td>Garis batas bahasa ganda</td>
+      </tr>
+      <tr>
+        <td style="color: #7c3aed; font-weight: bold;">&gt; 80%</td>
+        <td><strong>Beda Rumpun / Subkeluarga</strong></td>
+        <td>Perbedaan leksikon ekstrem; terpisah secara filogenetik historis.</td>
+        <td>Garis batas rumpun</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>3.2 Matriks Segitiga & Rekayasa Manual (Manual Override)</h3>
+  <p>
+    Sistem menyusun matriks segitiga berdimensi <em>N × (N-1) / 2</em> secara instan untuk memperlihatkan jarak antar-seluruh titik pengamatan sekaligus. Selain itu, fitur <strong>Manual Override</strong> memungkinkan linguis menimpa hasil komputasi otomatis jika menemukan kognat kuno atau kata serapan asing yang memerlukan justifikasi etimologis kualitatif.
+  </p>
+
+  <h2>4. Peta Glottolog & Vitalitas Bahasa (EGIDS / UNESCO)</h2>
+  <p>
+    Aplikasi memadukan 700+ bahasa daerah di Indonesia dengan 4 lapisan tematik (Persebaran Titik, Poligon Kepadatan Penutur, Batas Wilayah Etnolinguistik, dan Titik Survei Lapangan Riil), serta 6 tingkat vitalitas kepunahan bahasa (Aman, Rentan, Mengalami Kemunduran, Terancam Punah, Kritis, Punah).
+  </p>
+
+  <h2>5. Ekspor & Interoperabilitas</h2>
+  <p>
+    Hasil analisis dapat diekspor ke format: (1) CSV Matriks Segitiga (untuk R, SPSS, PAUP); (2) Dokumen Word (.doc) & Cetak PDF; (3) GeoJSON untuk QGIS/ArcGIS; serta (4) Sinkronisasi awan Cloud Firestore.
+  </p>
+
+  <h2>6. Panduan Pengguna & User Flow: 12 Modul Bento (Seksi 16)</h2>
+  <p>
+    Pada Seksi 16 (Dialektometri & Peta), tersedia panel <strong>"Pilih Instrumen Visualisasi & Analisis Dialek (12 Modul Bento)"</strong> yang membagi proses investigasi geolinguistik ke dalam 6 fase alur kerja (User Flow) terintegrasi:
+  </p>
+
+  <div class="callout" style="background-color: #f8fafc; border-left: 4px solid #4f46e5;">
+    <strong>Diagram User Flow 6 Fase Terintegrasi:</strong><br>
+    <strong>Fase 1: Georeferensi</strong> &mdash; Input koordinat GPS Lintang/Bujur presisi pada Seksi 1 Titik Pengamatan.<br>
+    <strong>Fase 2: Korpus Leksikon</strong> &mdash; Pengisian 200 kosakata Swadesh dan transkripsi fonetis IPA pada Seksi 15.<br>
+    <strong>Fase 3: Komputasi Indeks</strong> &mdash; Klik tombol <em>"Hitung Ulang Indeks Otomatis"</em> di Modul 11 (Tabel & Kalkulator).<br>
+    <strong>Fase 4: Rekonstruksi Spasial</strong> &mdash; Analisis garis isoglos di Modul 2, kontur di Modul 4, dan topologi di Modul 10.<br>
+    <strong>Fase 5: Taksonomi Filogeni</strong> &mdash; Dendrogram UPGMA di Modul 5, silsilah di Modul 6, dan usia pisah di Modul 12.<br>
+    <strong>Fase 6: Publikasi Ilmiah</strong> &mdash; Verifikasi regresi jarak IBD di Modul 7, klasifikasi baku di Modul 8, dan ekspor laporan.
+  </div>
+
+  <h3>Spesifikasi & Cara Penggunaan 12 Modul Bento</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Nama Modul</th>
+        <th>Kategori</th>
+        <th>Metodologi Ilmiah</th>
+        <th>Output Utama</th>
+        <th>Panduan Singkat</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1</strong></td>
+        <td><strong>Peta Tematik Leksikal</strong></td>
+        <td>Spasial</td>
+        <td>WebGIS Leaflet WGS84, Haversine</td>
+        <td>Marker titik, radius jangkauan tutur, popup info desa</td>
+        <td>Periksa koordinat desa di peta; gunakan 4 layer basemap (Light/Dark/OSM/Topo).</td>
+      </tr>
+      <tr>
+        <td><strong>2</strong></td>
+        <td><strong>Isoglos Otomatis</strong></td>
+        <td>Spasial</td>
+        <td>Orthogonal Bisector Guiter (1973)</td>
+        <td>Garis isoglos tegak lurus & berkas akumulasi (bundle)</td>
+        <td>Pilih kata Swadesh tertentu atau berkas global; klik garis batas untuk membuka drawer perbandingan.</td>
+      </tr>
+      <tr>
+        <td><strong>3</strong></td>
+        <td><strong>Matriks Heat-Map & Radar</strong></td>
+        <td>Matriks</td>
+        <td>Matriks Segitiga Simetris & Radar Polar</td>
+        <td>Tabel korelasi berkode warna & jaring radar keliling</td>
+        <td>Baca sel diagonal segitiga untuk mengidentifikasi pasangan desa terdekat dan terjauh.</td>
+      </tr>
+      <tr>
+        <td><strong>4</strong></td>
+        <td><strong>Heatmap Dialek Spasial</strong></td>
+        <td>Spasial</td>
+        <td>Inverse Distance Weighting (IDW)</td>
+        <td>Kontur gradasi warna spasial bentang alam</td>
+        <td>Amati zona transisi bertahap vs garis pemisah curam di antara wilayah tutur.</td>
+      </tr>
+      <tr>
+        <td><strong>5</strong></td>
+        <td><strong>Klaster & Radar D3</strong></td>
+        <td>Taksonomi</td>
+        <td>UPGMA Hierarchical Agglomerative</td>
+        <td>Dendrogram hirarkis D3.js dengan ambang batas jarak</td>
+        <td>Geser slider cutoff threshold untuk membagi kelompok subdialek secara objektif.</td>
+      </tr>
+      <tr>
+        <td><strong>6</strong></td>
+        <td><strong>Pohon Filogenetik</strong></td>
+        <td>Taksonomi</td>
+        <td>Filogenetika Leksikal Komparatif D3</td>
+        <td>Pohon silsilah berakar dengan label tarikh abad</td>
+        <td>Klik cabang pohon untuk memeriksa kognat purba dan abad divergensi dialek.</td>
+      </tr>
+      <tr>
+        <td><strong>7</strong></td>
+        <td><strong>Grafik & Scatter Plot</strong></td>
+        <td>Matriks</td>
+        <td>Regresi Pearson, Wright IBD Model</td>
+        <td>Scatter plot jarak fisik km vs persentase beda d%</td>
+        <td>Cari titik pencilan (outlier) untuk mendeteksi rintangan budaya atau kontak migrasi baru.</td>
+      </tr>
+      <tr>
+        <td><strong>8</strong></td>
+        <td><strong>Klasifikasi Kekerabatan</strong></td>
+        <td>Taksonomi</td>
+        <td>Skala Baku Badan Bahasa & Keraf</td>
+        <td>5 Kategori resmi (Beda Wicara s.d. Subkeluarga)</td>
+        <td>Gunakan narasi ilmiah otomatis untuk melengkapi bab pembahasan laporan penelitian.</td>
+      </tr>
+      <tr>
+        <td><strong>9</strong></td>
+        <td><strong>Perbandingan Dua Titik</strong></td>
+        <td>Leksikal</td>
+        <td>Analisis Pasangan Minimal Swadesh</td>
+        <td>Tabel komparasi 200 glos sejajar & audio player</td>
+        <td>Bandingkan kosakata desa acuan dan pembanding; dengarkan rekaman suara informan.</td>
+      </tr>
+      <tr>
+        <td><strong>10</strong></td>
+        <td><strong>Peta Isoglos Skematis</strong></td>
+        <td>Spasial</td>
+        <td>Teori Gelombang Johannes Schmidt (1872)</td>
+        <td>Diagram vektor skematis poligon SVG resolusi tinggi</td>
+        <td>Gunakan diagram topologi murni ini untuk ilustrasi publikasi jurnal monokrom.</td>
+      </tr>
+      <tr>
+        <td><strong>11</strong></td>
+        <td><strong>Tabel & Kalkulator</strong></td>
+        <td>Leksikal</td>
+        <td>Formula Guiter d = (s/n) × 100%</td>
+        <td>Tabel entri nilai s, n, koordinat, dan sinkronisasi</td>
+        <td>Kelola daftar titik pembanding; klik "Hitung Ulang Indeks" untuk sinkronisasi otomatis.</td>
+      </tr>
+      <tr>
+        <td><strong>12</strong></td>
+        <td><strong>Glotokronologi</strong></td>
+        <td>Taksonomi</td>
+        <td>Leksikostatistik Swadesh (1952)</td>
+        <td>Estimasi usia pisah (ribuan tahun) & era sejarah</td>
+        <td>Hitung tarikh pemisahan bahasa dengan konstanta retensi r = 0.805 per milenium.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    Dokumen ini diterbitkan oleh Tim Pengembang Sistem Pemetaan Bahasa & Dialektometri (Derana Panel Enterprise).<br>
+    © 2026 Hak Cipta Dilindungi Undang-Undang. Sesuai Standar Metodologi Badan Bahasa & UNESCO.
+  </div>
+
+</body>
+</html>
