@@ -41,7 +41,7 @@ import {
   getRoleLabel,
   getRoleDescription 
 } from '../../utils/authStorage';
-import firebaseConfig from '../../../firebase-applet-config.json';
+import { firebaseConfig } from '../../lib/firebase';
 
 interface PengaturanBentoViewProps {
   currentUser: AppUser;
