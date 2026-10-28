@@ -567,10 +567,10 @@ export const GlottologLanguageMap: React.FC<GlottologLanguageMapProps> = ({
       </div>
 
       {/* MAP VIEWER CARD */}
-      <div className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-[#444444] rounded-3xl shadow-sm overflow-hidden flex flex-col transition-colors">
+      <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-3xl shadow-sm overflow-hidden flex flex-col transition-colors">
         
         {/* PANEL KENDALI LAPISAN TEMATIK DATA & PENCARIAN */}
-        <div className="p-3 sm:px-5 sm:py-3.5 border-b border-slate-200 dark:border-[#444444] bg-slate-50/90 dark:bg-[#161616] flex flex-col gap-3">
+        <div className="p-3 sm:px-5 sm:py-3.5 border-b border-slate-200 dark:border-slate-700 bg-slate-50/90 dark:bg-slate-950 flex flex-col gap-3">
           
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-2.5">
             {/* Thematic Layer Switcher Buttons - Fully scrollable and touch-drag friendly on mobile */}
@@ -579,7 +579,7 @@ export const GlottologLanguageMap: React.FC<GlottologLanguageMapProps> = ({
                 type="button"
                 onClick={() => scrollLayer('left')}
                 aria-label="Geser lapisan ke kiri"
-                className="lg:hidden p-1.5 rounded-lg text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-200/70 dark:hover:bg-[#2A2A2A] shrink-0 transition-colors cursor-pointer"
+                className="lg:hidden p-1.5 rounded-lg text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-200/70 dark:hover:bg-slate-800 shrink-0 transition-colors cursor-pointer"
                 title="Geser lapisan ke kiri"
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -587,10 +587,10 @@ export const GlottologLanguageMap: React.FC<GlottologLanguageMapProps> = ({
 
               <div 
                 ref={layerContainerRef}
-                className="w-full lg:w-auto overflow-x-auto no-scrollbar scroll-smooth flex items-center gap-1.5 p-1 bg-white dark:bg-[#1E1E1E] rounded-xl border border-slate-200 dark:border-[#444444] text-xs shadow-2xs overscroll-x-contain touch-pan-x"
+                className="w-full lg:w-auto overflow-x-auto no-scrollbar scroll-smooth flex items-center gap-1.5 p-1 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 text-xs shadow-2xs overscroll-x-contain touch-pan-x"
                 style={{ WebkitOverflowScrolling: 'touch' }}
               >
-                <span className="shrink-0 text-[11px] font-bold text-slate-400 dark:text-[#888888] px-2 uppercase tracking-wider flex items-center gap-1 select-none whitespace-nowrap">
+                <span className="shrink-0 text-[11px] font-bold text-slate-400 dark:text-slate-400 px-2 uppercase tracking-wider flex items-center gap-1 select-none whitespace-nowrap">
                   <Layers className="w-3.5 h-3.5 text-blue-600 dark:text-sky-400" />
                   Lapisan:
                 </span>
@@ -602,7 +602,7 @@ export const GlottologLanguageMap: React.FC<GlottologLanguageMapProps> = ({
                   className={`shrink-0 whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
                     activeThematicLayer === 'persebaran'
                       ? 'bg-blue-600 text-white shadow-2xs'
-                      : 'text-slate-600 dark:text-[#B0B0B0] hover:text-slate-900 dark:hover:text-[#E0E0E0]'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-200'
                   }`}
                 >
                   <Globe2 className="w-3.5 h-3.5" />
@@ -616,7 +616,7 @@ export const GlottologLanguageMap: React.FC<GlottologLanguageMapProps> = ({
                   className={`shrink-0 whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
                     activeThematicLayer === 'kepadatan'
                       ? 'bg-amber-600 text-white shadow-2xs'
-                      : 'text-slate-600 dark:text-[#B0B0B0] hover:text-slate-900 dark:hover:text-[#E0E0E0]'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-200'
                   }`}
                 >
                   <Users className="w-3.5 h-3.5" />
@@ -630,7 +630,7 @@ export const GlottologLanguageMap: React.FC<GlottologLanguageMapProps> = ({
                   className={`shrink-0 whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
                     activeThematicLayer === 'batas-wilayah'
                       ? 'bg-indigo-600 text-white shadow-2xs'
-                      : 'text-slate-600 dark:text-[#B0B0B0] hover:text-slate-900 dark:hover:text-[#E0E0E0]'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-200'
                   }`}
                 >
                   <Compass className="w-3.5 h-3.5" />
@@ -644,7 +644,7 @@ export const GlottologLanguageMap: React.FC<GlottologLanguageMapProps> = ({
                   className={`shrink-0 whitespace-nowrap px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
                     activeThematicLayer === 'survei-lapangan'
                       ? 'bg-emerald-600 text-white shadow-2xs'
-                      : 'text-slate-600 dark:text-[#B0B0B0] hover:text-slate-900 dark:hover:text-[#E0E0E0]'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-200'
                   }`}
                 >
                   <MapPin className="w-3.5 h-3.5" />
@@ -656,7 +656,7 @@ export const GlottologLanguageMap: React.FC<GlottologLanguageMapProps> = ({
                 type="button"
                 onClick={() => scrollLayer('right')}
                 aria-label="Geser lapisan ke kanan"
-                className="lg:hidden p-1.5 rounded-lg text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-200/70 dark:hover:bg-[#2A2A2A] shrink-0 transition-colors cursor-pointer"
+                className="lg:hidden p-1.5 rounded-lg text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-200/70 dark:hover:bg-slate-800 shrink-0 transition-colors cursor-pointer"
                 title="Geser lapisan ke kanan"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -682,8 +682,8 @@ export const GlottologLanguageMap: React.FC<GlottologLanguageMapProps> = ({
                   onClick={() => handleJumpRegion(reg.id)}
                   className={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all cursor-pointer ${
                     activePresetRegion === reg.id
-                      ? 'bg-slate-900 text-white dark:bg-[#2A2A2A] dark:text-[#E0E0E0] dark:border-[#888888] shadow-2xs border border-transparent'
-                      : 'bg-white dark:bg-[#121212] text-slate-600 dark:text-[#B0B0B0] border border-slate-200 dark:border-[#444444] hover:bg-slate-100 dark:hover:bg-[#1E1E1E] dark:hover:text-[#E0E0E0]'
+                      ? 'bg-slate-900 text-white dark:bg-slate-800 dark:text-slate-200 dark:border-slate-400 shadow-2xs border border-transparent'
+                      : 'bg-white dark:bg-slate-950 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-900 dark:hover:text-slate-200'
                   }`}
                 >
                   {reg.label}
@@ -695,13 +695,13 @@ export const GlottologLanguageMap: React.FC<GlottologLanguageMapProps> = ({
           {/* Search & Family Filter Bar */}
           <div className="flex flex-wrap items-center justify-between gap-2.5 pt-1">
             <div className="relative flex-1 min-w-[220px] max-w-md">
-              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-[#888888]" />
+              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-400" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder="Cari bahasa, glottocode, ISO (contoh: Sundanese, java1254, ace)..."
-                className="w-full pl-9 pr-8 py-1.5 text-xs bg-white dark:bg-[#1E1E1E] border border-slate-300 dark:border-[#444444] text-slate-900 dark:text-[#E0E0E0] placeholder-slate-400 dark:placeholder-[#888888] rounded-xl focus:border-blue-600 focus:outline-hidden transition-colors"
+                className="w-full pl-9 pr-8 py-1.5 text-xs bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-400 rounded-xl focus:border-blue-600 focus:outline-hidden transition-colors"
               />
               {searchQuery && (
                 <button
@@ -718,7 +718,7 @@ export const GlottologLanguageMap: React.FC<GlottologLanguageMapProps> = ({
               <select
                 value={selectedFamily}
                 onChange={e => setSelectedFamily(e.target.value)}
-                className="px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-[#444444] bg-white dark:bg-[#1E1E1E] text-slate-700 dark:text-[#E0E0E0] text-xs font-medium cursor-pointer"
+                className="px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 text-xs font-medium cursor-pointer"
               >
                 <option value="all">Semua Rumpun Bahasa</option>
                 <option value="Austronesian">Austronesian (Nusantara)</option>
@@ -729,7 +729,7 @@ export const GlottologLanguageMap: React.FC<GlottologLanguageMapProps> = ({
                 <option value="Niger-Congo">Niger-Congo</option>
               </select>
 
-              <span className="text-[11px] text-slate-500 dark:text-[#B0B0B0] font-medium hidden sm:inline">
+              <span className="text-[11px] text-slate-500 dark:text-slate-300 font-medium hidden sm:inline">
                 Menampilkan <strong>{filteredLanguages.length}</strong> bahasa & <strong>{filteredTerritories.length}</strong> wilayah
               </span>
             </div>
@@ -744,14 +744,14 @@ export const GlottologLanguageMap: React.FC<GlottologLanguageMapProps> = ({
             <div ref={mapContainerRef} className="absolute inset-0 z-10 w-full h-full" />
             
             {/* LEGENDA INTERAKTIF DINAMIS (Disesuaikan otomatis dengan lapisan terpilih) */}
-            <div className="absolute bottom-3 left-3 z-20 bg-white/95 dark:bg-[#121212]/95 backdrop-blur-md rounded-2xl border border-slate-200/90 dark:border-[#444444] shadow-lg text-xs transition-all max-w-[280px]">
+            <div className="absolute bottom-3 left-3 z-20 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md rounded-2xl border border-slate-200/90 dark:border-slate-700 shadow-lg text-xs transition-all max-w-[280px]">
               
               {/* Legend Header */}
               <div 
                 onClick={() => setIsLegendExpanded(!isLegendExpanded)}
-                className="p-2.5 flex items-center justify-between gap-2 border-b border-slate-100 dark:border-[#444444] cursor-pointer select-none"
+                className="p-2.5 flex items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-700 cursor-pointer select-none"
               >
-                <div className="font-bold text-slate-800 dark:text-[#E0E0E0] flex items-center gap-1.5 text-xs">
+                <div className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5 text-xs">
                   <Activity className="w-3.5 h-3.5 text-blue-600" />
                   <span>
                     Legenda: {
@@ -859,16 +859,16 @@ export const GlottologLanguageMap: React.FC<GlottologLanguageMapProps> = ({
           </div>
 
           {/* Selected Language / Territory Inspector Panel (1 col on desktop) */}
-          <div className="lg:col-span-1 border-t lg:border-t-0 lg:border-l border-slate-200 dark:border-[#444444] p-4 sm:p-5 bg-slate-50/50 dark:bg-[#121212] flex flex-col justify-between overflow-y-auto max-h-[580px]">
+          <div className="lg:col-span-1 border-t lg:border-t-0 lg:border-l border-slate-200 dark:border-slate-700 p-4 sm:p-5 bg-slate-50/50 dark:bg-slate-950 flex flex-col justify-between overflow-y-auto max-h-[580px]">
             {selectedLanguage || selectedTerritory ? (
               <div className="space-y-4">
-                <div className="flex items-start justify-between gap-2 border-b border-slate-200/80 dark:border-[#444444] pb-3">
+                <div className="flex items-start justify-between gap-2 border-b border-slate-200/80 dark:border-slate-700 pb-3">
                   <div>
                     <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 flex items-center gap-1">
                       <Tag className="w-3 h-3" />
                       Detail Bahasa Terpilih
                     </span>
-                    <h3 className="text-base sm:text-lg font-extrabold text-slate-900 dark:text-[#E0E0E0] leading-tight mt-0.5">
+                    <h3 className="text-base sm:text-lg font-extrabold text-slate-900 dark:text-slate-200 leading-tight mt-0.5">
                       {selectedLanguage ? selectedLanguage.name : selectedTerritory?.name}
                     </h3>
                   </div>
@@ -885,9 +885,9 @@ export const GlottologLanguageMap: React.FC<GlottologLanguageMapProps> = ({
                 </div>
 
                 {/* Glottolog Metadata Card */}
-                <div className="bg-white dark:bg-[#1E1E1E] p-3.5 rounded-2xl border border-slate-200/80 dark:border-[#444444] shadow-2xs space-y-2.5 text-xs">
+                <div className="bg-white dark:bg-slate-900 p-3.5 rounded-2xl border border-slate-200/80 dark:border-slate-700 shadow-2xs space-y-2.5 text-xs">
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-500 dark:text-[#888888] text-[11px]">Glottocode:</span>
+                    <span className="text-slate-500 dark:text-slate-400 text-[11px]">Glottocode:</span>
                     <span className="font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-2 py-0.5 rounded">
                       {selectedLanguage?.glottocode || selectedTerritory?.glottocode}
                     </span>
@@ -895,24 +895,24 @@ export const GlottologLanguageMap: React.FC<GlottologLanguageMapProps> = ({
 
                   {selectedLanguage?.isocodes && (
                     <div className="flex items-center justify-between">
-                      <span className="text-slate-500 dark:text-[#888888] text-[11px]">ISO 639-3:</span>
-                      <span className="font-mono font-semibold text-slate-800 dark:text-[#E0E0E0]">
+                      <span className="text-slate-500 dark:text-slate-400 text-[11px]">ISO 639-3:</span>
+                      <span className="font-mono font-semibold text-slate-800 dark:text-slate-200">
                         {selectedLanguage.isocodes}
                       </span>
                     </div>
                   )}
 
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-500 dark:text-[#888888] text-[11px]">Rumpun / Famili:</span>
-                    <span className="font-semibold text-slate-800 dark:text-[#E0E0E0] text-right">
+                    <span className="text-slate-500 dark:text-slate-400 text-[11px]">Rumpun / Famili:</span>
+                    <span className="font-semibold text-slate-800 dark:text-slate-200 text-right">
                       {selectedLanguage?.family || selectedTerritory?.family || 'Austronesian'}
                     </span>
                   </div>
 
                   {selectedLanguage && (
                     <div className="flex items-center justify-between">
-                      <span className="text-slate-500 dark:text-[#888888] text-[11px]">Koordinat Pusat:</span>
-                      <span className="font-mono text-[11px] text-slate-600 dark:text-[#B0B0B0]">
+                      <span className="text-slate-500 dark:text-slate-400 text-[11px]">Koordinat Pusat:</span>
+                      <span className="font-mono text-[11px] text-slate-600 dark:text-slate-300">
                         {selectedLanguage.latitude.toFixed(4)}, {selectedLanguage.longitude.toFixed(4)}
                       </span>
                     </div>
@@ -920,7 +920,7 @@ export const GlottologLanguageMap: React.FC<GlottologLanguageMapProps> = ({
 
                   {selectedLanguage?.speakersEstimated && (
                     <div className="flex items-center justify-between">
-                      <span className="text-slate-500 dark:text-[#888888] text-[11px]">Estimasi Penutur:</span>
+                      <span className="text-slate-500 dark:text-slate-400 text-[11px]">Estimasi Penutur:</span>
                       <span className="font-bold text-emerald-600 dark:text-emerald-400">
                         ~{selectedLanguage.speakersEstimated}
                       </span>
@@ -976,8 +976,8 @@ export const GlottologLanguageMap: React.FC<GlottologLanguageMapProps> = ({
                     Klik salah satu poligon batas wilayah penggunaan bahasa atau titik koordinat Glottolog pada peta untuk memeriksa metadata glotolinguistik.
                   </p>
                 </div>
-                <div className="pt-2 text-left bg-white dark:bg-[#1E1E1E] p-3 rounded-xl border border-slate-200/80 dark:border-[#444444] space-y-1.5 text-[11px] text-slate-600 dark:text-[#B0B0B0]">
-                  <div className="font-semibold text-slate-800 dark:text-[#E0E0E0]">Fitur Peta Glottolog:</div>
+                <div className="pt-2 text-left bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200/80 dark:border-slate-700 space-y-1.5 text-[11px] text-slate-600 dark:text-slate-300">
+                  <div className="font-semibold text-slate-800 dark:text-slate-200">Fitur Peta Glottolog:</div>
                   <div>• {GLOTTOLOG_LANGUAGES.length} Titik Bahasa & Dialek Terkurasi</div>
                   <div>• {LANGUAGE_TERRITORIES.length} Poligon Batas Wilayah Penggunaan</div>
                   <div>• Sinkronisasi otomatis dengan instrumen survei lapangan</div>

@@ -567,7 +567,7 @@ export const LanguageComparison: React.FC<LanguageComparisonProps> = ({
                 onClick={() => setIsThreeLanguages(false)}
                 className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all cursor-pointer ${
                   !isThreeLanguages
-                    ? 'bg-[#1c5fff] text-white shadow-sm'
+                    ? 'bg-blue-600 text-white shadow-sm'
                     : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-700'
                 }`}
               >
@@ -579,7 +579,7 @@ export const LanguageComparison: React.FC<LanguageComparisonProps> = ({
                 onClick={() => setIsThreeLanguages(true)}
                 className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all cursor-pointer ${
                   isThreeLanguages
-                    ? 'bg-[#1c5fff] text-white shadow-sm'
+                    ? 'bg-blue-600 text-white shadow-sm'
                     : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-700'
                 }`}
               >

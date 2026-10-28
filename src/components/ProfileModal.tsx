@@ -669,17 +669,17 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
           {activeTab === 'security' && (
             <div className="space-y-5">
               {/* FIREBASE EMAIL & PASSWORD AUTH STATUS CARD */}
-              <div className="bg-gradient-to-br from-indigo-50/90 via-slate-50 to-emerald-50/40 dark:from-[#1E1E1E] dark:via-[#121212] dark:to-[#1E1E1E] border border-indigo-200 dark:border-[#444444] rounded-xl p-4 shadow-xs space-y-3 transition-colors">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-indigo-100 dark:border-[#444444]">
+              <div className="bg-gradient-to-br from-indigo-50/90 via-slate-50 to-emerald-50/40 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 border border-indigo-200 dark:border-slate-700 rounded-xl p-4 shadow-xs space-y-3 transition-colors">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-indigo-100 dark:border-slate-700">
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-950/60 text-indigo-600 dark:text-sky-400 flex items-center justify-center shrink-0">
                       <ShieldCheck className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="text-xs font-bold text-slate-900 dark:text-[#E0E0E0]">
+                      <h4 className="text-xs font-bold text-slate-900 dark:text-slate-200">
                         Otentikasi Firebase (Email & Kata Sandi)
                       </h4>
-                      <p className="text-[11px] text-slate-500 dark:text-[#B0B0B0]">
+                      <p className="text-[11px] text-slate-500 dark:text-slate-300">
                         Project ID: <span className="font-mono text-indigo-700 dark:text-sky-400 font-semibold">derana-map</span> • Aman & Mandiri
                       </p>
                     </div>
@@ -691,21 +691,21 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
                   </span>
                 </div>
 
-                <div className="text-xs text-slate-600 dark:text-[#B0B0B0] space-y-1 bg-white/70 dark:bg-[#121212] rounded-lg p-2.5 border border-indigo-100/60 dark:border-[#444444]">
+                <div className="text-xs text-slate-600 dark:text-slate-300 space-y-1 bg-white/70 dark:bg-slate-950 rounded-lg p-2.5 border border-indigo-100/60 dark:border-slate-700">
                   <div className="flex justify-between">
-                    <span className="text-slate-500 dark:text-[#888888]">Email Terdaftar:</span>
-                    <span className="font-mono font-bold text-slate-800 dark:text-[#E0E0E0]">
+                    <span className="text-slate-500 dark:text-slate-400">Email Terdaftar:</span>
+                    <span className="font-mono font-bold text-slate-800 dark:text-slate-200">
                       {currentUser.email}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-500 dark:text-[#888888]">Metode Masuk:</span>
+                    <span className="text-slate-500 dark:text-slate-400">Metode Masuk:</span>
                     <span className="font-mono text-[10px] text-indigo-700 dark:text-sky-400 font-semibold">
                       Firebase Email & Password
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-500 dark:text-[#888888]">Status Sinkronisasi:</span>
+                    <span className="text-slate-500 dark:text-slate-400">Status Sinkronisasi:</span>
                     <span className="text-emerald-600 dark:text-emerald-400 font-medium">
                       Cloud Firestore & Local Storage
                     </span>

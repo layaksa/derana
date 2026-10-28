@@ -454,7 +454,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_#eef4ff_0,_transparent_42%),linear-gradient(135deg,_#f8fafc_0%,_#eef2f7_100%)] dark:bg-[radial-gradient(circle_at_top_left,_#172554_0,_transparent_42%),linear-gradient(135deg,_#0f172a_0%,_#111827_100%)] flex flex-col justify-center items-center py-10 px-4 sm:px-6 lg:px-8 relative transition-colors text-[#0a0a0a] dark:text-[#E0E0E0]">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_#eef4ff_0,_transparent_42%),linear-gradient(135deg,_#f8fafc_0%,_#eef2f7_100%)] dark:bg-[radial-gradient(circle_at_top_left,_#172554_0,_transparent_42%),linear-gradient(135deg,_#0f172a_0%,_#111827_100%)] flex flex-col justify-center items-center py-10 px-4 sm:px-6 lg:px-8 relative transition-colors text-slate-900 dark:text-slate-200">
       {/* Top Right Quick Theme Switcher */}
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20">
         <ThemeToggle variant="segmented" />
@@ -472,19 +472,19 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
               className="w-12 h-12 object-contain hover:scale-105 transition-transform duration-200"
             />
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-[#E0E0E0]">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-200">
             Sistem Pemetaan Bahasa
           </h1>
-          <p className="text-xs sm:text-sm text-slate-600 dark:text-[#B0B0B0] mt-1 max-w-sm mx-auto">
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1 max-w-sm mx-auto">
             Portal Kuesioner Dialektometri & Inventarisasi Bahasa Daerah
           </p>
         </div>
 
         {/* Card Container */}
-        <div className="bg-white/95 dark:bg-[#121212]/95 backdrop-blur-xl border border-white/80 dark:border-white/10 rounded-[1.75rem] shadow-[0_24px_70px_-30px_rgba(15,23,42,0.55)] overflow-hidden relative transition-colors">
+        <div className="bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border border-white/80 dark:border-white/10 rounded-[1.75rem] shadow-[0_24px_70px_-30px_rgba(15,23,42,0.55)] overflow-hidden relative transition-colors">
           
           {/* Tab Selector: Masuk Akun / Daftar Baru */}
-          <div className="flex border-b border-slate-200 dark:border-[#444444]">
+          <div className="flex border-b border-slate-200 dark:border-slate-700">
             <button
               type="button"
               onClick={() => { 
@@ -493,8 +493,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
               }}
               className={`flex-1 py-3 text-xs sm:text-sm font-semibold transition-colors cursor-pointer border-b-2 ${
                 mode === 'login'
-                  ? 'border-indigo-600 dark:border-sky-400 text-indigo-600 dark:text-sky-400 bg-slate-50/70 dark:bg-[#1E1E1E]'
-                  : 'border-transparent text-slate-500 dark:text-[#B0B0B0] hover:text-slate-900 dark:hover:text-[#E0E0E0] hover:bg-slate-50/40 dark:hover:bg-[#1E1E1E]'
+                  ? 'border-indigo-600 dark:border-sky-400 text-indigo-600 dark:text-sky-400 bg-slate-50/70 dark:bg-slate-900'
+                  : 'border-transparent text-slate-500 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50/40 dark:hover:bg-slate-900'
               }`}
             >
               Masuk Akun
@@ -507,8 +507,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
               }}
               className={`flex-1 py-3 text-xs sm:text-sm font-semibold transition-colors cursor-pointer border-b-2 ${
                 mode === 'register'
-                  ? 'border-indigo-600 dark:border-sky-400 text-indigo-600 dark:text-sky-400 bg-slate-50/70 dark:bg-[#1E1E1E]'
-                  : 'border-transparent text-slate-500 dark:text-[#B0B0B0] hover:text-slate-900 dark:hover:text-[#E0E0E0] hover:bg-slate-50/40 dark:hover:bg-[#1E1E1E]'
+                  ? 'border-indigo-600 dark:border-sky-400 text-indigo-600 dark:text-sky-400 bg-slate-50/70 dark:bg-slate-900'
+                  : 'border-transparent text-slate-500 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50/40 dark:hover:bg-slate-900'
               }`}
             >
               Daftar Akun Baru
@@ -544,30 +544,30 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                     type="button"
                     onClick={() => handleGoogleAuth('login')}
                     disabled={loginLoading || regLoading}
-                    className="w-full flex items-center justify-center gap-3 rounded-xl border border-slate-300 dark:border-[#444444] bg-white dark:bg-[#1E1E1E] px-4 py-3 text-xs sm:text-sm font-semibold text-slate-800 dark:text-[#E0E0E0] shadow-xs hover:bg-slate-50 dark:hover:bg-[#252525] hover:border-slate-400 dark:hover:border-slate-500 transition-all cursor-pointer disabled:cursor-not-allowed disabled:opacity-60 group"
+                    className="w-full flex items-center justify-center gap-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200 shadow-xs hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-slate-400 dark:hover:border-slate-500 transition-all cursor-pointer disabled:cursor-not-allowed disabled:opacity-60 group"
                   >
                     <GoogleIcon className="w-5 h-5 shrink-0 group-hover:scale-105 transition-transform" />
                     <span>{loginLoading ? 'Memverifikasi Akun Google...' : 'Masuk dengan Akun Google'}</span>
                   </button>
-                  <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-500 dark:text-[#888888]">
+                  <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400">
                     <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                     <span>Firebase Authentication resmi • Akses instan sesuai peran riset</span>
                   </div>
                 </div>
 
                 <div className="my-5 flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.16em] text-slate-400 dark:text-slate-500">
-                  <span className="h-px flex-1 bg-slate-200 dark:bg-[#444444]" />
+                  <span className="h-px flex-1 bg-slate-200 dark:bg-slate-700" />
                   <span>atau masuk dengan email & kata sandi</span>
-                  <span className="h-px flex-1 bg-slate-200 dark:bg-[#444444]" />
+                  <span className="h-px flex-1 bg-slate-200 dark:bg-slate-700" />
                 </div>
 
                 <form onSubmit={handleLoginSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 dark:text-[#E0E0E0] mb-1.5">
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1.5">
                       Email atau Username *
                     </label>
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-[#888888]">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-400">
                         <Mail className="w-4 h-4" />
                       </div>
                       <input
@@ -576,14 +576,14 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                         onChange={e => setEmailOrUsername(e.target.value)}
                         required
                         placeholder="Contoh: derana.apps@gmail.com atau fadhillah"
-                        className="w-full pl-9 pr-3 py-2.5 bg-white dark:bg-[#1E1E1E] border border-slate-300 dark:border-[#444444] rounded-xl text-xs sm:text-sm text-slate-900 dark:text-[#E0E0E0] placeholder-slate-400 dark:placeholder-[#888888] focus:outline-hidden focus:border-indigo-600 dark:focus:border-sky-400 focus:ring-2 focus:ring-indigo-600/10 transition-colors"
+                        className="w-full pl-9 pr-3 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-400 focus:outline-hidden focus:border-indigo-600 dark:focus:border-sky-400 focus:ring-2 focus:ring-indigo-600/10 transition-colors"
                       />
                     </div>
                   </div>
 
                   <div>
                     <div className="flex items-center justify-between mb-1.5">
-                      <label className="block text-xs font-semibold text-slate-700 dark:text-[#E0E0E0]">
+                      <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200">
                         Kata Sandi *
                       </label>
                       <button
@@ -599,7 +599,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                       </button>
                     </div>
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-[#888888]">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-400">
                         <Lock className="w-4 h-4" />
                       </div>
                       <input
@@ -608,12 +608,12 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                         onChange={e => setLoginPassword(e.target.value)}
                         required
                         placeholder="Masukkan kata sandi..."
-                        className="w-full pl-9 pr-10 py-2.5 bg-white dark:bg-[#1E1E1E] border border-slate-300 dark:border-[#444444] rounded-xl text-xs sm:text-sm text-slate-900 dark:text-[#E0E0E0] placeholder-slate-400 dark:placeholder-[#888888] focus:outline-hidden focus:border-indigo-600 dark:focus:border-sky-400 focus:ring-2 focus:ring-indigo-600/10 transition-colors"
+                        className="w-full pl-9 pr-10 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-400 focus:outline-hidden focus:border-indigo-600 dark:focus:border-sky-400 focus:ring-2 focus:ring-indigo-600/10 transition-colors"
                       />
                       <button
                         type="button"
                         onClick={() => setShowLoginPassword(!showLoginPassword)}
-                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 dark:text-[#888888] hover:text-slate-600 dark:hover:text-[#E0E0E0] cursor-pointer"
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
                         title={showLoginPassword ? 'Sembunyikan sandi' : 'Tampilkan sandi'}
                       >
                         {showLoginPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -641,9 +641,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                 </form>
 
                 {/* Quick Test Accounts Accordion/Helper */}
-                <div className="pt-3 border-t border-slate-100 dark:border-[#444444]">
+                <div className="pt-3 border-t border-slate-100 dark:border-slate-700">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[11px] font-semibold text-slate-500 dark:text-[#B0B0B0] flex items-center gap-1">
+                    <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-300 flex items-center gap-1">
                       <Sparkles className="w-3 h-3 text-indigo-500 dark:text-sky-400" />
                       <span>Masuk Cepat Berdasarkan Peran Terdaftar:</span>
                     </span>
@@ -700,7 +700,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                 </div>
 
                 <div className="text-center pt-2">
-                  <p className="text-xs text-slate-500 dark:text-[#B0B0B0]">
+                  <p className="text-xs text-slate-500 dark:text-slate-300">
                     Belum memiliki akun?{' '}
                     <button
                       type="button"
@@ -742,7 +742,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                 {/* STEP 1: PILIHAN PERAN RISET */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <label className="block text-xs font-bold text-slate-800 dark:text-[#E0E0E0]">
+                    <label className="block text-xs font-bold text-slate-800 dark:text-slate-200">
                       1. Pilih Peran Akun Riset Anda *
                     </label>
                     <span className="text-[10px] text-indigo-600 dark:text-sky-400 font-semibold">
@@ -758,7 +758,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                       className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
                         regRole === 'tamu'
                           ? 'bg-amber-50/90 dark:bg-amber-950/40 border-amber-400 dark:border-amber-600 ring-2 ring-amber-500/20 shadow-2xs'
-                          : 'bg-white dark:bg-[#1E1E1E] border-slate-200 dark:border-[#444444] hover:bg-slate-50 dark:hover:bg-slate-800/60'
+                          : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/60'
                       }`}
                     >
                       <div>
@@ -772,10 +772,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                             Mode Hanya Baca
                           </span>
                         </div>
-                        <div className="text-xs font-bold text-slate-900 dark:text-[#E0E0E0] leading-tight">
+                        <div className="text-xs font-bold text-slate-900 dark:text-slate-200 leading-tight">
                           Tamu / Akademisi
                         </div>
-                        <p className="text-[10px] text-slate-500 dark:text-[#B0B0B0] mt-1 leading-relaxed">
+                        <p className="text-[10px] text-slate-500 dark:text-slate-300 mt-1 leading-relaxed">
                           Peneliti, dosen, & mahasiswa untuk eksplorasi data empiris & peta dialektometri.
                         </p>
                       </div>
@@ -792,7 +792,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                       className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
                         (regRole === 'surveyor' || regRole === 'user')
                           ? 'bg-blue-50/90 dark:bg-blue-950/40 border-blue-400 dark:border-blue-600 ring-2 ring-blue-500/20 shadow-2xs'
-                          : 'bg-white dark:bg-[#1E1E1E] border-slate-200 dark:border-[#444444] hover:bg-slate-50 dark:hover:bg-slate-800/60'
+                          : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/60'
                       }`}
                     >
                       <div>
@@ -806,10 +806,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                             Pengumpul Data
                           </span>
                         </div>
-                        <div className="text-xs font-bold text-slate-900 dark:text-[#E0E0E0] leading-tight">
+                        <div className="text-xs font-bold text-slate-900 dark:text-slate-200 leading-tight">
                           Surveyor Lapangan
                         </div>
-                        <p className="text-[10px] text-slate-500 dark:text-[#B0B0B0] mt-1 leading-relaxed">
+                        <p className="text-[10px] text-slate-500 dark:text-slate-300 mt-1 leading-relaxed">
                           Petugas pengumpul data lapangan: pengisian kuesioner 16 seksi & dialektometri.
                         </p>
                       </div>
@@ -826,7 +826,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                       className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
                         regRole === 'verifikator'
                           ? 'bg-emerald-50/90 dark:bg-emerald-950/40 border-emerald-400 dark:border-emerald-600 ring-2 ring-emerald-500/20 shadow-2xs'
-                          : 'bg-white dark:bg-[#1E1E1E] border-slate-200 dark:border-[#444444] hover:bg-slate-50 dark:hover:bg-slate-800/60'
+                          : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/60'
                       }`}
                     >
                       <div>
@@ -840,10 +840,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                             Otoritas Validasi
                           </span>
                         </div>
-                        <div className="text-xs font-bold text-slate-900 dark:text-[#E0E0E0] leading-tight">
+                        <div className="text-xs font-bold text-slate-900 dark:text-slate-200 leading-tight">
                           Verifikator Linguistik
                         </div>
-                        <p className="text-[10px] text-slate-500 dark:text-[#B0B0B0] mt-1 leading-relaxed">
+                        <p className="text-[10px] text-slate-500 dark:text-slate-300 mt-1 leading-relaxed">
                           Peneliti & kurator: otoritas mengesahkan data berstatus TERVALIDASI resmi.
                         </p>
                       </div>
@@ -862,7 +862,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                       Institusi / Balai Bahasa / Kampus
                     </label>
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-[#888888]">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-400">
                         <Building className="w-4 h-4" />
                       </div>
                       <input
@@ -874,17 +874,17 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                           regRole === 'verifikator' ? 'Pusat Riset Dialektologi / Balai Bahasa' :
                           'Balai Bahasa Provinsi / Kantor Bahasa'
                         }
-                        className="w-full pl-9 pr-3 py-2 bg-white dark:bg-[#1E1E1E] border border-slate-300 dark:border-[#444444] rounded-lg text-xs sm:text-sm text-slate-900 dark:text-[#E0E0E0] placeholder-slate-400 dark:placeholder-[#888888] focus:outline-hidden focus:border-indigo-600"
+                        className="w-full pl-9 pr-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-xs sm:text-sm text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-400 focus:outline-hidden focus:border-indigo-600"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 dark:text-[#E0E0E0] mb-1">
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
                       Wilayah Penugasan / Riset
                     </label>
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-[#888888]">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-400">
                         <MapPin className="w-4 h-4" />
                       </div>
                       <input
@@ -896,7 +896,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                           regRole === 'verifikator' ? 'Wilayah Kurasi (Misal: Maluku & Malut)' :
                           'Kabupaten / Titik Pengamatan Lapangan'
                         }
-                        className="w-full pl-9 pr-3 py-2 bg-white dark:bg-[#1E1E1E] border border-slate-300 dark:border-[#444444] rounded-lg text-xs sm:text-sm text-slate-900 dark:text-[#E0E0E0] placeholder-slate-400 dark:placeholder-[#888888] focus:outline-hidden focus:border-indigo-600"
+                        className="w-full pl-9 pr-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-xs sm:text-sm text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-400 focus:outline-hidden focus:border-indigo-600"
                       />
                     </div>
                   </div>
@@ -909,7 +909,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                       <Sparkles className="w-4 h-4 text-indigo-600 dark:text-sky-400 shrink-0" />
                       <span>Pendaftaran Cepat Akun Google</span>
                     </span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white dark:bg-[#1E1E1E] border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300">
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white dark:bg-slate-900 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300">
                       Peran: {regRole === 'tamu' ? 'Tamu / Akademisi' : regRole === 'verifikator' ? 'Verifikator' : 'Surveyor'}
                     </span>
                   </div>
@@ -918,30 +918,30 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                     type="button"
                     onClick={() => handleGoogleAuth('register')}
                     disabled={regLoading || loginLoading}
-                    className="w-full flex items-center justify-center gap-3 rounded-xl border border-indigo-300 dark:border-indigo-700 bg-white dark:bg-[#1E1E1E] px-4 py-3 text-xs sm:text-sm font-bold text-slate-800 dark:text-[#E0E0E0] shadow-xs hover:bg-slate-50 dark:hover:bg-[#252525] hover:border-indigo-400 dark:hover:border-indigo-500 transition-all cursor-pointer disabled:cursor-not-allowed disabled:opacity-60 group"
+                    className="w-full flex items-center justify-center gap-3 rounded-xl border border-indigo-300 dark:border-indigo-700 bg-white dark:bg-slate-900 px-4 py-3 text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 shadow-xs hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-indigo-400 dark:hover:border-indigo-500 transition-all cursor-pointer disabled:cursor-not-allowed disabled:opacity-60 group"
                   >
                     <GoogleIcon className="w-5 h-5 shrink-0 group-hover:scale-105 transition-transform" />
                     <span>{regLoading ? 'Mendaftarkan ke Firebase...' : `Daftar dengan Akun Google`}</span>
                   </button>
 
-                  <p className="text-[11px] text-slate-600 dark:text-[#B0B0B0] text-center leading-relaxed">
+                  <p className="text-[11px] text-slate-600 dark:text-slate-300 text-center leading-relaxed">
                     Akun Google Anda akan langsung terdaftar di Firebase Authentication dan tersimpan di Cloud Firestore dengan peran <strong>{regRole === 'tamu' ? 'Tamu (Hanya Baca)' : regRole === 'verifikator' ? 'Verifikator Linguistik' : 'Surveyor Lapangan'}</strong>.
                   </p>
                 </div>
 
                 <div className="my-4 flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.16em] text-slate-400 dark:text-slate-500">
-                  <span className="h-px flex-1 bg-slate-200 dark:bg-[#444444]" />
+                  <span className="h-px flex-1 bg-slate-200 dark:bg-slate-700" />
                   <span>atau lengkapi formulir email manual</span>
-                  <span className="h-px flex-1 bg-slate-200 dark:bg-[#444444]" />
+                  <span className="h-px flex-1 bg-slate-200 dark:bg-slate-700" />
                 </div>
 
                 <form onSubmit={handleRegisterSubmit} className="space-y-3">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 dark:text-[#E0E0E0] mb-1">
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
                       Nama Lengkap & Gelar *
                     </label>
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-[#888888]">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-400">
                         <User className="w-4 h-4" />
                       </div>
                       <input
@@ -950,17 +950,17 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                         onChange={e => setRegName(e.target.value)}
                         required
                         placeholder="Contoh: Dr. Nurhaliza, M.Hum."
-                        className="w-full pl-9 pr-3 py-2 bg-white dark:bg-[#1E1E1E] border border-slate-300 dark:border-[#444444] rounded-lg text-xs sm:text-sm text-slate-900 dark:text-[#E0E0E0] placeholder-slate-400 dark:placeholder-[#888888] focus:outline-hidden focus:border-indigo-600 dark:focus:border-sky-400 focus:ring-2 focus:ring-indigo-600/10"
+                        className="w-full pl-9 pr-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-xs sm:text-sm text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-400 focus:outline-hidden focus:border-indigo-600 dark:focus:border-sky-400 focus:ring-2 focus:ring-indigo-600/10"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 dark:text-[#E0E0E0] mb-1">
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
                       Alamat Email (Firebase Auth) *
                     </label>
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-[#888888]">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-400">
                         <Mail className="w-4 h-4" />
                       </div>
                       <input
@@ -969,18 +969,18 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                         onChange={e => setRegEmail(e.target.value)}
                         required
                         placeholder="nama@gmail.com"
-                        className="w-full pl-9 pr-3 py-2 bg-white dark:bg-[#1E1E1E] border border-slate-300 dark:border-[#444444] rounded-lg text-xs sm:text-sm text-slate-900 dark:text-[#E0E0E0] placeholder-slate-400 dark:placeholder-[#888888] focus:outline-hidden focus:border-indigo-600 dark:focus:border-sky-400 focus:ring-2 focus:ring-indigo-600/10"
+                        className="w-full pl-9 pr-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-xs sm:text-sm text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-400 focus:outline-hidden focus:border-indigo-600 dark:focus:border-sky-400 focus:ring-2 focus:ring-indigo-600/10"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-semibold text-slate-700 dark:text-[#E0E0E0] mb-1">
+                      <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
                         Kata Sandi *
                       </label>
                       <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-[#888888]">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-400">
                           <Lock className="w-4 h-4" />
                         </div>
                         <input
@@ -989,12 +989,12 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                           onChange={e => setRegPassword(e.target.value)}
                           required
                           placeholder="Min. 6 karakter"
-                          className="w-full pl-9 pr-8 py-2 bg-white dark:bg-[#1E1E1E] border border-slate-300 dark:border-[#444444] rounded-lg text-xs sm:text-sm text-slate-900 dark:text-[#E0E0E0] placeholder-slate-400 dark:placeholder-[#888888] focus:outline-hidden focus:border-indigo-600 dark:focus:border-sky-400 focus:ring-2 focus:ring-indigo-600/10"
+                          className="w-full pl-9 pr-8 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-xs sm:text-sm text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-400 focus:outline-hidden focus:border-indigo-600 dark:focus:border-sky-400 focus:ring-2 focus:ring-indigo-600/10"
                         />
                         <button
                           type="button"
                           onClick={() => setShowRegPassword(!showRegPassword)}
-                          className="absolute inset-y-0 right-0 pr-2 flex items-center text-slate-400 dark:text-[#888888] hover:text-slate-600 dark:hover:text-[#E0E0E0]"
+                          className="absolute inset-y-0 right-0 pr-2 flex items-center text-slate-400 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
                         >
                           {showRegPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
                         </button>
@@ -1002,7 +1002,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-slate-700 dark:text-[#E0E0E0] mb-1">
+                      <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
                         Konfirmasi Sandi *
                       </label>
                       <input
@@ -1011,7 +1011,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                         onChange={e => setRegConfirmPassword(e.target.value)}
                         required
                         placeholder="Ulangi kata sandi"
-                        className="w-full px-3 py-2 bg-white dark:bg-[#1E1E1E] border border-slate-300 dark:border-[#444444] rounded-lg text-xs sm:text-sm text-slate-900 dark:text-[#E0E0E0] placeholder-slate-400 dark:placeholder-[#888888] focus:outline-hidden focus:border-indigo-600 dark:focus:border-sky-400 focus:ring-2 focus:ring-indigo-600/10"
+                        className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-xs sm:text-sm text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-400 focus:outline-hidden focus:border-indigo-600 dark:focus:border-sky-400 focus:ring-2 focus:ring-indigo-600/10"
                       />
                     </div>
                   </div>
@@ -1036,7 +1036,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                 </form>
 
                 <div className="text-center pt-2">
-                  <p className="text-xs text-slate-500 dark:text-[#B0B0B0]">
+                  <p className="text-xs text-slate-500 dark:text-slate-300">
                     Sudah memiliki akun?{' '}
                     <button
                       type="button"
@@ -1055,7 +1055,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
             )}
 
             {/* Footer Features Info */}
-            <div className="mt-5 pt-4 border-t border-slate-100 dark:border-[#444444] flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-500 dark:text-[#B0B0B0]">
+            <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-500 dark:text-slate-300">
               <span className="flex items-center gap-1">
                 <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                 <span>Surveyor: input & kelola survei mandiri</span>
@@ -1070,7 +1070,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
         </div>
 
         {/* Minimal Footer Note */}
-        <p className="text-center text-[11px] text-slate-500 dark:text-[#B0B0B0]">
+        <p className="text-center text-[11px] text-slate-500 dark:text-slate-300">
           Instrumen Pemetaan Bahasa & Dialektometri • Firebase Email Authentication
         </p>
 
@@ -1079,11 +1079,11 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
       {/* Forgot Password Modal */}
       {isForgotModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-[#444444] rounded-2xl max-w-sm w-full p-5 shadow-2xl text-left">
-            <h3 className="text-sm font-bold text-slate-900 dark:text-[#E0E0E0] mb-1">
+          <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-2xl max-w-sm w-full p-5 shadow-2xl text-left">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-200 mb-1">
               Atur Ulang Kata Sandi
             </h3>
-            <p className="text-xs text-slate-500 dark:text-[#B0B0B0] mb-4">
+            <p className="text-xs text-slate-500 dark:text-slate-300 mb-4">
               Masukkan alamat email Anda yang terdaftar pada Firebase untuk menerima tautan pemulihan kata sandi.
             </p>
 
@@ -1104,7 +1104,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
 
             <form onSubmit={handleSendResetEmail} className="space-y-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-[#E0E0E0] mb-1">
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
                   Alamat Email
                 </label>
                 <input
@@ -1113,7 +1113,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                   onChange={e => setForgotEmail(e.target.value)}
                   required
                   placeholder="nama@domain.com"
-                  className="w-full px-3 py-2 bg-white dark:bg-[#1E1E1E] border border-slate-300 dark:border-[#444444] rounded-lg text-xs text-slate-900 dark:text-[#E0E0E0] focus:outline-hidden focus:border-indigo-600"
+                  className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-xs text-slate-900 dark:text-slate-200 focus:outline-hidden focus:border-indigo-600"
                 />
               </div>
 
@@ -1121,7 +1121,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                 <button
                   type="button"
                   onClick={() => setIsForgotModalOpen(false)}
-                  className="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-[#B0B0B0] hover:bg-slate-100 dark:hover:bg-[#1E1E1E] cursor-pointer"
+                  className="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 cursor-pointer"
                 >
                   Tutup
                 </button>

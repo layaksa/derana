@@ -1148,10 +1148,10 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--background)] dark:bg-[#121212] flex text-[var(--foreground)] dark:text-[#E0E0E0] antialiased transition-colors">
+    <div className="min-h-screen bg-[var(--md-surface)] flex text-[var(--md-on-surface)] antialiased transition-colors">
       {/* Toast Notification */}
       {showToast && (
-        <div className="fixed bottom-16 lg:bottom-6 right-4 sm:right-6 z-50 flex items-center gap-2 px-4 py-2.5 rounded-md bg-white dark:bg-slate-900 text-[#0a0a0a] dark:text-slate-100 text-xs font-semibold shadow-xl border border-[#e5e5e5] dark:border-slate-800 transition-all">
+        <div className="fixed bottom-16 lg:bottom-6 right-4 sm:right-6 z-50 flex items-center gap-2 px-4 py-2.5 rounded-md bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 text-xs font-semibold shadow-xl border border-slate-200 dark:border-slate-800 transition-all">
           <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
           <span>{showToast}</span>
         </div>
@@ -1768,22 +1768,22 @@ export default function App() {
           {currentView === 'form-screen' && (
             <div className="space-y-6">
               {/* Stepper Header Bar */}
-              <div className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-lg p-3.5 sm:p-5 shadow-2xs transition-colors">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#e5e5e5] dark:border-slate-800">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-3.5 sm:p-5 shadow-2xs transition-colors">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
                   <div className="flex items-center gap-3">
-                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-md bg-[#1447e6] text-white font-bold text-xs shadow-2xs shrink-0">
+                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-md bg-blue-600 text-white font-bold text-xs shadow-2xs shrink-0">
                       {activeScreenNumber}
                     </span>
                     <div>
                       <div className="flex items-center gap-2">
-                        <h2 className="text-sm sm:text-base font-bold text-[#0a0a0a] dark:text-slate-100">
+                        <h2 className="text-sm sm:text-base font-bold text-slate-900 dark:text-slate-100">
                           {SECTIONS_META[activeScreenNumber - 1]?.title}
                         </h2>
-                        <span className="text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-md bg-[#f5f5f5] dark:bg-slate-800 text-[#737373] dark:text-slate-400 border border-[#e5e5e5] dark:border-slate-700">
+                        <span className="text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
                           {SECTIONS_META[activeScreenNumber - 1]?.category}
                         </span>
                       </div>
-                      <p className="text-xs text-[#737373] dark:text-slate-400 mt-0.5">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                         Layar {activeScreenNumber} dari 16 Bagian Instrumen Pemetaan Bahasa
                       </p>
                     </div>
@@ -1793,10 +1793,10 @@ export default function App() {
                     <button
                       type="button"
                       onClick={() => setCurrentView('form-all')}
-                      className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-[#f5f5f5] dark:bg-slate-800 hover:bg-[#e5e5e5] dark:hover:bg-slate-700 text-[#0a0a0a] dark:text-slate-200 border border-transparent dark:border-slate-700 rounded-md text-xs font-medium transition-colors"
+                      className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-slate-200 border border-transparent dark:border-slate-700 rounded-md text-xs font-medium transition-colors"
                       title="Tampilkan semua 16 seksi formulir dalam satu halaman panjang"
                     >
-                      <ListFilter className="w-3.5 h-3.5 text-[#737373] dark:text-slate-400" />
+                      <ListFilter className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                       <span>Mode Gulir Penuh</span>
                     </button>
 
@@ -1804,18 +1804,18 @@ export default function App() {
                       <div className="hidden sm:flex items-center gap-1.5">
                         <button
                           onClick={handleLoadSample}
-                          className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-[#fafafa] dark:bg-slate-800/80 hover:bg-[#f5f5f5] dark:hover:bg-slate-700 text-[#0a0a0a] dark:text-slate-200 border border-[#e5e5e5] dark:border-slate-700 rounded-md text-xs font-medium transition-colors"
+                          className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-slate-50 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-900 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium transition-colors"
                           title="Muat data sampel contoh"
                         >
-                          <Sparkles className="w-3.5 h-3.5 text-[#1447e6] dark:text-blue-400" />
+                          <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
                           <span>Sampel</span>
                         </button>
                         <button
                           onClick={handleResetEmpty}
-                          className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-[#fafafa] dark:bg-slate-800/80 hover:bg-[#f5f5f5] dark:hover:bg-slate-700 text-[#0a0a0a] dark:text-slate-200 border border-[#e5e5e5] dark:border-slate-700 rounded-md text-xs font-medium transition-colors"
+                          className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-slate-50 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-900 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-md text-xs font-medium transition-colors"
                           title="Kosongkan formulir aktif"
                         >
-                          <RotateCcw className="w-3.5 h-3.5 text-[#737373] dark:text-slate-400" />
+                          <RotateCcw className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                           <span>Kosongkan</span>
                         </button>
                       </div>
@@ -1836,10 +1836,10 @@ export default function App() {
                         onClick={() => handleScreenChange(sec.number)}
                         className={`group relative flex items-center justify-center min-w-9 h-9 sm:min-w-8 sm:h-8 px-2 rounded-md text-xs font-semibold transition-all shrink-0 cursor-pointer ${
                           isCurrent
-                            ? 'bg-[#1447e6] text-white shadow-2xs ring-2 ring-blue-300 dark:ring-blue-500 ring-offset-1 dark:ring-offset-slate-900'
+                            ? 'bg-blue-600 text-white shadow-2xs ring-2 ring-blue-300 dark:ring-blue-500 ring-offset-1 dark:ring-offset-slate-900'
                             : isPast
-                            ? 'bg-blue-50 dark:bg-blue-950/60 text-[#1447e6] dark:text-blue-300 border border-blue-200 dark:border-blue-900/50 hover:bg-blue-100 dark:hover:bg-blue-900/60'
-                            : 'bg-[#fafafa] dark:bg-slate-800/60 text-[#737373] dark:text-slate-400 border border-[#e5e5e5] dark:border-slate-700 hover:bg-[#f5f5f5] dark:hover:bg-slate-800'
+                            ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-300 border border-blue-200 dark:border-blue-900/50 hover:bg-blue-100 dark:hover:bg-blue-900/60'
+                            : 'bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800'
                         }`}
                         title={`${sec.number}. ${sec.title}${secErrors.length > 0 ? ` (${secErrors.length} kolom perlu perbaikan)` : ''}`}
                       >
@@ -1865,15 +1865,15 @@ export default function App() {
                 </div>
 
                 {/* Progress Bar & Section Error Summary */}
-                <div className="mt-2.5 flex items-center justify-between gap-2 text-[11px] text-[#737373] dark:text-slate-400">
+                <div className="mt-2.5 flex items-center justify-between gap-2 text-[11px] text-slate-500 dark:text-slate-400">
                   <div className="flex-1 flex items-center gap-2">
-                    <div className="flex-1 h-1.5 bg-[#f5f5f5] dark:bg-slate-800 rounded-full overflow-hidden">
+                    <div className="flex-1 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-[#1447e6] dark:bg-blue-500 transition-all duration-300"
+                        className="h-full bg-blue-600 dark:bg-blue-500 transition-all duration-300"
                         style={{ width: `${Math.round((activeScreenNumber / 16) * 100)}%` }}
                       />
                     </div>
-                    <span className="font-semibold text-[#0a0a0a] dark:text-slate-200 shrink-0">
+                    <span className="font-semibold text-slate-900 dark:text-slate-200 shrink-0">
                       {Math.round((activeScreenNumber / 16) * 100)}% Selesai
                     </span>
                   </div>
@@ -2037,7 +2037,7 @@ export default function App() {
               <div className="space-y-6">
 
                 {/* Floating Bottom Action Bar: Responsive for all Mobile Aspect Ratios */}
-                <div className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-lg p-3 sm:p-4 shadow-md flex flex-col sm:flex-row items-center justify-between gap-3 sticky bottom-[64px] lg:bottom-4 z-20 transition-colors">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-3 sm:p-4 shadow-md flex flex-col sm:flex-row items-center justify-between gap-3 sticky bottom-[64px] lg:bottom-4 z-20 transition-colors">
                   <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-start">
                     <button
                       type="button"
@@ -2045,15 +2045,15 @@ export default function App() {
                       disabled={activeScreenNumber === 1}
                       className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-md text-xs font-semibold transition-colors min-h-[44px] sm:min-h-0 ${
                         activeScreenNumber === 1
-                          ? 'bg-[#f5f5f5] dark:bg-slate-800 text-[#737373] dark:text-slate-500 cursor-not-allowed border border-[#e5e5e5] dark:border-slate-700'
-                          : 'bg-white dark:bg-slate-800 text-[#0a0a0a] dark:text-slate-200 hover:bg-[#f5f5f5] dark:hover:bg-slate-700 border border-[#e5e5e5] dark:border-slate-700 shadow-2xs hover:text-[#1447e6] dark:hover:text-blue-400 cursor-pointer'
+                          ? 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-500 cursor-not-allowed border border-slate-200 dark:border-slate-700'
+                          : 'bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 shadow-2xs hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer'
                       }`}
                     >
                       <ChevronLeft className="w-4 h-4" />
                       <span>Kembali</span>
                     </button>
 
-                    <span className="text-xs text-[#737373] dark:text-slate-400 font-medium sm:hidden">
+                    <span className="text-xs text-slate-500 dark:text-slate-400 font-medium sm:hidden">
                       Layar {activeScreenNumber} dari 16
                     </span>
                   </div>
@@ -2092,7 +2092,7 @@ export default function App() {
                       <button
                         type="button"
                         onClick={() => handleScreenChange(activeScreenNumber + 1)}
-                        className="inline-flex items-center justify-center gap-1.5 px-5 py-2 rounded-md text-xs font-semibold text-white bg-[#1447e6] hover:bg-[#103cc2] shadow-2xs transition-colors cursor-pointer min-h-[44px] sm:min-h-0 flex-1 sm:flex-none"
+                        className="inline-flex items-center justify-center gap-1.5 px-5 py-2 rounded-md text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-2xs transition-colors cursor-pointer min-h-[44px] sm:min-h-0 flex-1 sm:flex-none"
                       >
                         <span>Selanjutnya</span>
                         <ChevronRight className="w-4 h-4" />
@@ -2105,7 +2105,7 @@ export default function App() {
                           setCurrentView('dashboard');
                           triggerToast('Kuesioner lengkap telah disimpan. Menampilkan ringkasan data survei.');
                         }}
-                        className="inline-flex items-center justify-center gap-1.5 px-5 py-2 rounded-md text-xs font-semibold text-white bg-[#1447e6] hover:bg-[#103cc2] shadow-2xs transition-colors cursor-pointer min-h-[44px] sm:min-h-0 flex-1 sm:flex-none"
+                        className="inline-flex items-center justify-center gap-1.5 px-5 py-2 rounded-md text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-2xs transition-colors cursor-pointer min-h-[44px] sm:min-h-0 flex-1 sm:flex-none"
                       >
                         <span>Selesai & Buka Dashboard</span>
                         <CheckCircle2 className="w-4 h-4" />
@@ -2120,19 +2120,19 @@ export default function App() {
           {/* VIEW: FORM ALL-SECTIONS CONTINUOUS FLOW */}
           {currentView === 'form-all' && (
             <div className="space-y-6">
-              <div className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-lg p-3 sm:p-4 shadow-2xs flex items-center justify-between transition-colors">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-3 sm:p-4 shadow-2xs flex items-center justify-between transition-colors">
                 <div>
-                  <h2 className="text-sm sm:text-base font-bold text-[#0a0a0a] dark:text-slate-100">
+                  <h2 className="text-sm sm:text-base font-bold text-slate-900 dark:text-slate-100">
                     Mode Gulir Penuh (Seluruh 16 Seksi)
                   </h2>
-                  <p className="text-xs text-[#737373] dark:text-slate-400">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     Gulir ke bawah untuk mengisi seluruh bagian formulir dalam satu halaman.
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={() => setCurrentView('form-screen')}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#1447e6] text-white rounded-md text-xs font-semibold shadow-2xs cursor-pointer hover:bg-[#103cc2] transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 text-white rounded-md text-xs font-semibold shadow-2xs cursor-pointer hover:bg-blue-700 transition-colors"
                 >
                   <Layers className="w-3.5 h-3.5" />
                   <span>Mode 16 Layar</span>
@@ -2240,8 +2240,8 @@ export default function App() {
               </fieldset>
 
               {/* Bottom save bar */}
-              <div className="bg-white dark:bg-slate-900 border border-[#e5e5e5] dark:border-slate-800 rounded-lg p-4 shadow-xs flex items-center justify-between sticky bottom-[64px] lg:bottom-4 z-20 transition-colors">
-                <div className="text-xs text-[#737373] dark:text-slate-400">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4 shadow-xs flex items-center justify-between sticky bottom-[64px] lg:bottom-4 z-20 transition-colors">
+                <div className="text-xs text-slate-500 dark:text-slate-400">
                   Menampilkan seluruh 16 bagian kuesioner. Anda juga dapat beralih ke tampilan per-layar.
                 </div>
                 <div className="flex items-center gap-2">
@@ -2251,9 +2251,9 @@ export default function App() {
                       setCurrentView('form-screen');
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold text-[#0a0a0a] dark:text-slate-200 bg-[#f5f5f5] dark:bg-slate-800 hover:bg-[#e5e5e5] dark:hover:bg-slate-700 transition-colors border border-transparent dark:border-slate-700"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold text-slate-900 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors border border-transparent dark:border-slate-700"
                   >
-                    <Layers className="w-3.5 h-3.5 text-[#1447e6] dark:text-blue-400" />
+                    <Layers className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
                     <span>Mode 16 Layar</span>
                   </button>
                   {canEditActive.allowed && (
@@ -2287,7 +2287,7 @@ export default function App() {
       {/* Floating Action Button: Back to Top */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="fixed bottom-22 sm:bottom-24 left-4 sm:left-6 z-30 p-2.5 rounded-xl bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-[#e5e5e5] dark:border-slate-700 text-[#737373] dark:text-slate-300 hover:text-[#1447e6] dark:hover:text-blue-400 shadow-lg transition-all hover:bg-white dark:hover:bg-slate-700 cursor-pointer"
+        className="fixed bottom-22 sm:bottom-24 left-4 sm:left-6 z-30 p-2.5 rounded-xl bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 shadow-lg transition-all hover:bg-white dark:hover:bg-slate-700 cursor-pointer"
         title="Kembali ke atas"
       >
         <ArrowUp className="w-4 h-4" />

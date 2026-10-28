@@ -294,22 +294,22 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
     <div className="space-y-6">
       
       {/* View Header with Bento Overview Strip */}
-      <div className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-[#444444] rounded-2xl p-5 sm:p-6 shadow-xs transition-colors">
+      <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 sm:p-6 shadow-xs transition-colors">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="flex items-start gap-3.5">
-            <div className="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-[#1E1E1E] text-indigo-600 dark:text-sky-400 flex items-center justify-center shrink-0 border border-indigo-100 dark:border-[#444444] shadow-xs">
+            <div className="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-slate-900 text-indigo-600 dark:text-sky-400 flex items-center justify-center shrink-0 border border-indigo-100 dark:border-slate-700 shadow-xs">
               <Globe2 className="w-6 h-6" />
             </div>
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-[#E0E0E0]">
+                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-200">
                   Data Responden & Narasumber Per Provinsi
                 </h1>
-                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-indigo-50 dark:bg-[#1E1E1E] text-indigo-700 dark:text-sky-300 border border-indigo-200/80 dark:border-[#444444]">
+                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-indigo-50 dark:bg-slate-900 text-indigo-700 dark:text-sky-300 border border-indigo-200/80 dark:border-slate-700">
                   Matriks Wilayah
                 </span>
               </div>
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-[#B0B0B0] mt-1 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
                 Inventarisasi profil narasumber penutur asli untuk instrumen pemetaan dialektometri yang dikelompokkan secara terstruktur per provinsi dan per desa.
               </p>
             </div>
@@ -350,51 +350,51 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
         </div>
 
         {/* Bento Stats Matrix */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-5 border-t border-slate-100 dark:border-[#444444]">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-5 border-t border-slate-100 dark:border-slate-700">
           
           {/* Card 1: Total Provinsi */}
-          <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#1E1E1E] border border-slate-200/80 dark:border-[#444444] flex items-center gap-3">
+          <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-700 flex items-center gap-3">
             <div className="w-9 h-9 rounded-lg bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-sky-400 flex items-center justify-center shrink-0">
               <Globe2 className="w-4.5 h-4.5" />
             </div>
             <div>
-              <p className="text-[11px] font-medium text-slate-500 dark:text-[#B0B0B0]">Provinsi Terdata</p>
-              <p className="text-base font-bold text-slate-900 dark:text-[#E0E0E0]">{overallStats.totalProvinces} Provinsi</p>
+              <p className="text-[11px] font-medium text-slate-500 dark:text-slate-300">Provinsi Terdata</p>
+              <p className="text-base font-bold text-slate-900 dark:text-slate-200">{overallStats.totalProvinces} Provinsi</p>
             </div>
           </div>
 
           {/* Card 2: Total Desa */}
-          <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#1E1E1E] border border-slate-200/80 dark:border-[#444444] flex items-center gap-3">
+          <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-700 flex items-center gap-3">
             <div className="w-9 h-9 rounded-lg bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 flex items-center justify-center shrink-0">
               <Building className="w-4.5 h-4.5" />
             </div>
             <div>
-              <p className="text-[11px] font-medium text-slate-500 dark:text-[#B0B0B0]">Titik Desa</p>
-              <p className="text-base font-bold text-slate-900 dark:text-[#E0E0E0]">{overallStats.totalVillages} Desa</p>
+              <p className="text-[11px] font-medium text-slate-500 dark:text-slate-300">Titik Desa</p>
+              <p className="text-base font-bold text-slate-900 dark:text-slate-200">{overallStats.totalVillages} Desa</p>
             </div>
           </div>
 
           {/* Card 3: Informan Terdata */}
-          <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#1E1E1E] border border-slate-200/80 dark:border-[#444444] flex items-center gap-3">
+          <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-700 flex items-center gap-3">
             <div className="w-9 h-9 rounded-lg bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 flex items-center justify-center shrink-0">
               <UserCheck className="w-4.5 h-4.5" />
             </div>
             <div>
-              <p className="text-[11px] font-medium text-slate-500 dark:text-[#B0B0B0]">Informan Terdata</p>
-              <p className="text-base font-bold text-slate-900 dark:text-[#E0E0E0]">
+              <p className="text-[11px] font-medium text-slate-500 dark:text-slate-300">Informan Terdata</p>
+              <p className="text-base font-bold text-slate-900 dark:text-slate-200">
                 {overallStats.filledInformants} <span className="text-xs font-normal text-slate-400">/ {overallStats.totalInformants}</span>
               </p>
             </div>
           </div>
 
           {/* Card 4: Kriteria Dialektologi */}
-          <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#1E1E1E] border border-slate-200/80 dark:border-[#444444] flex items-center gap-3">
+          <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-700 flex items-center gap-3">
             <div className="w-9 h-9 rounded-lg bg-sky-100 dark:bg-sky-950/60 text-sky-700 dark:text-sky-400 flex items-center justify-center shrink-0">
               <ShieldCheck className="w-4.5 h-4.5" />
             </div>
             <div>
-              <p className="text-[11px] font-medium text-slate-500 dark:text-[#B0B0B0]">Sesuai Kriteria (25–65 th)</p>
-              <p className="text-base font-bold text-slate-900 dark:text-[#E0E0E0]">
+              <p className="text-[11px] font-medium text-slate-500 dark:text-slate-300">Sesuai Kriteria (25–65 th)</p>
+              <p className="text-base font-bold text-slate-900 dark:text-slate-200">
                 {overallStats.validCriteriaCount} Penutur
               </p>
             </div>
@@ -404,26 +404,26 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
       </div>
 
       {/* FILTER PER PROVINSI & PER DESA */}
-      <div className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-[#444444] rounded-2xl p-4 sm:p-5 shadow-xs space-y-4 transition-colors">
+      <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 sm:p-5 shadow-xs space-y-4 transition-colors">
         
         {/* Search & Gender filter row */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
           
           {/* Search Input */}
           <div className="relative flex-1">
-            <Search className="w-4 h-4 text-slate-400 dark:text-[#888888] absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-slate-400 dark:text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
               placeholder="Cari nama responden, provinsi, nama desa, pekerjaan, atau bahasa..."
-              className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#1E1E1E] border border-slate-200 dark:border-[#444444] rounded-xl text-xs sm:text-sm text-slate-900 dark:text-[#E0E0E0] placeholder-slate-400 dark:placeholder-[#888888] focus:outline-hidden focus:border-indigo-600 dark:focus:border-sky-400"
+              className="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-400 focus:outline-hidden focus:border-indigo-600 dark:focus:border-sky-400"
             />
             {searchTerm && (
               <button
                 type="button"
                 onClick={() => setSearchTerm('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-[#E0E0E0]"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -431,14 +431,14 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
           </div>
 
           {/* Gender Filter Buttons */}
-          <div className="flex items-center gap-1 bg-slate-100 dark:bg-[#1E1E1E] p-1 rounded-xl text-xs self-start sm:self-auto border border-slate-200/80 dark:border-[#444444]">
+          <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-900 p-1 rounded-xl text-xs self-start sm:self-auto border border-slate-200/80 dark:border-slate-700">
             <button
               type="button"
               onClick={() => setGenderFilter('all')}
               className={`px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer ${
                 genderFilter === 'all'
-                  ? 'bg-white dark:bg-[#121212] text-indigo-700 dark:text-sky-300 shadow-2xs'
-                  : 'text-slate-600 dark:text-[#B0B0B0] hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-white dark:bg-slate-950 text-indigo-700 dark:text-sky-300 shadow-2xs'
+                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               Semua Gender
@@ -448,8 +448,8 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
               onClick={() => setGenderFilter('pria')}
               className={`px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer ${
                 genderFilter === 'pria'
-                  ? 'bg-white dark:bg-[#121212] text-indigo-700 dark:text-sky-300 shadow-2xs'
-                  : 'text-slate-600 dark:text-[#B0B0B0] hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-white dark:bg-slate-950 text-indigo-700 dark:text-sky-300 shadow-2xs'
+                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               Laki-laki
@@ -459,8 +459,8 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
               onClick={() => setGenderFilter('wanita')}
               className={`px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer ${
                 genderFilter === 'wanita'
-                  ? 'bg-white dark:bg-[#121212] text-indigo-700 dark:text-sky-300 shadow-2xs'
-                  : 'text-slate-600 dark:text-[#B0B0B0] hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-white dark:bg-slate-950 text-indigo-700 dark:text-sky-300 shadow-2xs'
+                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               Perempuan
@@ -470,13 +470,13 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
         </div>
 
         {/* TINGKAT 1: BILAH PILIHAN PROVINSI */}
-        <div className="pt-2 border-t border-slate-100 dark:border-[#444444]">
+        <div className="pt-2 border-t border-slate-100 dark:border-slate-700">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-[#888888] flex items-center gap-1.5">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400 flex items-center gap-1.5">
               <Globe2 className="w-3.5 h-3.5 text-indigo-500 dark:text-sky-400" />
               <span>1. Filter Berdasarkan Provinsi:</span>
             </span>
-            <span className="text-[11px] text-slate-400 dark:text-[#888888]">
+            <span className="text-[11px] text-slate-400 dark:text-slate-400">
               {allProvinces.length} Provinsi Aktif
             </span>
           </div>
@@ -492,7 +492,7 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 border ${
                 selectedProvinceFilter === 'all'
                   ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-                  : 'bg-slate-50 dark:bg-[#1E1E1E] text-slate-700 dark:text-[#B0B0B0] border-slate-200 dark:border-[#444444] hover:border-indigo-300'
+                  : 'bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-indigo-300'
               }`}
             >
               <Layers className="w-3.5 h-3.5" />
@@ -500,7 +500,7 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
               <span className={`px-1.5 py-0.2 rounded-full text-[10px] ${
                 selectedProvinceFilter === 'all'
                   ? 'bg-white/20 text-white'
-                  : 'bg-slate-200 dark:bg-[#444444] text-slate-700 dark:text-[#B0B0B0]'
+                  : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300'
               }`}>
                 {overallStats.totalVillages} Desa
               </span>
@@ -527,7 +527,7 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
                   className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 border ${
                     isSelected
                       ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-                      : 'bg-slate-50 dark:bg-[#1E1E1E] text-slate-700 dark:text-[#B0B0B0] border-slate-200 dark:border-[#444444] hover:border-indigo-300'
+                      : 'bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-indigo-300'
                   }`}
                 >
                   <MapPin className="w-3 h-3 shrink-0" />
@@ -547,9 +547,9 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
 
         {/* TINGKAT 2: BILAH PILIHAN DESA (Disesuaikan dengan Provinsi Terpilih) */}
         {availableVillages.length > 0 && (
-          <div className="pt-2 border-t border-slate-100 dark:border-[#444444]">
+          <div className="pt-2 border-t border-slate-100 dark:border-slate-700">
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-[#888888] flex items-center gap-1.5">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400 flex items-center gap-1.5">
                 <MapPin className="w-3.5 h-3.5 text-emerald-500" />
                 <span>2. Pilih Desa {selectedProvinceFilter !== 'all' ? `di ${selectedProvinceFilter}` : ''}:</span>
               </span>
@@ -562,7 +562,7 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
                 className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer border ${
                   selectedVillageFilter === 'all'
                     ? 'bg-emerald-600 text-white border-emerald-600 shadow-2xs'
-                    : 'bg-slate-50 dark:bg-[#1E1E1E] text-slate-600 dark:text-[#B0B0B0] border-slate-200 dark:border-[#444444] hover:bg-slate-100'
+                    : 'bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-100'
                 }`}
               >
                 Semua Desa ({availableVillages.length})
@@ -578,7 +578,7 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
                     className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer border ${
                       isSelected
                         ? 'bg-emerald-600 text-white border-emerald-600 shadow-2xs'
-                        : 'bg-slate-50 dark:bg-[#1E1E1E] text-slate-600 dark:text-[#B0B0B0] border-slate-200 dark:border-[#444444] hover:bg-slate-100'
+                        : 'bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-100'
                     }`}
                   >
                     Desa {vName}
@@ -593,14 +593,14 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
 
       {/* PROVINCE-BY-PROVINCE & VILLAGE BENTO SECTIONS */}
       {filteredProvinceGroups.length === 0 ? (
-        <div className="bg-white dark:bg-[#121212] border border-dashed border-slate-300 dark:border-[#444444] rounded-2xl p-10 text-center">
-          <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-[#1E1E1E] text-slate-400 flex items-center justify-center mx-auto mb-3">
+        <div className="bg-white dark:bg-slate-950 border border-dashed border-slate-300 dark:border-slate-700 rounded-2xl p-10 text-center">
+          <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-400 flex items-center justify-center mx-auto mb-3">
             <Search className="w-6 h-6" />
           </div>
-          <h3 className="text-sm font-bold text-slate-800 dark:text-[#E0E0E0] mb-1">
+          <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 mb-1">
             Tidak Ada Responden di Provinsi Ini
           </h3>
-          <p className="text-xs text-slate-500 dark:text-[#B0B0B0] max-w-sm mx-auto mb-4">
+          <p className="text-xs text-slate-500 dark:text-slate-300 max-w-sm mx-auto mb-4">
             Tidak ditemukan responden untuk kata kunci pencarian atau filter provinsi yang Anda pilih.
           </p>
           <button
@@ -611,7 +611,7 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
               setSelectedVillageFilter('all');
               setGenderFilter('all');
             }}
-            className="px-4 py-2 bg-indigo-50 dark:bg-[#1E1E1E] text-indigo-700 dark:text-sky-300 hover:bg-indigo-100 rounded-xl text-xs font-semibold cursor-pointer transition-colors"
+            className="px-4 py-2 bg-indigo-50 dark:bg-slate-900 text-indigo-700 dark:text-sky-300 hover:bg-indigo-100 rounded-xl text-xs font-semibold cursor-pointer transition-colors"
           >
             Reset Semua Filter
           </button>
@@ -632,28 +632,28 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
                 className="space-y-6"
               >
                 {/* PROVINCE BANNER HEADER */}
-                <div className="bg-white dark:bg-[#121212] text-slate-900 dark:text-[#E0E0E0] rounded-2xl p-5 sm:p-6 shadow-xs border border-slate-200 dark:border-[#444444] flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors">
+                <div className="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-200 rounded-2xl p-5 sm:p-6 shadow-xs border border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors">
                   <div className="flex items-center gap-3.5">
-                    <div className="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-[#1E1E1E] flex items-center justify-center text-indigo-600 dark:text-sky-400 border border-indigo-100 dark:border-[#444444] shrink-0 shadow-2xs">
+                    <div className="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-slate-900 flex items-center justify-center text-indigo-600 dark:text-sky-400 border border-indigo-100 dark:border-slate-700 shrink-0 shadow-2xs">
                       <Globe2 className="w-6 h-6" />
                     </div>
                     <div>
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 dark:bg-[#1E1E1E] text-indigo-700 dark:text-sky-300 border border-indigo-200/80 dark:border-[#444444] uppercase tracking-wider">
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 dark:bg-slate-900 text-indigo-700 dark:text-sky-300 border border-indigo-200/80 dark:border-slate-700 uppercase tracking-wider">
                           Wilayah Provinsi
                         </span>
-                        <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-[#E0E0E0]">
+                        <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-200">
                           Provinsi {province.provinceName}
                         </h2>
                       </div>
-                      <p className="text-xs sm:text-sm text-slate-600 dark:text-[#B0B0B0] mt-1">
-                        Tercakup <strong className="text-slate-800 dark:text-[#E0E0E0]">{province.villages.length} Desa Titik Pengamatan</strong> • <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{filledInfInProv} dari {totalInfInProv} Informan Lengkap</span>
+                      <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1">
+                        Tercakup <strong className="text-slate-800 dark:text-slate-200">{province.villages.length} Desa Titik Pengamatan</strong> • <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{filledInfInProv} dari {totalInfInProv} Informan Lengkap</span>
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2 self-start sm:self-auto">
-                    <span className="px-3.5 py-1.5 rounded-xl bg-slate-50 dark:bg-[#1E1E1E] text-slate-700 dark:text-[#B0B0B0] text-xs font-semibold border border-slate-200 dark:border-[#444444] flex items-center gap-1.5">
+                    <span className="px-3.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 text-xs font-semibold border border-slate-200 dark:border-slate-700 flex items-center gap-1.5">
                       <Layers className="w-3.5 h-3.5 text-indigo-600 dark:text-sky-400" />
                       <span>{province.villages.length} Titik Kuesioner</span>
                     </span>
@@ -668,24 +668,24 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
                     return (
                       <div 
                         key={village.villageName}
-                        className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-[#444444] rounded-2xl p-5 sm:p-6 shadow-xs space-y-5 transition-colors"
+                        className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 sm:p-6 shadow-xs space-y-5 transition-colors"
                       >
                         
                         {/* Village Sub-Header */}
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 dark:border-[#444444] gap-3">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-700 gap-3">
                           <div>
                             <div className="flex flex-wrap items-center gap-2">
-                              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-sky-300 border border-indigo-200/60 dark:border-[#444444]">
+                              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-sky-300 border border-indigo-200/60 dark:border-slate-700">
                                 Titik Pengamatan
                               </span>
-                              <h3 className="text-lg font-bold text-slate-900 dark:text-[#E0E0E0]">
+                              <h3 className="text-lg font-bold text-slate-900 dark:text-slate-200">
                                 Desa {village.villageName}
                               </h3>
                               <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
                                 {filledCount} dari {village.informants.length} Informan Terdata
                               </span>
                             </div>
-                            <div className="flex flex-wrap items-center gap-y-1 gap-x-3 text-xs text-slate-600 dark:text-[#B0B0B0] mt-1.5">
+                            <div className="flex flex-wrap items-center gap-y-1 gap-x-3 text-xs text-slate-600 dark:text-slate-300 mt-1.5">
                               <span className="flex items-center gap-1">
                                 <MapPin className="w-3.5 h-3.5 text-indigo-500 dark:text-sky-400 shrink-0" />
                                 <span>Kec. {village.kecamatan}, Kab. {village.kabupaten}</span>
@@ -693,10 +693,10 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
                               <span>•</span>
                               <span className="flex items-center gap-1">
                                 <Languages className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                                <span className="font-semibold text-slate-800 dark:text-[#E0E0E0]">{village.bahasa}</span>
+                                <span className="font-semibold text-slate-800 dark:text-slate-200">{village.bahasa}</span>
                               </span>
                               <span>•</span>
-                              <span className="text-slate-400 dark:text-[#888888]">
+                              <span className="text-slate-400 dark:text-slate-400">
                                 Peneliti: {village.createdByName}
                               </span>
                             </div>
@@ -705,7 +705,7 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
                           <button
                             type="button"
                             onClick={() => handleOpenSurvey(village.surveyId)}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 dark:bg-[#1E1E1E] hover:bg-indigo-50 dark:hover:bg-[#444444] text-indigo-600 dark:text-sky-400 border border-slate-200 dark:border-[#444444] rounded-xl text-xs font-semibold transition-colors cursor-pointer self-start sm:self-auto shrink-0"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-slate-700 text-indigo-600 dark:text-sky-400 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-semibold transition-colors cursor-pointer self-start sm:self-auto shrink-0"
                           >
                             <Edit3 className="w-3.5 h-3.5" />
                             <span>Buka Formulir</span>
@@ -726,22 +726,22 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
                               return (
                                 <div 
                                   key={`inf-empty-${surveyId}-${index}-${iIdx}`}
-                                  className="bg-slate-50/70 dark:bg-[#1E1E1E]/60 border border-dashed border-slate-300 dark:border-[#444444] rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left transition-colors"
+                                  className="bg-slate-50/70 dark:bg-slate-900/60 border border-dashed border-slate-300 dark:border-slate-700 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left transition-colors"
                                 >
                                   <div className="flex items-center gap-3.5">
-                                    <div className="w-10 h-10 rounded-xl bg-slate-200 dark:bg-[#121212] text-slate-400 flex items-center justify-center font-bold text-xs shrink-0">
+                                    <div className="w-10 h-10 rounded-xl bg-slate-200 dark:bg-slate-950 text-slate-400 flex items-center justify-center font-bold text-xs shrink-0">
                                       N{index + 1}
                                     </div>
                                     <div>
                                       <div className="flex items-center gap-2 justify-center sm:justify-start">
-                                        <h4 className="text-xs sm:text-sm font-bold text-slate-700 dark:text-[#E0E0E0]">
+                                        <h4 className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200">
                                           Informan Utama #{index + 1} (Belum Diinput)
                                         </h4>
                                         <span className="px-1.5 py-0.2 rounded text-[10px] font-semibold bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
                                           Kosong
                                         </span>
                                       </div>
-                                      <p className="text-[11px] text-slate-500 dark:text-[#B0B0B0] mt-0.5">
+                                      <p className="text-[11px] text-slate-500 dark:text-slate-300 mt-0.5">
                                         Slot narasumber ke-{index + 1} di Desa {village.villageName}, {province.provinceName}.
                                       </p>
                                     </div>
@@ -763,12 +763,12 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
                             return (
                               <div 
                                 key={`inf-card-${surveyId}-${index}-${iIdx}`}
-                                className="bg-slate-50/60 dark:bg-[#1E1E1E]/40 border border-slate-200/90 dark:border-[#444444] rounded-2xl p-4 sm:p-5 transition-all shadow-2xs hover:shadow-xs"
+                                className="bg-slate-50/60 dark:bg-slate-900/40 border border-slate-200/90 dark:border-slate-700 rounded-2xl p-4 sm:p-5 transition-all shadow-2xs hover:shadow-xs"
                               >
                                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
                                   
                                   {/* BENTO CARD 1: HERO IDENTITAS & STATUS (Span 4) */}
-                                  <div className="lg:col-span-4 bg-white dark:bg-[#121212] border border-slate-200/90 dark:border-[#444444] rounded-xl p-4 sm:p-5 flex flex-col justify-between shadow-2xs">
+                                  <div className="lg:col-span-4 bg-white dark:bg-slate-950 border border-slate-200/90 dark:border-slate-700 rounded-xl p-4 sm:p-5 flex flex-col justify-between shadow-2xs">
                                     <div>
                                       <div className="flex items-start justify-between gap-2 mb-3.5">
                                         <div className="flex items-center gap-3">
@@ -779,7 +779,7 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
                                             <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-sky-400">
                                               Informan Utama #{index + 1}
                                             </span>
-                                            <h4 className="text-base font-bold text-slate-900 dark:text-[#E0E0E0] leading-tight">
+                                            <h4 className="text-base font-bold text-slate-900 dark:text-slate-200 leading-tight">
                                               {n.nama}
                                             </h4>
                                           </div>
@@ -794,29 +794,29 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
                                         </span>
                                       </div>
 
-                                      <div className="space-y-2 py-2 border-t border-slate-100 dark:border-[#444444] text-xs">
+                                      <div className="space-y-2 py-2 border-t border-slate-100 dark:border-slate-700 text-xs">
                                         <div className="flex items-center justify-between">
-                                          <span className="text-slate-500 dark:text-[#888888] flex items-center gap-1.5">
+                                          <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                                             <Clock className="w-3.5 h-3.5 text-indigo-500 dark:text-sky-400" />
                                             <span>Usia:</span>
                                           </span>
-                                          <span className="font-bold text-slate-800 dark:text-[#E0E0E0]">
+                                          <span className="font-bold text-slate-800 dark:text-slate-200">
                                             {n.usia ? `${n.usia} Tahun` : '-'} {n.tahunKelahiran ? `(Lahir ${n.tahunKelahiran})` : ''}
                                           </span>
                                         </div>
                                         <div className="flex items-center justify-between">
-                                          <span className="text-slate-500 dark:text-[#888888] flex items-center gap-1.5">
+                                          <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                                             <Globe2 className="w-3.5 h-3.5 text-indigo-500 dark:text-sky-400" />
                                             <span>Provinsi:</span>
                                           </span>
-                                          <span className="font-semibold text-slate-800 dark:text-[#E0E0E0]">
+                                          <span className="font-semibold text-slate-800 dark:text-slate-200">
                                             {province.provinceName}
                                           </span>
                                         </div>
                                       </div>
 
-                                      <div className="mt-3 p-2.5 rounded-lg bg-slate-50 dark:bg-[#1E1E1E] border border-slate-200/80 dark:border-[#444444] space-y-1.5 text-[11px]">
-                                        <div className="font-bold text-slate-700 dark:text-[#E0E0E0] flex items-center justify-between">
+                                      <div className="mt-3 p-2.5 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-700 space-y-1.5 text-[11px]">
+                                        <div className="font-bold text-slate-700 dark:text-slate-200 flex items-center justify-between">
                                           <span>Kriteria Dialektologi</span>
                                           {criteria.allPassed ? (
                                             <span className="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
@@ -826,18 +826,18 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
                                             <span className="text-amber-600 dark:text-amber-400 font-medium">Perlu Cek</span>
                                           )}
                                         </div>
-                                        <div className="flex items-center gap-2 text-slate-600 dark:text-[#B0B0B0]">
+                                        <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
                                           <Check className={`w-3 h-3 ${criteria.isAgeValid ? 'text-emerald-600' : 'text-slate-300'}`} />
                                           <span>Usia 25–65 th ({n.usia || '-'} th)</span>
                                         </div>
-                                        <div className="flex items-center gap-2 text-slate-600 dark:text-[#B0B0B0]">
+                                        <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
                                           <Check className={`w-3 h-3 ${criteria.isNativeBorn ? 'text-emerald-600' : 'text-slate-300'}`} />
                                           <span>Penutur asli Desa {village.villageName}</span>
                                         </div>
                                       </div>
                                     </div>
 
-                                    <div className="mt-4 pt-3 border-t border-slate-100 dark:border-[#444444] flex items-center gap-2">
+                                    <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700 flex items-center gap-2">
                                       <button
                                         type="button"
                                         onClick={() => setActiveModalNarasumber({
@@ -847,7 +847,7 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
                                           surveyId: surveyId,
                                           index
                                         })}
-                                        className="flex-1 py-1.5 px-2.5 bg-indigo-50 dark:bg-[#1E1E1E] hover:bg-indigo-100 dark:hover:bg-[#444444] text-indigo-700 dark:text-sky-300 rounded-lg text-xs font-semibold text-center transition-colors cursor-pointer flex items-center justify-center gap-1"
+                                        className="flex-1 py-1.5 px-2.5 bg-indigo-50 dark:bg-slate-900 hover:bg-indigo-100 dark:hover:bg-slate-700 text-indigo-700 dark:text-sky-300 rounded-lg text-xs font-semibold text-center transition-colors cursor-pointer flex items-center justify-center gap-1"
                                       >
                                         <Eye className="w-3.5 h-3.5" />
                                         <span>Lihat Detail Lengkap</span>
@@ -855,7 +855,7 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
                                       <button
                                         type="button"
                                         onClick={() => handleOpenSurvey(surveyId)}
-                                        className="p-1.5 bg-slate-100 dark:bg-[#1E1E1E] hover:bg-slate-200 dark:hover:bg-[#444444] text-slate-700 dark:text-[#B0B0B0] rounded-lg transition-colors cursor-pointer"
+                                        className="p-1.5 bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg transition-colors cursor-pointer"
                                         title="Edit di Kuesioner (Layar 14)"
                                       >
                                         <Edit3 className="w-3.5 h-3.5" />
@@ -864,42 +864,42 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
                                   </div>
 
                                   {/* BENTO CARD 2: SITUASI KEBAHASAAN (Span 4) */}
-                                  <div className="lg:col-span-4 bg-white dark:bg-[#121212] border border-slate-200/90 dark:border-[#444444] rounded-xl p-4 sm:p-5 flex flex-col justify-between shadow-2xs">
+                                  <div className="lg:col-span-4 bg-white dark:bg-slate-950 border border-slate-200/90 dark:border-slate-700 rounded-xl p-4 sm:p-5 flex flex-col justify-between shadow-2xs">
                                     <div>
-                                      <div className="flex items-center gap-2 pb-2.5 border-b border-slate-100 dark:border-[#444444] mb-3">
+                                      <div className="flex items-center gap-2 pb-2.5 border-b border-slate-100 dark:border-slate-700 mb-3">
                                         <div className="p-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400">
                                           <Languages className="w-4 h-4" />
                                         </div>
-                                        <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-[#E0E0E0]">
+                                        <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
                                           Situasi Kebahasaan
                                         </h4>
                                       </div>
 
                                       <div className="space-y-2.5 text-xs">
                                         <div>
-                                          <span className="text-[11px] text-slate-500 dark:text-[#888888] block">Bahasa di Rumah (B1):</span>
+                                          <span className="text-[11px] text-slate-500 dark:text-slate-400 block">Bahasa di Rumah (B1):</span>
                                           <span className="font-bold text-indigo-600 dark:text-sky-400 text-sm">
                                             {n.bahasaDigunakan?.diRumah || village.bahasa || '-'}
                                           </span>
                                         </div>
 
-                                        <div className="grid grid-cols-2 gap-2 pt-1 border-t border-slate-100 dark:border-[#444444]">
+                                        <div className="grid grid-cols-2 gap-2 pt-1 border-t border-slate-100 dark:border-slate-700">
                                           <div>
-                                            <span className="text-[11px] text-slate-500 dark:text-[#888888] block">Di Masyarakat:</span>
-                                            <span className="font-semibold text-slate-800 dark:text-[#E0E0E0] truncate block">
+                                            <span className="text-[11px] text-slate-500 dark:text-slate-400 block">Di Masyarakat:</span>
+                                            <span className="font-semibold text-slate-800 dark:text-slate-200 truncate block">
                                               {n.bahasaDigunakan?.diMasyarakat || '-'}
                                             </span>
                                           </div>
                                           <div>
-                                            <span className="text-[11px] text-slate-500 dark:text-[#888888] block">Di Tempat Kerja:</span>
-                                            <span className="font-semibold text-slate-800 dark:text-[#E0E0E0] truncate block">
+                                            <span className="text-[11px] text-slate-500 dark:text-slate-400 block">Di Tempat Kerja:</span>
+                                            <span className="font-semibold text-slate-800 dark:text-slate-200 truncate block">
                                               {n.bahasaDigunakan?.diTempatKerja || '-'}
                                             </span>
                                           </div>
                                         </div>
 
-                                        <div className="pt-2 border-t border-slate-100 dark:border-[#444444]">
-                                          <span className="text-[11px] text-slate-500 dark:text-[#888888] block mb-1.5">
+                                        <div className="pt-2 border-t border-slate-100 dark:border-slate-700">
+                                          <span className="text-[11px] text-slate-500 dark:text-slate-400 block mb-1.5">
                                             Bahasa Lain yang Dikuasai:
                                           </span>
                                           {n.bahasaLainDikuasai && n.bahasaLainDikuasai.length > 0 ? (
@@ -907,7 +907,7 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
                                               {n.bahasaLainDikuasai.map((b, bIdx) => (
                                                 <span 
                                                   key={bIdx}
-                                                  className="px-2 py-0.5 rounded-md text-[10px] font-medium bg-slate-100 dark:bg-[#1E1E1E] text-slate-800 dark:text-[#E0E0E0] border border-slate-200 dark:border-[#444444] flex items-center gap-1"
+                                                  className="px-2 py-0.5 rounded-md text-[10px] font-medium bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 flex items-center gap-1"
                                                 >
                                                   <span>{b.namaBahasa}</span>
                                                   <span className="text-[9px] text-indigo-600 dark:text-sky-400 font-bold uppercase">
@@ -917,7 +917,7 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
                                               ))}
                                             </div>
                                           ) : (
-                                            <span className="text-slate-400 dark:text-[#888888] italic text-[11px]">
+                                            <span className="text-slate-400 dark:text-slate-400 italic text-[11px]">
                                               Hanya bahasa daerah {village.bahasa} & Indonesia.
                                             </span>
                                           )}
@@ -925,54 +925,54 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
                                       </div>
                                     </div>
 
-                                    <div className="mt-3 pt-2 text-[11px] text-slate-400 dark:text-[#888888] flex items-center gap-1">
+                                    <div className="mt-3 pt-2 text-[11px] text-slate-400 dark:text-slate-400 flex items-center gap-1">
                                       <Sparkles className="w-3 h-3 text-indigo-500" />
                                       <span>Rujukan glos dialektologi {province.provinceName}</span>
                                     </div>
                                   </div>
 
                                   {/* BENTO CARD 3: SOSIODEMOGRAFI & ASAL USUL (Span 4) */}
-                                  <div className="lg:col-span-4 bg-white dark:bg-[#121212] border border-slate-200/90 dark:border-[#444444] rounded-xl p-4 sm:p-5 flex flex-col justify-between shadow-2xs">
+                                  <div className="lg:col-span-4 bg-white dark:bg-slate-950 border border-slate-200/90 dark:border-slate-700 rounded-xl p-4 sm:p-5 flex flex-col justify-between shadow-2xs">
                                     <div>
-                                      <div className="flex items-center gap-2 pb-2.5 border-b border-slate-100 dark:border-[#444444] mb-3">
+                                      <div className="flex items-center gap-2 pb-2.5 border-b border-slate-100 dark:border-slate-700 mb-3">
                                         <div className="p-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400">
                                           <Briefcase className="w-4 h-4" />
                                         </div>
-                                        <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-[#E0E0E0]">
+                                        <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
                                           Sosiodemografi & Asal
                                         </h4>
                                       </div>
 
                                       <div className="space-y-2 text-xs">
-                                        <div className="flex items-center justify-between py-1 border-b border-slate-100 dark:border-[#444444]">
-                                          <span className="text-slate-500 dark:text-[#888888] flex items-center gap-1.5">
+                                        <div className="flex items-center justify-between py-1 border-b border-slate-100 dark:border-slate-700">
+                                          <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                                             <Briefcase className="w-3.5 h-3.5 text-slate-400" /> Pekerjaan:
                                           </span>
-                                          <span className="font-semibold text-slate-800 dark:text-[#E0E0E0] truncate max-w-[150px]">
+                                          <span className="font-semibold text-slate-800 dark:text-slate-200 truncate max-w-[150px]">
                                             {n.pekerjaan?.sebagaiApa || '-'}
                                           </span>
                                         </div>
 
-                                        <div className="flex items-center justify-between py-1 border-b border-slate-100 dark:border-[#444444]">
-                                          <span className="text-slate-500 dark:text-[#888888] flex items-center gap-1.5">
+                                        <div className="flex items-center justify-between py-1 border-b border-slate-100 dark:border-slate-700">
+                                          <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                                             <GraduationCap className="w-3.5 h-3.5 text-slate-400" /> Pendidikan:
                                           </span>
-                                          <span className="font-semibold text-slate-800 dark:text-[#E0E0E0]">
+                                          <span className="font-semibold text-slate-800 dark:text-slate-200">
                                             {n.pendidikanTertinggi || '-'}
                                           </span>
                                         </div>
 
-                                        <div className="flex items-center justify-between py-1 border-b border-slate-100 dark:border-[#444444]">
-                                          <span className="text-slate-500 dark:text-[#888888] flex items-center gap-1.5">
+                                        <div className="flex items-center justify-between py-1 border-b border-slate-100 dark:border-slate-700">
+                                          <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                                             <MapPin className="w-3.5 h-3.5 text-slate-400" /> Asal Lahir:
                                           </span>
-                                          <span className="font-semibold text-slate-800 dark:text-[#E0E0E0] truncate max-w-[150px]">
+                                          <span className="font-semibold text-slate-800 dark:text-slate-200 truncate max-w-[150px]">
                                             {n.tempatLahir?.desa ? `Desa ${n.tempatLahir.desa}` : `Desa ${village.villageName}`}
                                           </span>
                                         </div>
 
                                         <div className="flex items-center justify-between py-1">
-                                          <span className="text-slate-500 dark:text-[#888888] flex items-center gap-1.5">
+                                          <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                                             <Activity className="w-3.5 h-3.5 text-slate-400" /> Lama Tinggal:
                                           </span>
                                           <span className="font-semibold text-emerald-600 dark:text-emerald-400">
@@ -982,8 +982,8 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
                                       </div>
                                     </div>
 
-                                    <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-[#444444] flex items-center justify-between text-[11px]">
-                                      <span className="text-slate-400 dark:text-[#888888]">Media Sosial:</span>
+                                    <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between text-[11px]">
+                                      <span className="text-slate-400 dark:text-slate-400">Media Sosial:</span>
                                       <div className="flex items-center gap-1">
                                         {n.mediaSosial?.facebook && <span className="px-1.5 py-0.2 rounded bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 font-bold text-[9px]">FB</span>}
                                         {n.mediaSosial?.tiktok && <span className="px-1.5 py-0.2 rounded bg-pink-100 dark:bg-pink-950 text-pink-700 dark:text-pink-300 font-bold text-[9px]">TikTok</span>}
@@ -1016,24 +1016,24 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
       {/* DETAILED BENTO MODAL INSPECTOR */}
       {activeModalNarasumber && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-[#444444] rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative animate-in fade-in zoom-in-95 duration-150">
+          <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative animate-in fade-in zoom-in-95 duration-150">
             
             {/* Modal Header */}
-            <div className="flex items-start justify-between pb-4 border-b border-slate-200 dark:border-[#444444]">
+            <div className="flex items-start justify-between pb-4 border-b border-slate-200 dark:border-slate-700">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
                   {activeModalNarasumber.narasumber.nama.slice(0, 2).toUpperCase()}
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-[#E0E0E0]">
+                    <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-200">
                       {activeModalNarasumber.narasumber.nama}
                     </h3>
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 dark:bg-[#1E1E1E] text-indigo-700 dark:text-sky-300 border border-indigo-200 dark:border-[#444444]">
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 dark:bg-slate-900 text-indigo-700 dark:text-sky-300 border border-indigo-200 dark:border-slate-700">
                       Informan #{activeModalNarasumber.index + 1}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-500 dark:text-[#B0B0B0] mt-0.5">
+                  <p className="text-xs text-slate-500 dark:text-slate-300 mt-0.5">
                     Titik: <strong>Desa {activeModalNarasumber.villageName}</strong>, Provinsi <strong>{activeModalNarasumber.provinceName}</strong>
                   </p>
                 </div>
@@ -1042,7 +1042,7 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
               <button
                 type="button"
                 onClick={() => setActiveModalNarasumber(null)}
-                className="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-[#E0E0E0] rounded-lg transition-colors cursor-pointer"
+                className="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1052,12 +1052,12 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
             <div className="py-4 space-y-4">
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#1E1E1E] border border-slate-200/80 dark:border-[#444444] space-y-2">
-                  <h4 className="font-bold text-slate-800 dark:text-[#E0E0E0] flex items-center gap-1.5">
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-700 space-y-2">
+                  <h4 className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
                     <UserCheck className="w-4 h-4 text-indigo-600" />
                     <span>Identitas Responden</span>
                   </h4>
-                  <div className="space-y-1 text-slate-600 dark:text-[#B0B0B0]">
+                  <div className="space-y-1 text-slate-600 dark:text-slate-300">
                     <div><strong>Usia:</strong> {activeModalNarasumber.narasumber.usia || '-'} Tahun</div>
                     <div><strong>Tahun Lahir:</strong> {activeModalNarasumber.narasumber.tahunKelahiran || '-'}</div>
                     <div><strong>Jenis Kelamin:</strong> {activeModalNarasumber.narasumber.jenisKelamin === 'pria' ? 'Laki-laki' : 'Perempuan'}</div>
@@ -1065,12 +1065,12 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
                   </div>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#1E1E1E] border border-slate-200/80 dark:border-[#444444] space-y-2">
-                  <h4 className="font-bold text-slate-800 dark:text-[#E0E0E0] flex items-center gap-1.5">
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-700 space-y-2">
+                  <h4 className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
                     <Briefcase className="w-4 h-4 text-amber-600" />
                     <span>Pekerjaan & Mobilitas</span>
                   </h4>
-                  <div className="space-y-1 text-slate-600 dark:text-[#B0B0B0]">
+                  <div className="space-y-1 text-slate-600 dark:text-slate-300">
                     <div><strong>Pekerjaan:</strong> {activeModalNarasumber.narasumber.pekerjaan?.sebagaiApa || '-'}</div>
                     <div><strong>Lokasi Kerja:</strong> {activeModalNarasumber.narasumber.pekerjaan?.lokasiBekerja || 'Dalam Desa'}</div>
                     <div><strong>Lama Tinggal:</strong> {activeModalNarasumber.narasumber.lamaTinggalTahun ? `${activeModalNarasumber.narasumber.lamaTinggalTahun} Tahun` : 'Sejak Lahir'}</div>
@@ -1079,45 +1079,45 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
                 </div>
               </div>
 
-              <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#1E1E1E] border border-slate-200/80 dark:border-[#444444] text-xs space-y-2.5">
-                <h4 className="font-bold text-slate-800 dark:text-[#E0E0E0] flex items-center gap-1.5">
+              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-700 text-xs space-y-2.5">
+                <h4 className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
                   <Languages className="w-4 h-4 text-emerald-600" />
                   <span>Domain Penggunaan Bahasa</span>
                 </h4>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
-                  <div className="p-2 rounded-lg bg-white dark:bg-[#121212] border border-slate-200 dark:border-[#444444]">
+                  <div className="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700">
                     <span className="text-[10px] text-slate-400 block">Di Rumah (B1)</span>
                     <strong className="text-indigo-600 dark:text-sky-400 truncate block">
                       {activeModalNarasumber.narasumber.bahasaDigunakan?.diRumah || '-'}
                     </strong>
                   </div>
-                  <div className="p-2 rounded-lg bg-white dark:bg-[#121212] border border-slate-200 dark:border-[#444444]">
+                  <div className="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700">
                     <span className="text-[10px] text-slate-400 block">Di Masyarakat</span>
-                    <strong className="text-slate-800 dark:text-[#E0E0E0] truncate block">
+                    <strong className="text-slate-800 dark:text-slate-200 truncate block">
                       {activeModalNarasumber.narasumber.bahasaDigunakan?.diMasyarakat || '-'}
                     </strong>
                   </div>
-                  <div className="p-2 rounded-lg bg-white dark:bg-[#121212] border border-slate-200 dark:border-[#444444]">
+                  <div className="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700">
                     <span className="text-[10px] text-slate-400 block">Tempat Kerja</span>
-                    <strong className="text-slate-800 dark:text-[#E0E0E0] truncate block">
+                    <strong className="text-slate-800 dark:text-slate-200 truncate block">
                       {activeModalNarasumber.narasumber.bahasaDigunakan?.diTempatKerja || '-'}
                     </strong>
                   </div>
-                  <div className="p-2 rounded-lg bg-white dark:bg-[#121212] border border-slate-200 dark:border-[#444444]">
+                  <div className="p-2 rounded-lg bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700">
                     <span className="text-[10px] text-slate-400 block">Di Perjalanan</span>
-                    <strong className="text-slate-800 dark:text-[#E0E0E0] truncate block">
+                    <strong className="text-slate-800 dark:text-slate-200 truncate block">
                       {activeModalNarasumber.narasumber.bahasaDigunakan?.diPerjalanan || '-'}
                     </strong>
                   </div>
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#1E1E1E] border border-slate-200/80 dark:border-[#444444] text-xs space-y-1.5">
-                <h4 className="font-bold text-slate-800 dark:text-[#E0E0E0] flex items-center gap-1.5">
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-700 text-xs space-y-1.5">
+                <h4 className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
                   <MapPin className="w-4 h-4 text-rose-500" />
                   <span>Tempat Lahir & Asal Wilayah</span>
                 </h4>
-                <p className="text-slate-600 dark:text-[#B0B0B0]">
+                <p className="text-slate-600 dark:text-slate-300">
                   Lahir di: <strong>Desa {activeModalNarasumber.narasumber.tempatLahir?.desa || activeModalNarasumber.villageName}</strong>, Kec. {activeModalNarasumber.narasumber.tempatLahir?.kecamatan || '-'}, Kab. {activeModalNarasumber.narasumber.tempatLahir?.kabupatenKota || '-'}, Provinsi {activeModalNarasumber.provinceName}
                 </p>
               </div>
@@ -1125,11 +1125,11 @@ export const DataRespondenView: React.FC<DataRespondenViewProps> = ({
             </div>
 
             {/* Modal Footer Actions */}
-            <div className="pt-3 border-t border-slate-200 dark:border-[#444444] flex items-center justify-between gap-2">
+            <div className="pt-3 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between gap-2">
               <button
                 type="button"
                 onClick={() => setActiveModalNarasumber(null)}
-                className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-[#B0B0B0] hover:bg-slate-100 dark:hover:bg-[#1E1E1E] transition-colors cursor-pointer"
+                className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors cursor-pointer"
               >
                 Tutup
               </button>

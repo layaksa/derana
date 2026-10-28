@@ -1675,7 +1675,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                         className={`h-2.5 rounded-full transition-all duration-500 ${
                           survey.progress === 100 
                             ? 'bg-emerald-500' 
-                            : 'bg-[#1c5fff]'
+                            : 'bg-blue-600'
                         }`}
                         style={{ width: `${survey.progress}%` }}
                       />

@@ -15,68 +15,61 @@ interface FloatingBottomNavProps {
   activeSurveyProgress?: number;
 }
 
+const KUESIONER_VIEWS: ViewKey[] = [
+  'kuesioner',
+  'kuesioner-pemetaan',
+  'kuesioner-sastra-lisan',
+  'kuesioner-vitalitas',
+  'kuesioner-revitalisasi',
+  'form-screen',
+  'form-all',
+  'kondisi-bahasa',
+  'sastra-lisan',
+  'revitalisasi'
+];
+
 export const FloatingBottomNav: React.FC<FloatingBottomNavProps> = ({
   currentView,
-  onChangeView,
-  activeScreenNumber = 1,
-  activeSurveyProgress
+  onChangeView
 }) => {
-  const isDashboardActive = currentView === 'dashboard';
-  const isKuesionerActive = 
-    currentView === 'kuesioner' || 
-    currentView === 'kuesioner-pemetaan' || 
-    currentView === 'kuesioner-sastra-lisan' || 
-    currentView === 'kuesioner-vitalitas' || 
-    currentView === 'kuesioner-revitalisasi' || 
-    currentView === 'form-screen' || 
-    currentView === 'form-all' || 
-    currentView === 'kondisi-bahasa' || 
-    currentView === 'sastra-lisan' || 
-    currentView === 'revitalisasi';
-  const isKosakataActive = currentView === 'kosakata';
-  const isDialekPetaActive = currentView === 'dialektometri';
-
   const navItems = [
     {
       id: 'dashboard',
       label: 'Dashboard',
       icon: LayoutDashboard,
-      isActive: isDashboardActive,
-      onClick: () => onChangeView('dashboard'),
-      badge: null
+      isActive: currentView === 'dashboard',
+      onClick: () => onChangeView('dashboard')
     },
     {
       id: 'kuesioner',
       label: 'Kuesioner',
       icon: Layers,
-      isActive: isKuesionerActive,
-      onClick: () => onChangeView('kuesioner'),
-      badge: null
+      isActive: KUESIONER_VIEWS.includes(currentView),
+      onClick: () => onChangeView('kuesioner')
     },
     {
       id: 'kosakata',
       label: 'Kosakata',
       icon: BookOpen,
-      isActive: isKosakataActive,
-      onClick: () => onChangeView('kosakata'),
-      badge: null
+      isActive: currentView === 'kosakata',
+      onClick: () => onChangeView('kosakata')
     },
     {
       id: 'dialek-peta',
       label: 'Dialek/Peta',
       icon: Compass,
-      isActive: isDialekPetaActive,
-      onClick: () => onChangeView('dialektometri'),
-      badge: null
+      isActive: currentView === 'dialektometri',
+      onClick: () => onChangeView('dialektometri')
     }
   ];
 
   return (
     <aside 
-      className="fixed bottom-3.5 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.25rem)] max-w-sm sm:max-w-fit pointer-events-auto"
-      aria-label="Navigasi Utama Menggantung"
+      className="fixed bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.5rem)] max-w-md pointer-events-auto"
+      aria-label="Navigasi Utama"
     >
-      <nav className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200/90 dark:border-slate-800/90 shadow-[0_10px_35px_rgba(0,0,0,0.15)] dark:shadow-[0_16px_45px_rgba(0,0,0,0.6)] rounded-full p-1.5 sm:px-3 sm:py-2 flex items-center justify-between sm:justify-start gap-1 sm:gap-2 ring-1 ring-black/5 dark:ring-white/5 transition-all">
+      {/* M3 Navigation bar: surface-container with pill active indicators */}
+      <nav className="bg-[var(--md-surface-container)] dark:bg-[var(--md-surface-container-high)] shadow-lg rounded-[28px] px-2 py-2 flex items-stretch justify-between gap-1">
         {navItems.map((item) => {
           const Icon = item.icon;
           const active = item.isActive;
@@ -85,30 +78,26 @@ export const FloatingBottomNav: React.FC<FloatingBottomNavProps> = ({
               key={item.id}
               type="button"
               onClick={item.onClick}
-              className={`group relative flex-1 sm:flex-initial flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 px-2.5 sm:px-4 py-2 sm:py-2 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer select-none min-h-[44px] sm:min-h-0 ${
-                active
-                  ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-500/30 scale-[1.02]'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800/80 active:scale-95'
-              }`}
+              aria-current={active ? 'page' : undefined}
+              className="group flex-1 flex flex-col items-center justify-center gap-1 py-1 cursor-pointer select-none min-h-12"
               title={`Buka tampilan ${item.label}`}
             >
-              <div className="relative flex items-center justify-center">
-                <Icon className={`w-4 h-4 sm:w-4.5 sm:h-4.5 transition-transform group-hover:scale-110 ${
-                  active ? 'text-white' : 'text-slate-500 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-slate-100'
-                }`} />
-                {item.badge && (
-                  <span className={`absolute -top-1.5 -right-2.5 text-[8px] sm:text-[9px] px-1.5 py-0.2 rounded-full font-bold leading-tight ${
-                    active 
-                      ? 'bg-white text-blue-600 shadow-2xs' 
-                      : 'bg-blue-600 text-white'
-                  }`}>
-                    {item.badge}
-                  </span>
-                )}
-              </div>
-              <span className={`text-[10px] sm:text-xs whitespace-nowrap tracking-tight leading-none sm:leading-normal ${
-                active ? 'font-bold' : 'font-medium'
-              }`}>
+              <span
+                className={`flex items-center justify-center w-16 h-8 rounded-full transition-colors duration-200 ${
+                  active
+                    ? 'bg-blue-100 text-blue-950 dark:bg-blue-700 dark:text-blue-50'
+                    : 'text-[var(--md-on-surface-variant)] group-hover:bg-[var(--md-on-surface)]/[0.08]'
+                }`}
+              >
+                <Icon className="w-5 h-5" />
+              </span>
+              <span
+                className={`text-xs leading-4 whitespace-nowrap ${
+                  active
+                    ? 'font-semibold text-[var(--md-on-surface)]'
+                    : 'font-medium text-[var(--md-on-surface-variant)]'
+                }`}
+              >
                 {item.label}
               </span>
             </button>

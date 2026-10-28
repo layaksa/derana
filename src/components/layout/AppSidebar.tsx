@@ -341,26 +341,28 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
     : 'AD';
 
   const sidebarContent = (
-    <div className="flex flex-col h-full bg-[var(--sidebar)] dark:bg-slate-900 border-r border-[var(--sidebar-border)] dark:border-slate-800 select-none text-[var(--foreground)] dark:text-slate-100 transition-colors">
+    <div className="flex flex-col h-full bg-[var(--md-surface-container-low)] select-none text-[var(--md-on-surface)] transition-colors">
       
       {/* Brand Header */}
-      <div className="h-14 flex items-center justify-between px-3.5 border-b border-[#e5e5e5] dark:border-slate-800 shrink-0 bg-white dark:bg-slate-900 transition-colors">
+      <div className={`h-16 flex items-center justify-between shrink-0 transition-colors ${isCollapsedDesktop && !isOpenMobile ? 'px-3 justify-center' : 'px-5'}`}>
         <button
           type="button"
           onClick={() => handleSelect('dashboard')}
-          className="flex items-center gap-2.5 text-left focus:outline-hidden hover:opacity-85 transition-opacity"
+          className="flex items-center gap-3 text-left focus:outline-hidden hover:opacity-85 transition-opacity"
         >
-          <img 
-            src="/icons/logo.svg" 
-            alt="Derana" 
-            className="w-5 h-5 shrink-0"
-          />
+          <span className="w-10 h-10 rounded-2xl bg-[var(--md-surface-container-lowest)] dark:bg-[var(--md-surface-container-high)] shadow-xs flex items-center justify-center shrink-0">
+            <img 
+              src="/icons/logo.svg" 
+              alt="Derana" 
+              className="w-6 h-6"
+            />
+          </span>
           {(!isCollapsedDesktop || isOpenMobile) && (
             <div className="flex flex-col">
-              <span className="font-semibold text-sm tracking-tight text-[#0a0a0a] dark:text-white">
+              <span className="font-medium text-base text-[var(--md-on-surface)]">
                 Derana Panel
               </span>
-              <span className="text-[10px] text-[#737373] dark:text-slate-400 -mt-0.5">
+              <span className="text-xs text-[var(--md-on-surface-variant)] -mt-0.5">
                 {currentRole === 'admin' && 'Koordinator Riset Balai'}
                 {currentRole === 'verifikator' && 'Portal Kurasi & Validasi'}
                 {(currentRole === 'surveyor' || currentRole === 'user') && 'Pengumpul Data Lapangan'}
@@ -376,7 +378,7 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
             <button
               type="button"
               onClick={onCloseMobile}
-              className="p-1.5 rounded-md hover:bg-[#f5f5f5] dark:hover:bg-slate-800 text-[#737373] dark:text-slate-400 hover:text-[#0a0a0a] dark:hover:text-slate-100 transition-colors lg:hidden"
+              className="p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors lg:hidden"
               aria-label="Tutup sidebar"
             >
               <X className="w-5 h-5" />
@@ -387,8 +389,8 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
 
       {/* Role Banner on Expanded Sidebar */}
       {(!isCollapsedDesktop || isOpenMobile) && (
-        <div className="px-3.5 py-2.5 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
-          <div className="flex items-center gap-2 min-w-0">
+        <div className="mx-3 mt-1 px-4 py-3 rounded-t-3xl rounded-b-md bg-[var(--md-surface-container-lowest)] dark:bg-[var(--md-surface-container-high)] flex items-center justify-between">
+          <div className="flex items-center gap-3 min-w-0">
             {currentRole === 'admin' && <ShieldCheck className="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0" />}
             {currentRole === 'verifikator' && <GraduationCap className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />}
             {(currentRole === 'surveyor' || currentRole === 'user') && <UserCheck className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />}
@@ -413,9 +415,9 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
 
       {/* Observation Point Quick Status */}
       {(!isCollapsedDesktop || isOpenMobile) && villageName && (
-        <div className="px-3.5 py-2 bg-slate-50/60 dark:bg-slate-900/60 border-b border-slate-100 dark:border-slate-800/80">
-          <div className="flex items-center justify-between text-[10px] text-slate-400 dark:text-slate-500">
-            <span className="font-semibold uppercase tracking-wider">Titik Pantau</span>
+        <div className="mx-3 mt-0.5 px-4 py-2.5 rounded-t-md rounded-b-3xl bg-[var(--md-surface-container-lowest)] dark:bg-[var(--md-surface-container-high)]">
+          <div className="flex items-center justify-between text-[11px] text-[var(--md-on-surface-variant)]">
+            <span className="font-medium">Titik Pantau</span>
             <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-medium">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
               <span>Aktif</span>
@@ -428,11 +430,14 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
       )}
 
       {/* Scrollable Navigation Groups */}
-      <div className="flex-1 overflow-y-auto px-2.5 py-4 space-y-5 scrollbar-thin">
-        {navGroups.map(group => (
-          <div key={group.title} className="space-y-1">
+      <div className="flex-1 overflow-y-auto px-3 py-3 space-y-2 scrollbar-thin">
+        {navGroups.map((group, groupIndex) => (
+          <div key={group.title} className="space-y-0.5">
+            {groupIndex > 0 && (
+              <div className="mx-4 my-2 h-px bg-[var(--md-outline-variant)]" aria-hidden="true" />
+            )}
             {(!isCollapsedDesktop || isOpenMobile) && (
-              <div className="px-2.5 py-1 text-[10px] font-bold tracking-wider text-slate-400 dark:text-slate-500 uppercase">
+              <div className="px-4 pt-1.5 pb-1 text-sm font-medium text-[var(--md-on-surface-variant)]">
                 {group.title}
               </div>
             )}
@@ -452,16 +457,19 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
                     key={item.key}
                     type="button"
                     onClick={() => handleSelect(item.key)}
-                    className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all text-left ${
+                    aria-current={isActive ? 'page' : undefined}
+                    className={`w-full h-11 flex items-center gap-3 rounded-full text-sm transition-colors text-left ${
+                      isCollapsedDesktop && !isOpenMobile ? 'justify-center px-0' : 'px-4'
+                    } ${
                       isActive
-                        ? 'bg-[#1c5fff] text-white dark:bg-[#1c5fff] dark:text-white font-semibold shadow-xs'
-                        : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-white'
+                        ? 'bg-blue-100 text-blue-950 dark:bg-blue-700 dark:text-blue-50 font-semibold'
+                        : 'text-[var(--md-on-surface-variant)] font-medium hover:bg-[var(--md-on-surface)]/[0.08] hover:text-[var(--md-on-surface)]'
                     }`}
                     title={isCollapsedDesktop && !isOpenMobile ? item.label : undefined}
                   >
                     <Icon
-                      className={`w-4 h-4 shrink-0 transition-colors ${
-                        isActive ? 'text-white dark:text-white' : 'text-slate-400 dark:text-slate-500'
+                      className={`w-5 h-5 shrink-0 transition-colors ${
+                        isActive ? 'text-blue-800 dark:text-blue-50' : ''
                       }`}
                     />
                     {(!isCollapsedDesktop || isOpenMobile) && (
@@ -469,11 +477,7 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
                     )}
                     {(!isCollapsedDesktop || isOpenMobile) && item.badge && (
                       <span
-                        className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-medium ${
-                          isActive
-                            ? 'bg-white/20 text-white dark:bg-slate-900/20 dark:text-slate-900'
-                            : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
-                        }`}
+                        className="min-w-5 h-5 px-1.5 inline-flex items-center justify-center rounded-full text-[11px] font-medium bg-red-600 text-white dark:bg-red-200 dark:text-red-900"
                       >
                         {item.badge}
                       </span>
@@ -487,12 +491,13 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
       </div>
 
       {/* Sidebar Footer: Mode Tampilan, Konfigurasi & Role Actions */}
-      <div className="border-t border-[#e5e5e5] dark:border-slate-800 p-2 space-y-1.5 bg-white dark:bg-slate-900 shrink-0 transition-colors">
+      <div className="px-3 pt-2 pb-3 space-y-1.5 shrink-0 transition-colors">
+        <div className="mx-4 mb-2 h-px bg-[var(--md-outline-variant)]" aria-hidden="true" />
         
         {/* Theme mode toggle row in sidebar */}
         {(!isCollapsedDesktop || isOpenMobile) ? (
-          <div className="px-2 py-1 flex items-center justify-between bg-[#fafafa] dark:bg-[#1E1E1E] rounded-md border border-[#e5e5e5] dark:border-[#444444]">
-            <span className="text-[11px] font-medium text-[#737373] dark:text-slate-400">
+          <div className="pl-4 pr-1.5 py-1.5 flex items-center justify-between bg-[var(--md-surface-container-lowest)] dark:bg-[var(--md-surface-container-high)] rounded-full">
+            <span className="text-xs font-medium text-[var(--md-on-surface-variant)]">
               {t('navbar.theme', 'Mode Tema')}
             </span>
             <ThemeToggle variant="segmented" />
@@ -505,8 +510,8 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
 
         {/* Language selector row */}
         {(!isCollapsedDesktop || isOpenMobile) ? (
-          <div className="px-2 py-1 flex items-center justify-between bg-[#fafafa] dark:bg-[#1E1E1E] rounded-md border border-[#e5e5e5] dark:border-[#444444]">
-            <span className="text-[11px] font-medium text-[#737373] dark:text-slate-400">
+          <div className="pl-4 pr-1.5 py-1.5 flex items-center justify-between bg-[var(--md-surface-container-lowest)] dark:bg-[var(--md-surface-container-high)] rounded-full">
+            <span className="text-xs font-medium text-[var(--md-on-surface-variant)]">
               {t('navbar.language', 'Pilihan Bahasa')}
             </span>
             <LanguageSelector variant="segmented" />
@@ -536,7 +541,7 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
               onOpenPRD();
               onCloseMobile();
             }}
-            className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-md text-xs font-semibold text-blue-700 dark:text-blue-300 bg-blue-50/70 dark:bg-blue-950/40 hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors text-left border border-blue-200/60 dark:border-blue-800/60 cursor-pointer"
+            className="w-full h-10 flex items-center gap-3 px-4 rounded-full text-sm font-medium text-[var(--md-on-surface-variant)] hover:bg-[var(--md-on-surface)]/[0.08] hover:text-[var(--md-on-surface)] transition-colors text-left cursor-pointer"
             title="Buka Dokumen PRD"
           >
             <FileText className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
@@ -557,10 +562,10 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
               onChangeView('pengaturan');
               onCloseMobile();
             }}
-            className={`w-full flex items-center gap-2 px-2.5 py-2.5 rounded-xl text-xs font-bold transition-all text-left shadow-2xs cursor-pointer border ${
+            className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-3xl text-sm font-medium transition-colors text-left cursor-pointer ${
               currentView === 'pengaturan'
-                ? 'bg-purple-600 text-white border-purple-600 shadow-xs'
-                : 'text-purple-800 dark:text-purple-200 bg-purple-100/80 dark:bg-purple-950/70 hover:bg-purple-200/80 dark:hover:bg-purple-900/60 border-purple-300 dark:border-purple-700'
+                ? 'bg-purple-600 text-white'
+                : 'text-purple-900 dark:text-purple-100 bg-purple-100 dark:bg-purple-900/60 hover:bg-purple-200 dark:hover:bg-purple-800/70'
             }`}
             title="Buka Pengaturan & Pengguna"
           >
@@ -592,12 +597,12 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
                 onOpenRoleRequest();
                 onCloseMobile();
               }}
-              className={`w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-xs font-bold transition-all text-left shadow-2xs cursor-pointer border ${
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-3xl text-sm font-medium transition-colors text-left cursor-pointer ${
                 currentRole === 'tamu'
-                  ? 'bg-amber-100/80 dark:bg-amber-950/70 text-amber-900 dark:text-amber-200 border-amber-300 dark:border-amber-700 hover:bg-amber-200/80'
+                  ? 'bg-amber-100 dark:bg-amber-900/60 text-amber-900 dark:text-amber-100 hover:bg-amber-200'
                   : currentRole === 'verifikator'
-                  ? 'bg-emerald-100/80 dark:bg-emerald-950/70 text-emerald-900 dark:text-emerald-200 border-emerald-300 dark:border-emerald-700 hover:bg-emerald-200/80'
-                  : 'bg-blue-100/80 dark:bg-blue-950/70 text-blue-900 dark:text-blue-200 border-blue-300 dark:border-blue-700 hover:bg-blue-200/80'
+                  ? 'bg-emerald-100 dark:bg-emerald-900/60 text-emerald-900 dark:text-emerald-100 hover:bg-emerald-200'
+                  : 'bg-blue-100 dark:bg-blue-900/60 text-blue-900 dark:text-blue-100 hover:bg-blue-200'
               }`}
               title="Ajukan peran kepada Admin"
             >
@@ -618,7 +623,7 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
 
         {/* User Profile Card */}
         <div className="pt-0.5">
-          <div className="flex items-center gap-2.5 p-1.5 rounded-xl hover:bg-[#f5f5f5] dark:hover:bg-slate-800 transition-colors">
+          <div className="flex items-center gap-3 p-2 rounded-full hover:bg-[var(--md-on-surface)]/[0.08] transition-colors">
             <button
               type="button"
               onClick={() => {
@@ -636,14 +641,14 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
             </button>
             {(!isCollapsedDesktop || isOpenMobile) && (
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-semibold text-[#0a0a0a] dark:text-slate-100 truncate leading-tight">
+                <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 truncate leading-tight">
                   {currentUser?.name || 'Pengguna Riset'}
                 </p>
                 <div className="flex items-center gap-1.5 mt-0.5">
                   <span className={`text-[9px] font-bold px-1.5 py-0.2 rounded ${roleBadge.bg} ${roleBadge.text}`}>
                     {roleBadge.shortLabel}
                   </span>
-                  <span className="text-[10px] text-[#737373] dark:text-slate-400 truncate">
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400 truncate">
                     {currentUser?.username || 'user'}
                   </span>
                 </div>
@@ -653,7 +658,7 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
               <button
                 type="button"
                 onClick={onLogout}
-                className="p-1.5 text-[#737373] dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
+                className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
                 title="Keluar / Logout"
               >
                 <LogOut className="w-4 h-4" />
@@ -671,7 +676,7 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
       {/* Desktop Persistent Sidebar */}
       <aside
         className={`hidden lg:block shrink-0 transition-all duration-200 z-30 h-screen sticky top-0 ${
-          isCollapsedDesktop ? 'w-16' : 'w-64'
+          isCollapsedDesktop ? 'w-20' : 'w-72'
         }`}
       >
         {sidebarContent}
@@ -688,7 +693,7 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
 
       {/* Mobile Drawer Slider */}
       <div
-        className={`fixed inset-y-0 left-0 z-50 w-72 max-w-[82vw] bg-white dark:bg-slate-900 shadow-2xl transform transition-transform duration-300 ease-in-out lg:hidden border-r border-transparent dark:border-slate-800 ${
+        className={`fixed inset-y-0 left-0 z-50 w-80 max-w-[85vw] overflow-hidden rounded-r-[28px] bg-[var(--md-surface-container-low)] shadow-2xl transform transition-transform duration-300 ease-out lg:hidden ${
           isOpenMobile ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
