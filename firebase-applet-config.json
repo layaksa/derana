@@ -1,12 +1,9 @@
 {
-  "projectId": "steadfast-lore-tmn89",
-  "appId": "1:907558852342:web:ea51deef0d10fbfc0b3ed7",
-  "apiKey": "AIzaSyAFPh5hcK9fKXswf7r0coXI1Xnv8aIx7KY",
-  "authDomain": "steadfast-lore-tmn89.firebaseapp.com",
-  "firestoreDatabaseId": "ai-studio-sistempemetaanba-5231f94e-43ef-4d19-8673-dc8be73af21b",
-  "storageBucket": "steadfast-lore-tmn89.firebasestorage.app",
-  "messagingSenderId": "907558852342",
-  "measurementId": "",
-  "oAuthClientId": "907558852342-vf3ufhtoei8f77e4pa88up6ibcvrrjl7.apps.googleusercontent.com",
-  "recaptchaSiteKey": ""
+  "apiKey": "AIzaSyCKLgoofLPBZo0SYaL8_v9uXBpY153HO00",
+  "authDomain": "derana-alpha.firebaseapp.com",
+  "projectId": "derana-alpha",
+  "storageBucket": "derana-alpha.firebasestorage.app",
+  "messagingSenderId": "903897126867",
+  "appId": "1:903897126867:web:555e152a9bfe71411f0126",
+  "measurementId": "G-7K6FL1FN6N"
 }
