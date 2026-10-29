@@ -13,6 +13,8 @@ export const DEFAULT_USERS: AppUser[] = [
     name: 'Derana Admin (Koordinator Riset)',
     email: 'derana.apps@gmail.com',
     role: 'admin',
+    status: 'active',
+    isApproved: true,
     password: 'admin',
     institution: 'Badan Pengembangan dan Pembinaan Bahasa',
     assignedRegion: 'Nasional (Koordinator Utama)',
@@ -24,6 +26,8 @@ export const DEFAULT_USERS: AppUser[] = [
     name: 'Fadhillah Pandu Pradana, S.S.',
     email: 'fadhillah.admin@gmail.com',
     role: 'admin',
+    status: 'active',
+    isApproved: true,
     password: 'admin123',
     institution: 'Balai Bahasa Provinsi Maluku',
     assignedRegion: 'Kepulauan Maluku (Koordinator Wilayah)',
@@ -36,6 +40,8 @@ export const DEFAULT_USERS: AppUser[] = [
     name: 'Dr. Dewi Sartika, M.Hum.',
     email: 'dewi.verifikator@gmail.com',
     role: 'verifikator',
+    status: 'active',
+    isApproved: true,
     password: 'verifikator123',
     institution: 'Pusat Riset Dialektologi & Kurasi Bahasa',
     assignedRegion: 'Wilayah Barat & Kepulauan Riau (Kurator Linguistik)',
@@ -47,6 +53,8 @@ export const DEFAULT_USERS: AppUser[] = [
     name: 'Dr. Johanes Latuconsina, M.A.',
     email: 'johanes.verifikator@gmail.com',
     role: 'verifikator',
+    status: 'active',
+    isApproved: true,
     password: 'verifikator123',
     institution: 'Balai Bahasa Provinsi Maluku',
     assignedRegion: 'Wilayah Kepulauan Maluku & Papua Barat (Kurator)',
@@ -59,6 +67,8 @@ export const DEFAULT_USERS: AppUser[] = [
     name: 'Budi Santoso, S.S.',
     email: 'budi@pemetaan.id',
     role: 'surveyor',
+    status: 'active',
+    isApproved: true,
     password: 'user123',
     institution: 'Balai Bahasa Provinsi Jawa Barat',
     assignedRegion: 'Kabupaten Garut & Tasikmalaya (Petugas Pengumpul)',
@@ -70,6 +80,8 @@ export const DEFAULT_USERS: AppUser[] = [
     name: 'Fadhillah Pandu Pradana, S.S.',
     email: 'fadhillah@gmail.com',
     role: 'surveyor',
+    status: 'active',
+    isApproved: true,
     password: 'user123',
     institution: 'Balai Bahasa Provinsi Maluku',
     assignedRegion: 'Pulau Ambon & Kepulauan Lease (Wilayah Lapangan)',
@@ -81,6 +93,8 @@ export const DEFAULT_USERS: AppUser[] = [
     name: 'Siti Aminah, M.Pd.',
     email: 'siti@pemetaan.id',
     role: 'surveyor',
+    status: 'active',
+    isApproved: true,
     password: 'user123',
     institution: 'Balai Bahasa Provinsi Jawa Tengah',
     assignedRegion: 'Kabupaten Brebes & Cilacap (Perbatasan Sunda-Jawa)',
@@ -93,6 +107,8 @@ export const DEFAULT_USERS: AppUser[] = [
     name: 'Prof. Dr. Aris Munandar',
     email: 'aris.akademisi@gmail.com',
     role: 'tamu',
+    status: 'active',
+    isApproved: true,
     password: 'tamu',
     institution: 'Fakultas Ilmu Budaya / Peneliti Akademisi',
     assignedRegion: 'Peneliti Tamu (Mode Hanya Baca Data Empiris)',
@@ -104,6 +120,8 @@ export const DEFAULT_USERS: AppUser[] = [
     name: 'Alya Rahmawati (Mahasiswa Riset)',
     email: 'alya.riset@gmail.com',
     role: 'tamu',
+    status: 'active',
+    isApproved: true,
     password: 'tamu',
     institution: 'Laboratorium Dialektologi Universitas',
     assignedRegion: 'Peneliti Mahasiswa (Mode Hanya Baca)',
@@ -121,16 +139,20 @@ export function loadAllUsers(): AppUser[] {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) {
         let modified = false;
-        // Migrate any legacy @kemdikbud.go.id emails to @gmail.com
-        const merged: AppUser[] = parsed.map((u: AppUser) => {
-          if (u.email && u.email.includes('kemdikbud.go.id')) {
-            modified = true;
-            return {
-              ...u,
-              email: u.email.replace(/@([a-zA-Z0-9.-]+\.)?kemdikbud\.go\.id$/i, '@gmail.com')
-            };
-          }
-          return u;
+        // Migrate any legacy @kemdikbud.go.id emails to @gmail.com & ensure status
+        const merged: AppUser[] = parsed.map((u: any) => {
+          let role: UserRole = u.role;
+          if ((role as any) === 'user') role = 'surveyor';
+          const email = u.email ? u.email.replace(/@([a-zA-Z0-9.-]+\.)?kemdikbud\.go\.id$/i, '@gmail.com') : u.email;
+          const status: 'active' | 'pending' | 'rejected' = u.status || (role === 'surveyor' && u.isApproved === false ? 'pending' : 'active');
+          const isApproved = u.isApproved ?? (status === 'active');
+          return {
+            ...u,
+            email,
+            role,
+            status,
+            isApproved
+          };
         });
 
         // Ensure default key users exist and keep emails up-to-date
@@ -179,6 +201,8 @@ export function persistUsers(users: AppUser[]): void {
 
 /**
  * Register a new user
+ * - Tamu / Akademisi: status: 'active', isApproved: true
+ * - Surveyor Lapangan: status: 'pending', isApproved: false (requires Admin approval)
  */
 export function registerUser(newUserData: Omit<AppUser, 'id' | 'createdAt'>): { success: boolean; message: string; user?: AppUser } {
   const users = loadAllUsers();
@@ -198,8 +222,16 @@ export function registerUser(newUserData: Omit<AppUser, 'id' | 'createdAt'>): { 
     };
   }
 
+  const isSurveyor = newUserData.role === 'surveyor' || (newUserData.role as any) === 'user';
+  const role: UserRole = isSurveyor ? 'surveyor' : (newUserData.role || 'tamu');
+  const status: 'active' | 'pending' = isSurveyor ? 'pending' : 'active';
+  const isApproved = !isSurveyor;
+
   const newUser: AppUser = {
     ...newUserData,
+    role,
+    status,
+    isApproved,
     id: `user_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
     createdAt: new Date().toISOString()
   };
@@ -209,7 +241,9 @@ export function registerUser(newUserData: Omit<AppUser, 'id' | 'createdAt'>): { 
 
   return {
     success: true,
-    message: 'Pendaftaran akun berhasil!',
+    message: isSurveyor
+      ? 'Pendaftaran akun Surveyor Lapangan berhasil! Akun Anda sedang menunggu persetujuan dari Admin Sistem.'
+      : 'Pendaftaran akun Tamu/Akademisi berhasil! Akun Anda langsung aktif.',
     user: newUser
   };
 }
@@ -374,6 +408,7 @@ export function authenticateUser(identifier: string, passwordAttempt: string): {
 
 /**
  * Handle user logged in via Google (Firebase Auth or Google Identity Services)
+ * Ensures roles are never downgraded for existing users, and sets correct pending status for new surveyors.
  */
 export function loginOrRegisterGoogleUser(profile: {
   email: string;
@@ -381,6 +416,8 @@ export function loginOrRegisterGoogleUser(profile: {
   picture?: string;
   sub?: string;
   role?: UserRole;
+  status?: 'active' | 'pending' | 'rejected';
+  isApproved?: boolean;
   institution?: string;
   assignedRegion?: string;
   username?: string;
@@ -388,7 +425,7 @@ export function loginOrRegisterGoogleUser(profile: {
   const users = loadAllUsers();
   const cleanEmail = profile.email.trim().toLowerCase();
   const existing = users.find(u => u.email.toLowerCase() === cleanEmail);
-  const isAdminEmail = cleanEmail === 'derana.apps@gmail.com' || cleanEmail.includes('admin');
+  const isAdminEmail = cleanEmail === 'derana.apps@gmail.com' || cleanEmail === 'layaksa.studio@gmail.com' || cleanEmail.includes('admin');
 
   if (existing) {
     let changed = false;
@@ -403,11 +440,17 @@ export function loginOrRegisterGoogleUser(profile: {
       ];
       changed = true;
     }
+    // Always grant admin to verified admin emails
     if (isAdminEmail && existing.role !== 'admin') {
       existing.role = 'admin';
+      existing.status = 'active';
+      existing.isApproved = true;
       changed = true;
-    } else if (!isAdminEmail && existing.role !== 'tamu') {
-      existing.role = 'tamu';
+    }
+    // Keep existing status and isApproved if present, otherwise default based on role
+    if (!existing.status) {
+      existing.status = existing.role === 'surveyor' ? 'pending' : 'active';
+      existing.isApproved = existing.role !== 'surveyor';
       changed = true;
     }
     if (profile.picture && existing.avatar !== profile.picture) {
@@ -435,12 +478,33 @@ export function loginOrRegisterGoogleUser(profile: {
 
   // Create new user for Google Account
   const defaultUsername = cleanEmail.split('@')[0].replace(/[^a-zA-Z0-9_.]/g, '') || `google_${Date.now()}`;
+  
+  let newRole: UserRole = 'tamu';
+  let newStatus: 'active' | 'pending' = 'active';
+  let isApproved = true;
+
+  if (isAdminEmail) {
+    newRole = 'admin';
+    newStatus = 'active';
+    isApproved = true;
+  } else if (profile.role === 'surveyor' || (profile.role as any) === 'user') {
+    newRole = 'surveyor';
+    newStatus = profile.status || 'pending';
+    isApproved = profile.isApproved ?? false;
+  } else {
+    newRole = 'tamu';
+    newStatus = 'active';
+    isApproved = true;
+  }
+
   const newUser: AppUser = {
     id: `google_${profile.sub || Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
     username: profile.username || defaultUsername,
     name: profile.name || cleanEmail.split('@')[0],
     email: cleanEmail,
-    role: isAdminEmail ? 'admin' : 'tamu',
+    role: newRole,
+    status: newStatus,
+    isApproved,
     avatar: profile.picture,
     institution: profile.institution || (isAdminEmail ? 'Badan Pengembangan dan Pembinaan Bahasa' : 'Peneliti Mandiri / Balai Bahasa'),
     assignedRegion: profile.assignedRegion || (isAdminEmail ? 'Nasional (Koordinator Utama)' : 'Wilayah Lapangan'),
@@ -602,24 +666,35 @@ export function canUserVerifySurvey(currentUser: AppUser | null): boolean {
 
 /**
  * Check if user can create new surveys
- * - Admin, Verifikator, Surveyor can create
+ * - Admin, Verifikator, Surveyor (Active & Approved) can create
  * - Tamu (Read-Only) CANNOT create surveys
+ * - Surveyor with status 'pending' CANNOT create surveys until approved by Admin
  */
 export function canUserCreateSurvey(currentUser: AppUser | null): boolean {
   if (!currentUser) return false;
-  return currentUser.role !== 'tamu';
+  if (currentUser.role === 'tamu') return false;
+  if (currentUser.status === 'pending' || currentUser.isApproved === false) return false;
+  return true;
 }
 
 /**
  * Check if the active user can modify this specific survey
  * - Admin: Can modify all surveys
  * - Verifikator: Can modify / add curation notes and verification status
- * - Surveyor: Can modify their own survey
- * - Tamu: CANNOT edit (Read-Only Mode)
+ * - Surveyor (Active & Approved): Can modify their own survey
+ * - Pending Users & Tamu: CANNOT edit (Read-Only Mode)
  */
 export function canUserEditSurvey(survey: SurveyRecord | null | undefined, currentUser: AppUser | null): { allowed: boolean; reason?: string } {
   if (!currentUser) {
     return { allowed: false, reason: 'Silakan login terlebih dahulu untuk mengakses atau mengubah data kuesioner.' };
+  }
+
+  // Account Pending Approval Notice
+  if (currentUser.status === 'pending' || currentUser.isApproved === false) {
+    return {
+      allowed: false,
+      reason: 'Akun Anda sedang menunggu persetujuan dari Admin Sistem. Selama masa verifikasi penugasan, Anda hanya dapat melihat data dalam mode baca.'
+    };
   }
 
   // Tamu / Akademisi is strictly read-only
@@ -836,3 +911,87 @@ export function switchActiveUserRole(targetRole: UserRole): AppUser | null {
   updateUserByAdmin(current.id, { role: targetRole });
   return updatedUser;
 }
+
+/**
+ * Get all accounts pending approval (specifically users who registered as Surveyor)
+ */
+export function getPendingSurveyors(): AppUser[] {
+  const users = loadAllUsers();
+  return users.filter(u => u.status === 'pending' || (u.role === 'surveyor' && u.isApproved === false));
+}
+
+/**
+ * Admin action: Approve a pending Surveyor Lapangan registration
+ */
+export function approveSurveyorUser(userId: string, adminUser: AppUser): { success: boolean; user?: AppUser; message: string } {
+  if (adminUser.role !== 'admin') {
+    return { success: false, message: 'Hanya Admin Sistem yang berhak menyetujui pendaftaran surveyor.' };
+  }
+  const users = loadAllUsers();
+  const target = users.find(u => u.id === userId);
+  if (!target) {
+    return { success: false, message: 'Pengguna tidak ditemukan.' };
+  }
+
+  const now = new Date().toISOString();
+  const updatedUser: AppUser = {
+    ...target,
+    role: 'surveyor',
+    status: 'active',
+    isApproved: true,
+    approvedAt: now,
+    approvedBy: adminUser.name
+  };
+
+  const updatedUsers = users.map(u => u.id === userId ? updatedUser : u);
+  persistUsers(updatedUsers);
+
+  // If approving the active session user, update session as well
+  const current = getCurrentUser();
+  if (current && current.id === userId) {
+    setCurrentUserSession(updatedUser);
+  }
+
+  return {
+    success: true,
+    user: updatedUser,
+    message: `Akun Surveyor "${updatedUser.name}" berhasil disetujui dan telah aktif sepenuhnya.`
+  };
+}
+
+/**
+ * Admin action: Reject a pending Surveyor Lapangan registration (downgrades to 'tamu')
+ */
+export function rejectSurveyorUser(userId: string, adminUser: AppUser): { success: boolean; user?: AppUser; message: string } {
+  if (adminUser.role !== 'admin') {
+    return { success: false, message: 'Hanya Admin Sistem yang berhak menolak pendaftaran surveyor.' };
+  }
+  const users = loadAllUsers();
+  const target = users.find(u => u.id === userId);
+  if (!target) {
+    return { success: false, message: 'Pengguna tidak ditemukan.' };
+  }
+
+  const updatedUser: AppUser = {
+    ...target,
+    role: 'tamu',
+    status: 'rejected',
+    isApproved: false
+  };
+
+  const updatedUsers = users.map(u => u.id === userId ? updatedUser : u);
+  persistUsers(updatedUsers);
+
+  // If rejecting active session user, update session
+  const current = getCurrentUser();
+  if (current && current.id === userId) {
+    setCurrentUserSession(updatedUser);
+  }
+
+  return {
+    success: true,
+    user: updatedUser,
+    message: `Permohonan akun Surveyor "${updatedUser.name}" ditolak dan dialihkan ke mode Tamu/Akademisi.`
+  };
+}
+

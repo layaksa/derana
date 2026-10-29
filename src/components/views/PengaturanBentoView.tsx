@@ -26,7 +26,9 @@ import {
   Sparkles,
   Server,
   Lock,
-  ArrowRight
+  ArrowRight,
+  Clock,
+  UserX
 } from 'lucide-react';
 import { AppUser, UserRole, RoleRequest } from '../../types/auth';
 import { SurveyRecord } from '../../types/linguistic';
@@ -37,11 +39,19 @@ import {
   loadRoleRequests, 
   approveRoleRequest, 
   rejectRoleRequest,
+  getPendingSurveyors,
+  approveSurveyorUser,
+  rejectSurveyorUser,
   getRoleBadge, 
-  getRoleLabel,
+  getRoleLabel, 
   getRoleDescription 
 } from '../../utils/authStorage';
-import { firebaseConfig } from '../../lib/firebase';
+import { 
+  firebaseConfig,
+  approveUserInFirestore,
+  rejectUserInFirestore,
+  updateUserRoleInFirestore
+} from '../../lib/firebase';
 
 interface PengaturanBentoViewProps {
   currentUser: AppUser;
@@ -85,7 +95,9 @@ export const PengaturanBentoView: React.FC<PengaturanBentoViewProps> = ({
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
+  const [pendingSurveyors, setPendingSurveyors] = useState<AppUser[]>(() => getPendingSurveyors());
   const pendingRequests = roleRequests.filter(r => r.status === 'pending');
+  const totalPendingActionCount = pendingSurveyors.length + pendingRequests.length;
 
   // Role distribution counters
   const adminCount = users.filter(u => u.role === 'admin').length;
@@ -122,7 +134,26 @@ export const PengaturanBentoView: React.FC<PengaturanBentoViewProps> = ({
     }
     const updated = updateUserByAdmin(userId, { role: targetRole });
     setUsers(updated);
+    updateUserRoleInFirestore(userId, targetRole).catch(console.warn);
     setSuccessMsg(`Peran pengguna berhasil diperbarui menjadi "${getRoleLabel(targetRole)}".`);
+    if (onUserUpdated) onUserUpdated();
+  };
+
+  const handleApproveSurveyor = async (userId: string) => {
+    approveSurveyorUser(userId, currentUser);
+    await approveUserInFirestore(userId, currentUser.id).catch(console.warn);
+    setUsers(loadAllUsers());
+    setPendingSurveyors(getPendingSurveyors());
+    setSuccessMsg('Akun Surveyor Lapangan berhasil disetujui (Status: Aktif). Pengguna kini memiliki hak akses penuh untuk melakukan survei.');
+    if (onUserUpdated) onUserUpdated();
+  };
+
+  const handleRejectSurveyor = async (userId: string) => {
+    rejectSurveyorUser(userId, currentUser);
+    await rejectUserInFirestore(userId, currentUser.id).catch(console.warn);
+    setUsers(loadAllUsers());
+    setPendingSurveyors(getPendingSurveyors());
+    setSuccessMsg('Pengajuan akun Surveyor Lapangan telah ditolak.');
     if (onUserUpdated) onUserUpdated();
   };
 
@@ -326,10 +357,10 @@ export const PengaturanBentoView: React.FC<PengaturanBentoViewProps> = ({
             }`}
           >
             <Send className="w-3.5 h-3.5" />
-            <span>Permohonan Peran</span>
-            {pendingRequests.length > 0 && (
+            <span>Persetujuan & Permohonan</span>
+            {totalPendingActionCount > 0 && (
               <span className="px-1.5 py-0.2 rounded-full text-[10px] font-extrabold bg-amber-500 text-white animate-pulse">
-                {pendingRequests.length}
+                {totalPendingActionCount}
               </span>
             )}
           </button>
@@ -509,7 +540,7 @@ export const PengaturanBentoView: React.FC<PengaturanBentoViewProps> = ({
             </div>
           </div>
 
-          {/* BENTO 2: Antrean Permohonan Peran */}
+          {/* BENTO 2: Antrean Pengajuan Akun & Permohonan Peran */}
           <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 sm:p-6 shadow-xs flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-3">
@@ -519,16 +550,16 @@ export const PengaturanBentoView: React.FC<PengaturanBentoViewProps> = ({
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
-                      Permohonan Akses
+                      Persetujuan Akun
                     </h3>
                     <p className="text-xs text-slate-500 dark:text-slate-400">
-                      Antrean verifikasi hak peran
+                      Antrean verifikasi surveyor & peran
                     </p>
                   </div>
                 </div>
-                {pendingRequests.length > 0 ? (
+                {totalPendingActionCount > 0 ? (
                   <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-amber-500 text-white animate-pulse">
-                    {pendingRequests.length} Baru
+                    {totalPendingActionCount} Baru
                   </span>
                 ) : (
                   <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
@@ -537,24 +568,32 @@ export const PengaturanBentoView: React.FC<PengaturanBentoViewProps> = ({
                 )}
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-800 mt-2">
-                {pendingRequests.length > 0 ? (
-                  <div className="space-y-1.5">
-                    <div className="text-xs font-bold text-amber-800 dark:text-amber-300 flex items-center gap-1.5">
-                      <AlertCircle className="w-3.5 h-3.5 text-amber-600" />
-                      <span>{pendingRequests.length} pengguna menunggu persetujuan:</span>
+              <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-800 mt-2 space-y-2">
+                {pendingSurveyors.length > 0 && (
+                  <div className="p-2 rounded-xl bg-amber-100/70 dark:bg-amber-900/30 border border-amber-300 dark:border-amber-800 text-xs">
+                    <div className="font-bold text-amber-900 dark:text-amber-200 flex items-center gap-1.5">
+                      <Clock className="w-3.5 h-3.5 text-amber-600 animate-spin" />
+                      <span>{pendingSurveyors.length} Surveyor Baru Menunggu Persetujuan</span>
                     </div>
-                    <div className="text-xs text-slate-600 dark:text-slate-300 truncate">
-                      {pendingRequests[0].userName} → {getRoleLabel(pendingRequests[0].requestedRole)}
-                    </div>
-                    <div className="text-[10px] text-slate-400">
-                      "{pendingRequests[0].reason.slice(0, 45)}..."
+                    <div className="text-[11px] text-amber-800 dark:text-amber-300 truncate mt-0.5">
+                      {pendingSurveyors[0].name} ({pendingSurveyors[0].email})
                     </div>
                   </div>
-                ) : (
-                  <div className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                )}
+
+                {pendingRequests.length > 0 && (
+                  <div className="text-xs text-slate-700 dark:text-slate-300">
+                    <span className="font-semibold">{pendingRequests.length} permohonan peran: </span>
+                    <span className="truncate block text-slate-500 dark:text-slate-400">
+                      {pendingRequests[0].userName} → {getRoleLabel(pendingRequests[0].requestedRole)}
+                    </span>
+                  </div>
+                )}
+
+                {totalPendingActionCount === 0 && (
+                  <div className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1.5 py-1">
                     <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                    <span>Tidak ada permohonan tertunda. Seluruh hak akses telah dievaluasi.</span>
+                    <span>Tidak ada antrean tertunda. Seluruh akun dan hak akses telah disetujui.</span>
                   </div>
                 )}
               </div>
@@ -565,7 +604,7 @@ export const PengaturanBentoView: React.FC<PengaturanBentoViewProps> = ({
               onClick={() => setActiveTab('requests')}
               className="mt-4 w-full py-2 rounded-xl text-xs font-bold text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/60 hover:bg-purple-100 dark:hover:bg-purple-900/60 border border-purple-200 dark:border-purple-800 transition-colors flex items-center justify-center gap-1 cursor-pointer"
             >
-              <span>Buka Panel Permohonan</span>
+              <span>Buka Panel Persetujuan ({totalPendingActionCount})</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -1090,31 +1129,134 @@ export const PengaturanBentoView: React.FC<PengaturanBentoViewProps> = ({
       )}
 
       {/* =========================================================================
-          BENTO SECTION: PERMOHONAN PERAN MASUK
+          BENTO SECTION: PERSETUJUAN AKUN SURVEYOR & PERMOHONAN PERAN MASUK
           ========================================================================= */}
       {(activeTab === 'all' || activeTab === 'requests') && (
-        <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 sm:p-7 shadow-xs space-y-5">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-200/80 dark:border-slate-800">
-            <div>
-              <h2 className="text-2xl font-semibold text-slate-900 dark:text-white flex items-center gap-2">
-                <Send className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-                <span>Antrean Permohonan Peningkatan Hak Akses</span>
-              </h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                Evaluasi permohonan dari peneliti dan surveyor untuk dinaikkan hak perannya
-              </p>
+        <div className="space-y-6">
+          {/* PANEL 1: PENGAJUAN AKUN SURVEYOR LAPANGAN (MENUNGGU PERSETUJUAN ADMIN) */}
+          <div className="rounded-3xl border border-amber-300 dark:border-amber-700/80 bg-white dark:bg-slate-900 p-5 sm:p-7 shadow-xs space-y-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-amber-200/80 dark:border-amber-800/80">
+              <div>
+                <h2 className="text-2xl font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                  <Clock className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                  <span>Pengajuan Akun Surveyor Lapangan (Menunggu Persetujuan)</span>
+                </h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                  Pengguna baru yang mendaftar via Google / registrasi publik dan meminta hak akses sebagai Surveyor Lapangan
+                </p>
+              </div>
+              <span className={`px-3 py-1 rounded-xl text-xs font-bold border self-start sm:self-auto ${
+                pendingSurveyors.length > 0
+                  ? 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 border-amber-300 dark:border-amber-700 animate-pulse'
+                  : 'bg-emerald-50 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
+              }`}>
+                {pendingSurveyors.length} Menunggu Persetujuan
+              </span>
             </div>
-            <span className="px-3 py-1 rounded-xl text-xs font-bold bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 self-start sm:self-auto">
-              {pendingRequests.length} Menunggu Persetujuan
-            </span>
+
+            {pendingSurveyors.length === 0 ? (
+              <div className="p-8 text-center rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 text-xs text-slate-400">
+                <CheckCircle2 className="w-6 h-6 text-emerald-500 mx-auto mb-2 opacity-80" />
+                Tidak ada pengajuan akun surveyor baru yang tertunda. Semua akun surveyor telah dievaluasi.
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {pendingSurveyors.map((surveyor) => (
+                  <div 
+                    key={surveyor.id} 
+                    className="p-5 rounded-2xl border border-amber-300 dark:border-amber-700/80 bg-amber-50/50 dark:bg-amber-950/20 shadow-xs flex flex-col justify-between"
+                  >
+                    <div className="space-y-3">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-amber-200 dark:bg-amber-900 text-amber-900 dark:text-amber-100 flex items-center justify-center font-bold text-sm shrink-0">
+                            {surveyor.name.charAt(0).toUpperCase()}
+                          </div>
+                          <div>
+                            <div className="font-bold text-sm text-slate-900 dark:text-white">
+                              {surveyor.name}
+                            </div>
+                            <div className="text-xs text-slate-500 dark:text-slate-400">
+                              @{surveyor.username} • {surveyor.email}
+                            </div>
+                          </div>
+                        </div>
+
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-white animate-pulse">
+                          Pending
+                        </span>
+                      </div>
+
+                      <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs space-y-1 text-slate-700 dark:text-slate-300">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-slate-400">Institusi:</span>
+                          <span className="font-medium truncate">{surveyor.institution || 'Balai Bahasa / Riset Mandiri'}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                          <span className="text-slate-400">Wilayah:</span>
+                          <span className="font-medium truncate">{surveyor.assignedRegion || 'Wilayah Riset Lapangan'}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-[11px] text-slate-500 pt-1 border-t border-slate-100 dark:border-slate-800">
+                          <span>Terdaftar: {surveyor.createdAt ? new Date(surveyor.createdAt).toLocaleDateString('id-ID', { dateStyle: 'medium' }) : '-'}</span>
+                          <span>•</span>
+                          <span>Provider: {surveyor.authProvider || 'Lokal'}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 pt-3 border-t border-amber-200/80 dark:border-amber-800/80 flex items-center justify-between gap-2">
+                      <span className="text-[11px] text-amber-800 dark:text-amber-300 font-medium">
+                        Otorisasi Akun:
+                      </span>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => handleRejectSurveyor(surveyor.id)}
+                          className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-slate-800 hover:bg-rose-50 hover:text-rose-700 dark:hover:bg-rose-950/40 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 transition-colors flex items-center gap-1 cursor-pointer"
+                        >
+                          <UserX className="w-3.5 h-3.5 text-rose-500" />
+                          <span>Tolak</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleApproveSurveyor(surveyor.id)}
+                          className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-2xs transition-colors flex items-center gap-1.5 cursor-pointer"
+                        >
+                          <Check className="w-3.5 h-3.5" />
+                          <span>Setujui Akun</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
-          {roleRequests.length === 0 ? (
-            <div className="p-12 text-center rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 text-xs text-slate-400">
-              Belum ada permohonan peran yang diajukan oleh pengguna.
+          {/* PANEL 2: ANTREAN PERMOHONAN PENINGKATAN HAK AKSES */}
+          <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 sm:p-7 shadow-xs space-y-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-200/80 dark:border-slate-800">
+              <div>
+                <h2 className="text-2xl font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                  <Send className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                  <span>Antrean Permohonan Peningkatan Hak Akses</span>
+                </h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                  Evaluasi permohonan dari peneliti dan surveyor untuk dinaikkan hak perannya
+                </p>
+              </div>
+              <span className="px-3 py-1 rounded-xl text-xs font-bold bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 self-start sm:self-auto">
+                {pendingRequests.length} Menunggu Persetujuan
+              </span>
             </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+            {roleRequests.length === 0 ? (
+              <div className="p-12 text-center rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 text-xs text-slate-400">
+                Belum ada permohonan peran yang diajukan oleh pengguna.
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {roleRequests.map((req) => {
                 const currentBadge = getRoleBadge(req.currentRole);
                 const targetBadge = getRoleBadge(req.requestedRole);

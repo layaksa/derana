@@ -306,6 +306,11 @@ export default function App() {
             setCurrentUserSession(userObj);
             return userObj;
           });
+
+          // Trigger sync now that user is verified and authenticated with Firebase
+          setTimeout(() => {
+            offlineSyncManager.triggerAutoSync();
+          }, 1000);
         } catch (e) {
           console.warn('Could not rehydrate auth user profile:', e);
         }

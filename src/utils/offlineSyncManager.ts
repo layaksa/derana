@@ -6,7 +6,8 @@ import {
   saveRevitalisasiMonevToFirestore,
   saveRevitalisasiRAPToFirestore,
   getSurveyFromFirestore,
-  testFirestoreConnection 
+  testFirestoreConnection,
+  isFirebaseAuthenticated
 } from '../lib/firebase';
 import { loadAllSurveys, persistAllSurveys } from './surveyStorage';
 import { loadVitalitasResponses } from './vitalitasStorage';
@@ -218,6 +219,11 @@ class OfflineSyncManager {
   }> {
     if (!this.isOnline()) {
       console.log('[OfflineSync] Perangkat offline, menunda sinkronisasi cloud.');
+      return { syncedCount: 0, failedCount: 0, totalPending: this.getPendingItems().length, conflictsResolved: 0 };
+    }
+
+    if (!isFirebaseAuthenticated()) {
+      console.info('[OfflineSync] Pengguna belum login Firebase. Antrian sinkronisasi ditunda sampai terautentikasi.');
       return { syncedCount: 0, failedCount: 0, totalPending: this.getPendingItems().length, conflictsResolved: 0 };
     }
 

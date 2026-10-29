@@ -8,7 +8,7 @@ import {
 } from '../data/sampleSurveyData';
 import { getSectionProgressDetails } from './calculations';
 import { AppUser, UserRole } from '../types/auth';
-import { saveSurveyToFirestore, deleteSurveyFromFirestore } from '../lib/firebase';
+import { saveSurveyToFirestore, deleteSurveyFromFirestore, isFirebaseAuthenticated } from '../lib/firebase';
 import { offlineSyncManager } from './offlineSyncManager';
 
 export const STORAGE_KEY_SURVEYS = 'linguistic_mapping_surveys_collection_v2';
@@ -266,8 +266,8 @@ export function saveSurveyRecord(survey: SurveyRecord, surveys: SurveyRecord[]):
   // 1. Instantly persist locally to ensure zero data loss offline
   persistAllSurveys(updatedList);
 
-  // 2. Upload to Firebase Firestore if online, or queue for auto-upload when back online
-  if (isOnline) {
+  // 2. Upload to Firebase Firestore if online and authenticated
+  if (isOnline && isFirebaseAuthenticated()) {
     saveSurveyToFirestore(updatedRecord)
       .then(() => {
         offlineSyncManager.dequeue(updatedRecord.id);
@@ -285,9 +285,19 @@ export function saveSurveyRecord(survey: SurveyRecord, surveys: SurveyRecord[]):
         console.warn('[OfflineSync] Unggah langsung gagal, data masuk antrian offline:', err);
         offlineSyncManager.enqueue(updatedRecord.id);
       });
-  } else {
-    // Offline: Automatically enqueue for background upload when device gets internet
+  } else if (!isOnline && isFirebaseAuthenticated()) {
+    // Offline and authenticated: Automatically enqueue for background upload when device gets internet
     offlineSyncManager.enqueue(updatedRecord.id);
+  } else {
+    // Unauthenticated: Keep data safely in local storage
+    const idx = updatedList.findIndex(s => s.id === updatedRecord.id);
+    if (idx >= 0) {
+      updatedList[idx] = {
+        ...updatedList[idx],
+        syncStatus: 'local'
+      };
+      persistAllSurveys(updatedList);
+    }
   }
 
   return updatedList;

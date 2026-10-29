@@ -15,6 +15,9 @@ import {
 } from 'firebase/auth';
 import { 
   getFirestore, 
+  initializeFirestore,
+  persistentLocalCache,
+  persistentMultipleTabManager,
   doc, 
   getDoc,
   getDocFromServer, 
@@ -41,11 +44,26 @@ export { firebaseConfig };
 
 export const app = initializeApp(firebaseConfig);
 
-// Initialize Firestore with specific database ID from config
-export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
+// Initialize Firestore with persistent multi-tab IndexedDB cache for robust PWA offline sync
+export const db = (() => {
+  try {
+    return initializeFirestore(app, {
+      localCache: persistentLocalCache({
+        tabManager: persistentMultipleTabManager()
+      })
+    }, firebaseConfig.firestoreDatabaseId);
+  } catch (e) {
+    console.warn('Fallback to standard getFirestore:', e);
+    return getFirestore(app, firebaseConfig.firestoreDatabaseId);
+  }
+})();
 
 export const auth = getAuth(app);
 auth.useDeviceLanguage();
+
+export function isFirebaseAuthenticated(): boolean {
+  return auth.currentUser !== null;
+}
 
 export enum OperationType {
   CREATE = 'create',
@@ -194,8 +212,8 @@ export function subscribeToSurveys(
         if (list.length > 0) {
           // Cloud has data, pass it up
           onSurveysUpdated(list);
-        } else if (initialLocalSurveys && initialLocalSurveys.length > 0) {
-          // Cloud is newly provisioned / empty: seed local surveys into Firestore!
+        } else if (auth.currentUser && initialLocalSurveys && initialLocalSurveys.length > 0) {
+          // Cloud is newly provisioned / empty: seed local surveys into Firestore if authenticated!
           console.info(`Inisialisasi cloud: Menyinkronkan ${initialLocalSurveys.length} data survei lokal ke Firestore...`);
           try {
             for (const s of initialLocalSurveys) {
@@ -207,6 +225,9 @@ export function subscribeToSurveys(
             console.warn('Gagal mengunggah data survei awal ke cloud:', seedErr);
             onSurveysUpdated(initialLocalSurveys);
           }
+        } else if (initialLocalSurveys && initialLocalSurveys.length > 0) {
+          // Unauthenticated mode: use local surveys directly without writing to cloud
+          onSurveysUpdated(initialLocalSurveys);
         } else {
           onSurveysUpdated([]);
         }
@@ -233,6 +254,10 @@ export function subscribeToSurveys(
  * Force manual sync of all local surveys to Firestore
  */
 export async function syncAllSurveysToFirestore(localSurveys: SurveyRecord[]): Promise<number> {
+  if (!auth.currentUser) {
+    console.info('[Firestore] Pengguna belum login Firebase. Sinkronisasi cloud ditunda.');
+    return 0;
+  }
   let count = 0;
   for (const s of localSurveys) {
     try {
@@ -251,6 +276,11 @@ export async function syncAllSurveysToFirestore(localSurveys: SurveyRecord[]): P
  * Persist or update a survey record to Firestore
  */
 export async function saveSurveyToFirestore(survey: SurveyRecord): Promise<void> {
+  // If user is unauthenticated, survey data remains safe in localStorage without attempting unauthorized cloud writes
+  if (!auth.currentUser) {
+    console.info(`[Firestore] Pengguna lokal/tamu (belum login Firebase). Data survei '${survey.title}' (${survey.id}) tersimpan secara lokal.`);
+    return;
+  }
   const path = `surveys/${survey.id}`;
   try {
     const cleanSurvey = sanitizeForFirestore(survey);
@@ -282,6 +312,9 @@ export async function getSurveyFromFirestore(surveyId: string): Promise<SurveyRe
  * Delete a survey record from Firestore
  */
 export async function deleteSurveyFromFirestore(surveyId: string): Promise<void> {
+  if (!auth.currentUser) {
+    return;
+  }
   const path = `surveys/${surveyId}`;
   try {
     await deleteDoc(doc(db, 'surveys', surveyId));
@@ -299,6 +332,9 @@ export async function toggleVerificationInFirestore(
   isVerified: boolean, 
   verifierName: string
 ): Promise<void> {
+  if (!auth.currentUser) {
+    return;
+  }
   const path = `surveys/${surveyId}`;
   try {
     await updateDoc(doc(db, 'surveys', surveyId), {
@@ -360,7 +396,7 @@ export async function loginWithGoogle(options: GoogleAuthOptions = {}): Promise<
   const isNew = Boolean((credential as any)?._tokenResponse?.isNewUser || options.mode === 'register');
   const profile = await syncUserToFirestore(
     user,
-    undefined,
+    options.desiredRole,
     options.institution,
     options.assignedRegion,
     isNew
@@ -429,7 +465,7 @@ export async function getUserProfileFromFirestore(uid: string): Promise<any | nu
 
 /**
  * Sync authenticated user profile to Cloud Firestore /users/{uid}
- * Safely preserves existing roles unless admin email or explicit registration selection.
+ * Safely preserves existing roles and sets status: 'pending', isApproved: false for new Surveyors.
  */
 export async function syncUserToFirestore(
   user: User,
@@ -451,21 +487,41 @@ export async function syncUserToFirestore(
     }
 
     const email = user.email || '';
-    const isAdminEmail = email.toLowerCase() === 'derana.apps@gmail.com' || email.toLowerCase().includes('admin');
+    const cleanEmail = email.toLowerCase();
+    const isAdminEmail = cleanEmail === 'derana.apps@gmail.com' || cleanEmail === 'layaksa.studio@gmail.com' || cleanEmail.includes('admin');
 
-    // Role resolution rules:
-    // 1. derana.apps@gmail.com or admin emails -> always 'admin'
-    // 2. Existing user on login -> preserve existingData.role
-    // 3. New registration or no existing role -> use desiredRole (default 'surveyor')
+    // Role and status resolution rules:
+    // 1. Admin emails -> always 'admin', 'active', isApproved: true
+    // 2. Existing user on login -> PRESERVE existingData.role and status
+    // 3. New registration:
+    //    - If surveyor -> role: 'surveyor', status: 'pending', isApproved: false
+    //    - If tamu -> role: 'tamu', status: 'active', isApproved: true
     let finalRole: UserRole = 'tamu';
+    let finalStatus: 'active' | 'pending' | 'rejected' = 'active';
+    let isApproved = true;
+
     if (isAdminEmail) {
       finalRole = 'admin';
-    } else if (user.providerData.some((provider) => provider.providerId === 'google.com')) {
-      finalRole = 'tamu';
+      finalStatus = 'active';
+      isApproved = true;
     } else if (existingData?.role) {
-      finalRole = (isRegistration && desiredRole) ? desiredRole : existingData.role;
+      if (isRegistration && desiredRole) {
+        finalRole = desiredRole;
+        finalStatus = desiredRole === 'surveyor' ? 'pending' : 'active';
+        isApproved = desiredRole !== 'surveyor';
+      } else {
+        finalRole = existingData.role;
+        finalStatus = existingData.status || (existingData.role === 'surveyor' && existingData.isApproved === false ? 'pending' : 'active');
+        isApproved = existingData.isApproved !== undefined ? existingData.isApproved : (finalStatus === 'active');
+      }
     } else if (desiredRole) {
       finalRole = desiredRole;
+      finalStatus = desiredRole === 'surveyor' ? 'pending' : 'active';
+      isApproved = desiredRole !== 'surveyor';
+    } else {
+      finalRole = 'tamu';
+      finalStatus = 'active';
+      isApproved = true;
     }
 
     const finalInstitution = institution 
@@ -485,6 +541,8 @@ export async function syncUserToFirestore(
       displayName: user.displayName || existingData?.displayName || email.split('@')[0] || 'Peneliti Bahasa',
       photoURL: user.photoURL || existingData?.photoURL || null,
       role: finalRole,
+      status: finalStatus,
+      isApproved,
       institution: finalInstitution,
       assignedRegion: finalRegion,
       authProvider: 'google_oauth',
@@ -498,6 +556,67 @@ export async function syncUserToFirestore(
   } catch (err) {
     console.warn('Could not sync user profile to Firestore:', err);
     return null;
+  }
+}
+
+/**
+ * Admin action: Approve user registration in Cloud Firestore
+ */
+export async function approveUserInFirestore(uid: string, adminName: string = 'Admin Sistem'): Promise<void> {
+  if (!auth.currentUser) return;
+  try {
+    const userDocRef = doc(db, 'users', uid);
+    await updateDoc(userDocRef, {
+      role: 'surveyor',
+      status: 'active',
+      isApproved: true,
+      approvedAt: new Date().toISOString(),
+      approvedBy: adminName,
+      updatedAt: new Date().toISOString()
+    });
+    console.log(`[Firestore] User ${uid} approved as active surveyor.`);
+  } catch (error) {
+    console.warn(`[Firestore] Gagal approve user ${uid}:`, error);
+  }
+}
+
+/**
+ * Admin action: Reject user registration in Cloud Firestore (reverts to 'tamu')
+ */
+export async function rejectUserInFirestore(uid: string, adminName: string = 'Admin Sistem'): Promise<void> {
+  if (!auth.currentUser) return;
+  try {
+    const userDocRef = doc(db, 'users', uid);
+    await updateDoc(userDocRef, {
+      role: 'tamu',
+      status: 'rejected',
+      isApproved: false,
+      rejectedAt: new Date().toISOString(),
+      rejectedBy: adminName,
+      updatedAt: new Date().toISOString()
+    });
+    console.log(`[Firestore] User ${uid} rejected/reverted to tamu.`);
+  } catch (error) {
+    console.warn(`[Firestore] Gagal reject user ${uid}:`, error);
+  }
+}
+
+/**
+ * Admin action: Update role of user in Cloud Firestore
+ */
+export async function updateUserRoleInFirestore(uid: string, newRole: UserRole): Promise<void> {
+  if (!auth.currentUser) return;
+  try {
+    const userDocRef = doc(db, 'users', uid);
+    await updateDoc(userDocRef, {
+      role: newRole,
+      status: 'active',
+      isApproved: true,
+      updatedAt: new Date().toISOString()
+    });
+    console.log(`[Firestore] User ${uid} role updated to ${newRole}.`);
+  } catch (error) {
+    console.warn(`[Firestore] Gagal update role user ${uid}:`, error);
   }
 }
 
@@ -523,6 +642,9 @@ export async function logoutFirebase(): Promise<void> {
  * Save vitalitas survey response to Firestore
  */
 export async function saveVitalitasToFirestore(vitalitas: any): Promise<void> {
+  if (!auth.currentUser) {
+    return;
+  }
   const path = `vitalitas/${vitalitas.id}`;
   try {
     await setDoc(doc(db, 'vitalitas', vitalitas.id), sanitizeForFirestore(vitalitas), { merge: true });
@@ -536,6 +658,9 @@ export async function saveVitalitasToFirestore(vitalitas: any): Promise<void> {
  * Delete vitalitas survey response from Firestore
  */
 export async function deleteVitalitasFromFirestore(id: string): Promise<void> {
+  if (!auth.currentUser) {
+    return;
+  }
   const path = `vitalitas/${id}`;
   try {
     await deleteDoc(doc(db, 'vitalitas', id));
@@ -548,6 +673,9 @@ export async function deleteVitalitasFromFirestore(id: string): Promise<void> {
  * Save sastra lisan questionnaire record to Firestore
  */
 export async function saveSastraLisanToFirestore(record: any): Promise<void> {
+  if (!auth.currentUser) {
+    return;
+  }
   const path = `sastra_lisan/${record.id}`;
   try {
     await setDoc(doc(db, 'sastra_lisan', record.id), sanitizeForFirestore(record), { merge: true });
@@ -561,6 +689,9 @@ export async function saveSastraLisanToFirestore(record: any): Promise<void> {
  * Delete sastra lisan questionnaire record from Firestore
  */
 export async function deleteSastraLisanFromFirestore(id: string): Promise<void> {
+  if (!auth.currentUser) {
+    return;
+  }
   const path = `sastra_lisan/${id}`;
   try {
     await deleteDoc(doc(db, 'sastra_lisan', id));
@@ -573,6 +704,9 @@ export async function deleteSastraLisanFromFirestore(id: string): Promise<void> 
  * Save revitalisasi monev record to Firestore
  */
 export async function saveRevitalisasiMonevToFirestore(record: any): Promise<void> {
+  if (!auth.currentUser) {
+    return;
+  }
   const path = `revitalisasi_monev/${record.id}`;
   try {
     await setDoc(doc(db, 'revitalisasi_monev', record.id), sanitizeForFirestore(record), { merge: true });
@@ -586,6 +720,9 @@ export async function saveRevitalisasiMonevToFirestore(record: any): Promise<voi
  * Delete revitalisasi monev record from Firestore
  */
 export async function deleteRevitalisasiMonevFromFirestore(id: string): Promise<void> {
+  if (!auth.currentUser) {
+    return;
+  }
   const path = `revitalisasi_monev/${id}`;
   try {
     await deleteDoc(doc(db, 'revitalisasi_monev', id));
@@ -598,6 +735,9 @@ export async function deleteRevitalisasiMonevFromFirestore(id: string): Promise<
  * Save revitalisasi RAP record to Firestore
  */
 export async function saveRevitalisasiRAPToFirestore(record: any): Promise<void> {
+  if (!auth.currentUser) {
+    return;
+  }
   const path = `revitalisasi_rap/${record.id}`;
   try {
     await setDoc(doc(db, 'revitalisasi_rap', record.id), sanitizeForFirestore(record), { merge: true });
@@ -611,6 +751,9 @@ export async function saveRevitalisasiRAPToFirestore(record: any): Promise<void>
  * Delete revitalisasi RAP record from Firestore
  */
 export async function deleteRevitalisasiRAPFromFirestore(id: string): Promise<void> {
+  if (!auth.currentUser) {
+    return;
+  }
   const path = `revitalisasi_rap/${id}`;
   try {
     await deleteDoc(doc(db, 'revitalisasi_rap', id));

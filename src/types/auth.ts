@@ -21,6 +21,8 @@ export interface AppUser {
   name: string;
   email: string;
   role: UserRole;
+  status?: 'active' | 'pending' | 'rejected';
+  isApproved?: boolean;
   avatar?: string;
   institution?: string;
   assignedRegion?: string;
@@ -32,6 +34,8 @@ export interface AppUser {
   oauthAuthorizedAt?: string;
   oauthScopes?: string[];
   pendingRoleRequest?: UserRole;
+  approvedAt?: string;
+  approvedBy?: string;
 }
 
 export interface AuthState {

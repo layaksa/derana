@@ -164,9 +164,33 @@ export const KuesionerSastraLisanForm: React.FC<KuesionerSastraLisanFormProps> =
       bentukTuturan,
       iringanMusik,
       syarat: syaratPertunjukan,
-      tujuan: tujuanPertunjukan
+      tujuan: tujuanPertunjukan,
+      suasanaPertunjukan,
+      tempatPertunjukan,
+      waktuPertunjukan,
+      kategoriPenutur,
+      sukuPemilik,
+      bahasaDigunakan,
+      transkripsi: transkripsiTeks,
+      terjemahan: terjemahanTeks
     });
-  }, [namaSastraLisan, deskripsiSingkat, kutipanTuturan, bentukTuturan, iringanMusik, syaratPertunjukan, tujuanPertunjukan]);
+  }, [
+    namaSastraLisan, 
+    deskripsiSingkat, 
+    kutipanTuturan, 
+    bentukTuturan, 
+    iringanMusik, 
+    syaratPertunjukan, 
+    tujuanPertunjukan,
+    suasanaPertunjukan,
+    tempatPertunjukan,
+    waktuPertunjukan,
+    kategoriPenutur,
+    sukuPemilik,
+    bahasaDigunakan,
+    transkripsiTeks,
+    terjemahanTeks
+  ]);
 
   const populateFromRecord = (rec: SastraLisanRecord) => {
     setCurrentRecordId(rec.id);

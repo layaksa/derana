@@ -327,7 +327,7 @@ export interface SurveyRecord {
   verificationNotes?: string;
   verificationRole?: 'admin' | 'verifikator';
   // Offline & Cloud Sync Status
-  syncStatus?: 'synced' | 'pending' | 'syncing';
+  syncStatus?: 'synced' | 'pending' | 'syncing' | 'local';
   lastSyncedAt?: string;
 }
 

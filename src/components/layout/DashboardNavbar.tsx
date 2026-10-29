@@ -393,17 +393,19 @@ export const DashboardNavbar: React.FC<DashboardNavbarProps> = ({
                   <User className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                   <span>{t('navbar.profile', 'Profil Peneliti')}</span>
                 </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    onOpenUserManagement();
-                    setIsUserDropdownOpen(false);
-                  }}
-                  className="w-full flex items-center gap-2 px-3 py-1.5 text-left hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-900 dark:text-slate-200"
-                >
-                  <Settings className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
-                  <span>{t('navbar.userManagement', 'Manajemen Pengguna')}</span>
-                </button>
+                {currentUser?.role === 'admin' && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onOpenUserManagement();
+                      setIsUserDropdownOpen(false);
+                    }}
+                    className="w-full flex items-center gap-2 px-3 py-1.5 text-left hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-900 dark:text-slate-200"
+                  >
+                    <Settings className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
+                    <span>{t('navbar.userManagement', 'Manajemen Pengguna')}</span>
+                  </button>
+                )}
               </div>
 
               <div className="border-t border-slate-200 dark:border-slate-800 pt-1">

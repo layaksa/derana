@@ -109,6 +109,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
   const [regSuccess, setRegSuccess] = useState<string | null>(null);
   const [regLoading, setRegLoading] = useState(false);
 
+  // Google OAuth role selection modal state
+  const [isGoogleRoleModalOpen, setIsGoogleRoleModalOpen] = useState(false);
+  const [googleChosenRole, setGoogleChosenRole] = useState<UserRole>('tamu');
+
   // Forgot password modal state
   const [isForgotModalOpen, setIsForgotModalOpen] = useState(false);
   const [forgotEmail, setForgotEmail] = useState('');
@@ -122,21 +126,42 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
         if (!active || !firebaseUser) return;
         const profile = await getUserProfileFromFirestore(firebaseUser.uid);
         const email = firebaseUser.email || '';
-        onLoginSuccess({
+        const isAdminEmail = email.toLowerCase() === 'derana.apps@gmail.com' || email.toLowerCase() === 'layaksa.studio@gmail.com' || email.toLowerCase().includes('admin');
+        const role: UserRole = isAdminEmail ? 'admin' : (profile?.role || 'tamu');
+        const status = isAdminEmail ? 'active' : (profile?.status || (role === 'surveyor' ? 'pending' : 'active'));
+        const isApproved = isAdminEmail ? true : (profile?.isApproved !== undefined ? profile.isApproved : (status === 'active'));
+
+        const loggedInUser: AppUser = {
           id: firebaseUser.uid,
           username: email.split('@')[0] || `google_${firebaseUser.uid.slice(0, 8)}`,
           name: firebaseUser.displayName || profile?.displayName || email.split('@')[0] || 'Peneliti Bahasa',
           email,
-          role: profile?.role === 'admin' ? 'admin' : 'tamu',
+          role,
+          status,
+          isApproved,
           avatar: firebaseUser.photoURL || undefined,
-          institution: profile?.institution || 'Balai Bahasa / Peneliti Mandiri',
-          assignedRegion: profile?.assignedRegion || 'Wilayah Riset',
+          institution: profile?.institution || (isAdminEmail ? 'Badan Pengembangan dan Pembinaan Bahasa' : 'Balai Bahasa / Peneliti Mandiri'),
+          assignedRegion: profile?.assignedRegion || (isAdminEmail ? 'Nasional (Koordinator Utama)' : 'Wilayah Riset'),
           createdAt: profile?.createdAt || new Date().toISOString(),
           authProvider: 'google_oauth',
           oauthConnected: true,
           oauthEmail: email,
           oauthAuthorizedAt: new Date().toISOString()
+        };
+
+        loginOrRegisterGoogleUser({
+          email,
+          name: loggedInUser.name,
+          picture: firebaseUser.photoURL || undefined,
+          sub: firebaseUser.uid,
+          role,
+          status,
+          isApproved,
+          institution: loggedInUser.institution,
+          assignedRegion: loggedInUser.assignedRegion
         });
+
+        onLoginSuccess(loggedInUser);
       })
       .catch((error: any) => {
         if (!active) return;
@@ -156,7 +181,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
    * Universal Google authentication handler (both for Sign In and Sign Up)
    * Integrates Firebase Authentication popup and Firestore profile persistence.
    */
-  const handleGoogleAuth = async (targetMode: 'login' | 'register' = mode) => {
+  const handleGoogleAuth = async (targetMode: 'login' | 'register' = mode, chosenRole?: UserRole) => {
     setLoginError(null);
     setRegError(null);
     if (targetMode === 'login') {
@@ -166,20 +191,30 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
     }
 
     try {
+      const roleToRequest: UserRole = chosenRole || (targetMode === 'register' ? regRole : googleChosenRole);
       const result = await loginWithGoogle({
         mode: targetMode,
+        desiredRole: roleToRequest,
         institution: targetMode === 'register' ? (regInstitution.trim() || undefined) : undefined,
         assignedRegion: targetMode === 'register' ? (regRegion.trim() || undefined) : undefined
       });
 
       const { user: firebaseUser, profile } = result;
       const email = firebaseUser.email || '';
-      const isAdminEmail = email.toLowerCase() === 'derana.apps@gmail.com' || email.toLowerCase().includes('admin');
+      const isAdminEmail = email.toLowerCase() === 'derana.apps@gmail.com' || email.toLowerCase() === 'layaksa.studio@gmail.com' || email.toLowerCase().includes('admin');
       
-      // Determine final active role
+      // Determine final active role and approval status
       const finalRole: UserRole = isAdminEmail 
         ? 'admin' 
-        : (profile?.role || (targetMode === 'register' ? regRole : 'surveyor'));
+        : (profile?.role || roleToRequest);
+
+      const finalStatus = isAdminEmail
+        ? 'active'
+        : (profile?.status || (finalRole === 'surveyor' ? 'pending' : 'active'));
+
+      const isApproved = isAdminEmail
+        ? true
+        : (profile?.isApproved !== undefined ? profile.isApproved : (finalStatus === 'active'));
 
       const displayName = firebaseUser.displayName 
         || profile?.displayName 
@@ -199,7 +234,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
         username: email.split('@')[0] || `google_${firebaseUser.uid.slice(0, 8)}`,
         name: displayName,
         email,
-        role: profile?.role === 'admin' ? 'admin' : 'tamu',
+        role: finalRole,
+        status: finalStatus,
+        isApproved,
         avatar: firebaseUser.photoURL || undefined,
         institution: finalInstitution,
         assignedRegion: finalRegion,
@@ -217,10 +254,13 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
         picture: firebaseUser.photoURL || undefined,
         sub: firebaseUser.uid,
         role: finalRole,
+        status: finalStatus,
+        isApproved,
         institution: finalInstitution,
         assignedRegion: finalRegion
       });
 
+      setIsGoogleRoleModalOpen(false);
       onLoginSuccess(loggedInUser);
     } catch (error: any) {
       const message = getGoogleAuthErrorMessage(error);
@@ -542,7 +582,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                 <div className="space-y-2">
                   <button
                     type="button"
-                    onClick={() => handleGoogleAuth('login')}
+                    onClick={() => setIsGoogleRoleModalOpen(true)}
                     disabled={loginLoading || regLoading}
                     className="w-full flex items-center justify-center gap-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200 shadow-xs hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-slate-400 dark:hover:border-slate-500 transition-all cursor-pointer disabled:cursor-not-allowed disabled:opacity-60 group"
                   >
@@ -551,7 +591,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                   </button>
                   <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400">
                     <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                    <span>Firebase Authentication resmi • Akses instan sesuai peran riset</span>
+                    <span>Firebase Authentication resmi • Pilihan peran Tamu atau Surveyor</span>
                   </div>
                 </div>
 
@@ -750,12 +790,12 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {/* 1. Tamu / Akademisi */}
                     <button
                       type="button"
                       onClick={() => setRegRole('tamu')}
-                      className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
+                      className={`p-3.5 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
                         regRole === 'tamu'
                           ? 'bg-amber-50/90 dark:bg-amber-950/40 border-amber-400 dark:border-amber-600 ring-2 ring-amber-500/20 shadow-2xs'
                           : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/60'
@@ -768,20 +808,20 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                           }`}>
                             <Eye className="w-4 h-4" />
                           </div>
-                          <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded-full bg-amber-200/80 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200">
-                            Mode Hanya Baca
+                          <span className="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-amber-200/80 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200">
+                            Langsung Aktif
                           </span>
                         </div>
                         <div className="text-xs font-bold text-slate-900 dark:text-slate-200 leading-tight">
                           Tamu / Akademisi
                         </div>
-                        <p className="text-[10px] text-slate-500 dark:text-slate-300 mt-1 leading-relaxed">
-                          Peneliti, dosen, & mahasiswa untuk eksplorasi data empiris & peta dialektometri.
+                        <p className="text-[11px] text-slate-500 dark:text-slate-300 mt-1 leading-relaxed">
+                          Peneliti, dosen, & mahasiswa untuk eksplorasi data empiris, peta komparasi & dialektometri (Mode Hanya Baca).
                         </p>
                       </div>
-                      <div className="mt-2.5 pt-2 border-t border-amber-200/60 dark:border-amber-900/40 text-[9px] text-amber-800 dark:text-amber-300 font-medium space-y-0.5">
-                        <div className="flex items-center gap-1"><span>•</span> Peta Titik Survei</div>
-                        <div className="flex items-center gap-1"><span>•</span> Komparasi Bahasa</div>
+                      <div className="mt-3 pt-2 border-t border-amber-200/60 dark:border-amber-900/40 text-[10px] text-amber-800 dark:text-amber-300 font-medium space-y-0.5">
+                        <div className="flex items-center gap-1"><span>•</span> Peta Titik Survei & Glottolog</div>
+                        <div className="flex items-center gap-1"><span>•</span> Analisis Komparasi Bahasa</div>
                       </div>
                     </button>
 
@@ -789,7 +829,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                     <button
                       type="button"
                       onClick={() => setRegRole('surveyor')}
-                      className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
+                      className={`p-3.5 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
                         (regRole === 'surveyor' || regRole === 'user')
                           ? 'bg-blue-50/90 dark:bg-blue-950/40 border-blue-400 dark:border-blue-600 ring-2 ring-blue-500/20 shadow-2xs'
                           : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/60'
@@ -802,54 +842,20 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                           }`}>
                             <UserCheck className="w-4 h-4" />
                           </div>
-                          <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded-full bg-blue-200/80 dark:bg-blue-900/60 text-blue-900 dark:text-blue-200">
-                            Pengumpul Data
+                          <span className="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-blue-200/80 dark:bg-blue-900/60 text-blue-900 dark:text-blue-200">
+                            Perlu Persetujuan
                           </span>
                         </div>
                         <div className="text-xs font-bold text-slate-900 dark:text-slate-200 leading-tight">
                           Surveyor Lapangan
                         </div>
-                        <p className="text-[10px] text-slate-500 dark:text-slate-300 mt-1 leading-relaxed">
-                          Petugas pengumpul data lapangan: pengisian kuesioner 16 seksi & dialektometri.
+                        <p className="text-[11px] text-slate-500 dark:text-slate-300 mt-1 leading-relaxed">
+                          Petugas pengumpul data lapangan (kuesioner 16 seksi & korpus). Memerlukan persetujuan Admin Sistem sebelum pengisian.
                         </p>
                       </div>
-                      <div className="mt-2.5 pt-2 border-t border-blue-200/60 dark:border-blue-900/40 text-[9px] text-blue-800 dark:text-blue-300 font-medium space-y-0.5">
-                        <div className="flex items-center gap-1"><span>•</span> Kuesioner (16 Seksi)</div>
-                        <div className="flex items-center gap-1"><span>•</span> Korpus Sastra Lisan</div>
-                      </div>
-                    </button>
-
-                    {/* 3. Verifikator Linguistik */}
-                    <button
-                      type="button"
-                      onClick={() => setRegRole('verifikator')}
-                      className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
-                        regRole === 'verifikator'
-                          ? 'bg-emerald-50/90 dark:bg-emerald-950/40 border-emerald-400 dark:border-emerald-600 ring-2 ring-emerald-500/20 shadow-2xs'
-                          : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/60'
-                      }`}
-                    >
-                      <div>
-                        <div className="flex items-center justify-between gap-1 mb-2">
-                          <div className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold ${
-                            regRole === 'verifikator' ? 'bg-emerald-600 text-white shadow-2xs' : 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300'
-                          }`}>
-                            <GraduationCap className="w-4 h-4" />
-                          </div>
-                          <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded-full bg-emerald-200/80 dark:bg-emerald-900/60 text-emerald-900 dark:text-emerald-200">
-                            Otoritas Validasi
-                          </span>
-                        </div>
-                        <div className="text-xs font-bold text-slate-900 dark:text-slate-200 leading-tight">
-                          Verifikator Linguistik
-                        </div>
-                        <p className="text-[10px] text-slate-500 dark:text-slate-300 mt-1 leading-relaxed">
-                          Peneliti & kurator: otoritas mengesahkan data berstatus TERVALIDASI resmi.
-                        </p>
-                      </div>
-                      <div className="mt-2.5 pt-2 border-t border-emerald-200/60 dark:border-emerald-900/40 text-[9px] text-emerald-800 dark:text-emerald-300 font-medium space-y-0.5">
-                        <div className="flex items-center gap-1"><span>•</span> Pengesahan Tervalidasi</div>
-                        <div className="flex items-center gap-1"><span>•</span> Kurasi Transkripsi IPA</div>
+                      <div className="mt-3 pt-2 border-t border-blue-200/60 dark:border-blue-900/40 text-[10px] text-blue-800 dark:text-blue-300 font-medium space-y-0.5">
+                        <div className="flex items-center gap-1"><span>•</span> Kuesioner (16 Seksi) & Audio</div>
+                        <div className="flex items-center gap-1"><span>•</span> Status: Pending Approval</div>
                       </div>
                     </button>
                   </div>
@@ -893,7 +899,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                         onChange={e => setRegRegion(e.target.value)}
                         placeholder={
                           regRole === 'tamu' ? 'Peneliti Tamu (Nasional / Regional)' :
-                          regRole === 'verifikator' ? 'Wilayah Kurasi (Misal: Maluku & Malut)' :
                           'Kabupaten / Titik Pengamatan Lapangan'
                         }
                         className="w-full pl-9 pr-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-xs sm:text-sm text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-400 focus:outline-hidden focus:border-indigo-600"
@@ -910,7 +915,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                       <span>Pendaftaran Cepat Akun Google</span>
                     </span>
                     <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white dark:bg-slate-900 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300">
-                      Peran: {regRole === 'tamu' ? 'Tamu / Akademisi' : regRole === 'verifikator' ? 'Verifikator' : 'Surveyor'}
+                      Peran: {regRole === 'tamu' ? 'Tamu / Akademisi' : 'Surveyor Lapangan'}
                     </span>
                   </div>
 
@@ -925,7 +930,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                   </button>
 
                   <p className="text-[11px] text-slate-600 dark:text-slate-300 text-center leading-relaxed">
-                    Akun Google Anda akan langsung terdaftar di Firebase Authentication dan tersimpan di Cloud Firestore dengan peran <strong>{regRole === 'tamu' ? 'Tamu (Hanya Baca)' : regRole === 'verifikator' ? 'Verifikator Linguistik' : 'Surveyor Lapangan'}</strong>.
+                    Akun Google Anda akan langsung terdaftar di Firebase Authentication dan tersimpan di Cloud Firestore dengan peran <strong>{regRole === 'tamu' ? 'Tamu (Langsung Aktif)' : 'Surveyor Lapangan (Menunggu Persetujuan Admin)'}</strong>.
                   </p>
                 </div>
 
@@ -1138,8 +1143,113 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
         </div>
       )}
 
+      {/* Google OAuth Role Selection Modal */}
+      {isGoogleRoleModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-200">
+          <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 shadow-2xl text-left space-y-4">
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+                <GoogleIcon className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
+                  Pilih Peran Akun Riset Google
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">
+                  Tentukan peran akun Anda sebelum mengotorisasi login atau pendaftaran melalui Akun Google:
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-2.5">
+              {/* Option 1: Tamu / Akademisi */}
+              <button
+                type="button"
+                onClick={() => setGoogleChosenRole('tamu')}
+                className={`w-full p-3.5 rounded-2xl border text-left transition-all cursor-pointer flex items-start gap-3 ${
+                  googleChosenRole === 'tamu'
+                    ? 'bg-amber-50/90 dark:bg-amber-950/40 border-amber-400 dark:border-amber-600 ring-2 ring-amber-500/20 shadow-2xs'
+                    : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900/60'
+                }`}
+              >
+                <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
+                  googleChosenRole === 'tamu' ? 'bg-amber-600 text-white' : 'bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300'
+                }`}>
+                  <Eye className="w-4 h-4" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between gap-1">
+                    <span className="text-xs font-bold text-slate-900 dark:text-slate-100">
+                      Tamu / Akademisi
+                    </span>
+                    <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-amber-200/80 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200">
+                      Langsung Aktif
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">
+                    Mode Hanya Baca (Read-Only) untuk eksplorasi peta titik survei, komparasi dialek, dan riset kebahasaan.
+                  </p>
+                </div>
+              </button>
+
+              {/* Option 2: Surveyor Lapangan */}
+              <button
+                type="button"
+                onClick={() => setGoogleChosenRole('surveyor')}
+                className={`w-full p-3.5 rounded-2xl border text-left transition-all cursor-pointer flex items-start gap-3 ${
+                  googleChosenRole === 'surveyor'
+                    ? 'bg-blue-50/90 dark:bg-blue-950/40 border-blue-400 dark:border-blue-600 ring-2 ring-blue-500/20 shadow-2xs'
+                    : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900/60'
+                }`}
+              >
+                <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
+                  googleChosenRole === 'surveyor' ? 'bg-blue-600 text-white' : 'bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300'
+                }`}>
+                  <UserCheck className="w-4 h-4" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between gap-1">
+                    <span className="text-xs font-bold text-slate-900 dark:text-slate-100">
+                      Surveyor Lapangan
+                    </span>
+                    <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-blue-200/80 dark:bg-blue-900/60 text-blue-900 dark:text-blue-200">
+                      Perlu Persetujuan
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">
+                    Petugas pengumpul data lapangan (kuesioner 16 seksi & korpus). Akun berstatus pending sampai disetujui Admin Sistem.
+                  </p>
+                </div>
+              </button>
+            </div>
+
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+              <button
+                type="button"
+                onClick={() => setIsGoogleRoleModalOpen(false)}
+                className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 cursor-pointer"
+              >
+                Batal
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  handleGoogleAuth('login', googleChosenRole);
+                }}
+                disabled={loginLoading}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 shadow-md shadow-indigo-500/20 cursor-pointer disabled:opacity-50"
+              >
+                <GoogleIcon className="w-4 h-4" />
+                <span>Lanjutkan dengan Google</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
 
 export default LoginPage;
+
