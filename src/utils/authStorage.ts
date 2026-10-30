@@ -480,7 +480,7 @@ export function loginOrRegisterGoogleUser(profile: {
   const defaultUsername = cleanEmail.split('@')[0].replace(/[^a-zA-Z0-9_.]/g, '') || `google_${Date.now()}`;
   
   let newRole: UserRole = 'tamu';
-  let newStatus: 'active' | 'pending' = 'active';
+  let newStatus: 'active' | 'pending' | 'rejected' = 'active';
   let isApproved = true;
 
   if (isAdminEmail) {

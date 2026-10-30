@@ -63,6 +63,7 @@ import { NarasumberStatsSummary } from './dashboard/NarasumberStatsSummary';
 import { EducationDialectCorrelationAnalysis } from './dashboard/EducationDialectCorrelationAnalysis';
 import { AgeLanguageRegressionTrendAnalysis } from './dashboard/AgeLanguageRegressionTrendAnalysis';
 import { KecamatanDialectDominanceStats } from './dashboard/KecamatanDialectDominanceStats';
+import { SurveyorProductivityCard } from './dashboard/SurveyorProductivityCard';
 import { PetaSastraLisanView } from './views/PetaSastraLisanView';
 import { PetaVitalitasView } from './views/PetaVitalitasView';
 import { PetaRevitalisasiView } from './views/PetaRevitalisasiView';
@@ -775,6 +776,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
           </div>
         </div>
       </div>
+
+      {/* KARTU STATISTIK PRODUKTIVITAS PER SURVEYOR (DASHBOARD ADMIN) */}
+      <SurveyorProductivityCard
+        surveys={surveys}
+        currentUser={currentUser}
+        onSelectSurvey={onSelectSurvey}
+        onNavigateToForm={onSwitchToEditor}
+      />
 
       {/* BENTO MENU NAVIGASI UTAMA DASHBOARD & MODUL ANALISIS */}
       <div className="bg-white/80 dark:bg-slate-900/70 p-4 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">

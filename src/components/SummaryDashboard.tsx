@@ -43,6 +43,7 @@ import { getSectionProgressDetails } from '../utils/calculations';
 import { SECTIONS_META } from './NavigationStepper';
 import { DescriptiveDialectStats } from './dashboard/DescriptiveDialectStats';
 import { NarasumberStatsSummary } from './dashboard/NarasumberStatsSummary';
+import { SurveyorProductivityCard } from './dashboard/SurveyorProductivityCard';
 import { ConflictResolutionModal } from './pwa/ConflictResolutionModal';
 
 interface SummaryDashboardProps {
@@ -592,7 +593,15 @@ export const SummaryDashboard: React.FC<SummaryDashboardProps> = ({
         onNavigateToAgeRegression={onNavigateToAgeRegression}
       />
 
-      {/* 4. PROVINCE-BY-PROVINCE BREAKDOWN & BENTO COMPARISON */}
+      {/* 4. KARTU RINGKASAN PRODUKTIVITAS PER SURVEYOR (DASHBOARD ADMIN) */}
+      <SurveyorProductivityCard
+        surveys={surveys}
+        currentUser={currentUser}
+        onSelectSurvey={onSelectSurvey}
+        onNavigateToForm={onSwitchToEditor}
+      />
+
+      {/* 5. PROVINCE-BY-PROVINCE BREAKDOWN & BENTO COMPARISON */}
       <div className="bg-white dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-700 p-5 sm:p-6 shadow-xs space-y-5 transition-colors">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-700 gap-3">
           <div className="flex items-center gap-3">

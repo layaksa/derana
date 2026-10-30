@@ -94,6 +94,7 @@ import {
   toggleSurveyVerification,
   STORAGE_KEY_ACTIVE_ID
 } from './utils/surveyStorage';
+import { logSurveyActivity } from './utils/activityLogStorage';
 import { 
   getCurrentUser, 
   logoutUser, 
@@ -281,7 +282,9 @@ export default function App() {
           const profile = await getUserProfileFromFirestore(firebaseUser.uid);
           const email = firebaseUser.email || '';
           const isAdminEmail = email.toLowerCase() === 'derana.apps@gmail.com' || email.toLowerCase().includes('admin');
-          const finalRole: UserRole = isAdminEmail ? 'admin' : (profile?.role || 'surveyor');
+          const finalRole: UserRole = isAdminEmail ? 'admin' : (profile?.role || 'tamu');
+          const finalStatus = isAdminEmail ? 'active' : (profile?.status || (finalRole === 'surveyor' ? 'pending' : 'active'));
+          const isApproved = isAdminEmail ? true : (profile?.isApproved !== undefined ? profile.isApproved : (finalStatus === 'active'));
 
           const userObj: AppUser = {
             id: firebaseUser.uid,
@@ -289,6 +292,8 @@ export default function App() {
             name: firebaseUser.displayName || profile?.displayName || email.split('@')[0] || 'Peneliti Kebahasaan',
             email,
             role: finalRole,
+            status: finalStatus,
+            isApproved,
             avatar: firebaseUser.photoURL || undefined,
             institution: profile?.institution || (isAdminEmail ? 'Badan Pengembangan dan Pembinaan Bahasa' : 'Balai Bahasa / Peneliti Mandiri'),
             assignedRegion: profile?.assignedRegion || (isAdminEmail ? 'Nasional (Koordinator Utama)' : 'Wilayah Riset Lapangan'),
@@ -486,6 +491,25 @@ export default function App() {
     setData(newRecord.data);
     setCurrentView('form-screen');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Audit trail logging
+    if (currentUser) {
+      logSurveyActivity({
+        surveyId: newRecord.id,
+        surveyTitle: newRecord.title,
+        village: newRecord.desa,
+        languageName: newRecord.bahasa,
+        action: 'create_survey',
+        actionLabel: 'Pembuatan Berkas Survei Baru',
+        user: currentUser,
+        details: `Membuat berkas instrumen survei baru "${newRecord.title}" (${type === 'sample' ? 'berkas contoh terisi' : 'formulir kosong'}).`,
+        diffSummary: {
+          field: 'all',
+          notes: 'Berkas survei baru diinisialisasi'
+        }
+      });
+    }
+
     triggerToast(type === 'sample' 
       ? `Contoh survei baru dibuat atas nama ${currentUser?.name || 'Surveyor'}.` 
       : `Formulir survei kosong baru berhasil dibuat atas nama ${currentUser?.name || 'Surveyor'}.`);
@@ -514,6 +538,21 @@ export default function App() {
       setSurveys(updatedSurveys);
       setActiveSurveyId(duplicatedRecord.id);
       setData(duplicatedRecord.data);
+
+      // Audit trail logging
+      if (currentUser) {
+        logSurveyActivity({
+          surveyId: duplicatedRecord.id,
+          surveyTitle: duplicatedRecord.title,
+          village: duplicatedRecord.desa,
+          languageName: duplicatedRecord.bahasa,
+          action: 'duplicate_survey',
+          actionLabel: 'Penggandaan Data Survei',
+          user: currentUser,
+          details: `Menggandakan data survei ID ${id} menjadi "${duplicatedRecord.title}".`
+        });
+      }
+
       triggerToast(`Survei "${duplicatedRecord.title}" berhasil disalin ke akun Anda.`);
     }
   };
@@ -529,6 +568,20 @@ export default function App() {
     if (target && !canUserEditSurvey(target, currentUser).allowed) {
       triggerToast('Peringatan: Anda tidak memiliki wewenang untuk menghapus survei milik surveyor lain.');
       return;
+    }
+
+    // Audit trail logging
+    if (currentUser && target) {
+      logSurveyActivity({
+        surveyId: target.id,
+        surveyTitle: target.title,
+        village: target.desa,
+        languageName: target.bahasa,
+        action: 'delete_survey',
+        actionLabel: 'Penghapusan Berkas Survei',
+        user: currentUser,
+        details: `Menghapus berkas instrumen survei "${target.title}" dari database sistem.`
+      });
     }
 
     const updated = deleteSurveyRecord(id, surveys);
@@ -558,6 +611,29 @@ export default function App() {
     const updated = toggleSurveyVerification(surveyId, surveys, currentUser);
     setSurveys(updated);
     const target = updated.find(s => s.id === surveyId);
+
+    // Audit trail logging
+    if (currentUser && target) {
+      logSurveyActivity({
+        surveyId: target.id,
+        surveyTitle: target.title,
+        village: target.desa,
+        languageName: target.bahasa,
+        action: target.isVerified ? 'verify_survey' : 'unverify_survey',
+        actionLabel: target.isVerified ? 'Pengesahan Status Verifikasi' : 'Pembatalan Status Verifikasi',
+        sectionId: 'verifikasi',
+        sectionName: 'Kurasi & Validasi Data',
+        user: currentUser,
+        details: target.isVerified 
+          ? `Mengesahkan kelayakan ilmiah dan status tervalidasi untuk survei "${target.title}".` 
+          : `Membatalkan status verifikasi survei "${target.title}".`,
+        diffSummary: {
+          field: 'isVerified',
+          notes: target.isVerified ? 'Status: TERVALIDASI' : 'Status: Draf Belum Tervalidasi'
+        }
+      });
+    }
+
     triggerToast(target?.isVerified 
       ? `Data survei "${target.title}" telah berhasil disahkan statusnya sebagai TERVALIDASI.` 
       : `Status verifikasi survei "${target?.title}" telah dibatalkan.`);
@@ -596,6 +672,16 @@ export default function App() {
               setData(importedSurvey.data);
             }
           }
+          if (currentUser) {
+            logSurveyActivity({
+              surveyId: result.activeId || 'imported',
+              surveyTitle: 'Berkas Impor Cadangan Survei',
+              action: 'import_survey',
+              actionLabel: 'Impor Berkas Cadangan',
+              user: currentUser,
+              details: `Mengimpor berkas cadangan JSON: ${result.message}`
+            });
+          }
           triggerToast(result.message);
         } else {
           triggerToast(`Gagal impor: ${result.message}`);
@@ -626,6 +712,29 @@ export default function App() {
     const now = new Date();
     const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     setLastSavedTime(timeStr);
+
+    // Audit trail logging for manual save
+    if (currentUser) {
+      const currentSectionMeta = SECTIONS_META.find(s => s.id === activeSection);
+      logSurveyActivity({
+        surveyId: activeRec.id,
+        surveyTitle: activeRec.title,
+        village: data.titikPengamatan?.namaDesa,
+        languageName: data.titikPengamatan?.bahasaDigunakan,
+        regency: data.titikPengamatan?.kabupatenKota,
+        action: 'update_section',
+        actionLabel: currentSectionMeta ? `Penyuntingan ${currentSectionMeta.title}` : 'Pembaruan Data Kuesioner',
+        sectionId: activeSection,
+        sectionName: currentSectionMeta?.title || activeSection,
+        user: currentUser,
+        details: `Surveyor memperbarui dan menyimpan data instrumen riset lapangan "${activeRec.title}" (${currentSectionMeta?.title || 'Formulir'}).`,
+        diffSummary: {
+          field: activeSection,
+          notes: `Kemajuan instrumen: ${activeRec.progress}%`
+        }
+      });
+    }
+
     triggerToast(`Data formulir berhasil disimpan pada ${timeStr}`);
     setShowValidationWarningModal(false);
   };
@@ -1766,6 +1875,11 @@ export default function App() {
                 const refreshed = getCurrentUser();
                 if (refreshed) setCurrentUser(refreshed);
               }}
+              onSelectSurvey={(surveyId) => {
+                handleSelectSurvey(surveyId);
+                setCurrentView('kuesioner');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
             />
           )}
 
@@ -2365,6 +2479,11 @@ export default function App() {
           surveys={surveys}
           onUserUpdated={() => {
             setSurveys(loadAllSurveys());
+          }}
+          onSelectSurvey={(surveyId) => {
+            handleSelectSurvey(surveyId);
+            setCurrentView('kuesioner');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
         />
       )}

@@ -48,50 +48,88 @@ export function analyzeMotifDanJenis(input: AnalysisInput): {
   const tempat = (input.tempatPertunjukan || '').toLowerCase();
 
   // =========================================================================
-  // 1. KLASIFIKASI GENRE / JENIS FOLKLOR SASTRA LISAN
+  // 1. KLASIFIKASI GENRE / JENIS FOLKLOR SASTRA LISAN (HIERARKIS & PRESISI)
   // =========================================================================
   let jenisUtama: AnalisisJenisSastraLisan['jenisUtama'] = 'Legenda';
   let subJenis = 'Legenda Toponimik (Asal Usul Tempat & Alam)';
-  let confidenceScore = 90;
+  let confidenceScore = 88;
   const ciriKhas: string[] = [];
 
-  // A. Nyanyian Rakyat / Tembang
-  const isNyanyian = bentuk === 'dinyanyikan' || 
-    musik.includes('suling') || musik.includes('kecapi') || musik.includes('gamelan') || musik.includes('rebana') ||
-    combinedText.includes('tembang') || combinedText.includes('kawih') || combinedText.includes('pupuh') || 
-    combinedText.includes('kidung') || combinedText.includes('sinom') || combinedText.includes('asmarandana');
+  // Hitung indikator khusus tiap genre
+  const hasSasakalaOrAsalUsul = combinedText.includes('sasakala') || 
+    combinedText.includes('asal usul') || 
+    combinedText.includes('asal-usul') || 
+    combinedText.includes('mula') ||
+    combinedText.includes('terbentuknya');
 
-  // B. Puisi Lisan / Mantra
-  const isMantra = combinedText.includes('mantra') || combinedText.includes('rajah') || combinedText.includes('jampi') || 
-    combinedText.includes('ajen') || combinedText.includes('ajian') || combinedText.includes('asihan') ||
-    combinedText.includes('tolak bala') || combinedText.includes('ruwatan') || combinedText.includes('sesaji') || 
-    syarat.includes('kemenyan') || syarat.includes('menyan') || syarat.includes('sesajen');
+  const hasToponimiPhysical = combinedText.includes('batu') || 
+    combinedText.includes('gunung') || 
+    combinedText.includes('sungai') || 
+    combinedText.includes('danau') || 
+    combinedText.includes('curug') || 
+    combinedText.includes('situ') || 
+    combinedText.includes('bukit') || 
+    combinedText.includes('goa') || 
+    combinedText.includes('rawa') ||
+    combinedText.includes('pulau');
 
-  // C. Teater / Drama Tutur
-  const isTeater = bentuk === 'dialog' || input.kategoriPenutur === 'Kelompok' || input.kategoriPenutur === 'Duet' ||
-    combinedText.includes('lakon') || combinedText.includes('wayang') || combinedText.includes('drama tutur') || 
-    combinedText.includes('dalang') || combinedText.includes('sandiwara') || combinedText.includes('babak') ||
-    tempat.includes('panggung') || tempat.includes('arena');
+  const hasTokohSejarahOrWali = combinedText.includes('makam') || 
+    combinedText.includes('keramat') || 
+    combinedText.includes('wali') || 
+    combinedText.includes('pangeran') || 
+    combinedText.includes('eyang') || 
+    combinedText.includes('syekh') || 
+    combinedText.includes('prabu') ||
+    combinedText.includes('raden');
 
-  // D. Mite / Mitos
-  const isMitos = combinedText.includes('dewa') || combinedText.includes('dewi') || combinedText.includes('kahyangan') || 
-    combinedText.includes('batara') || combinedText.includes('sanghyang') || combinedText.includes('dewi sri') || 
-    combinedText.includes('penciptaan alam') || combinedText.includes('dunia gaib') || 
-    (suasana.includes('sakral') && (combinedText.includes('azali') || combinedText.includes('penciptaan') || combinedText.includes('padi')));
+  // A. Puisi Lisan / Mantra (Memiliki formula magis sakral eksplisit)
+  const isExplicitMantra = combinedText.includes('mantra') || 
+    combinedText.includes('rajah') || 
+    combinedText.includes('jampi') || 
+    combinedText.includes('jangjawokan') ||
+    combinedText.includes('singlar') ||
+    combinedText.includes('asihan') ||
+    (tujuan.includes('ruwatan') && (tujuan.includes('tolak bala') || syarat.includes('kemenyan')));
 
-  // E. Dongeng / Fabel
-  const isDongeng = combinedText.includes('kancil') || combinedText.includes('fabel') || combinedText.includes('binatang') || 
-    combinedText.includes('kabayan') || combinedText.includes('raksasa') || combinedText.includes('dongeng') || 
-    combinedText.includes('pelipur lara') || tujuan.includes('hiburan semata') || combinedText.includes('buto ijo');
+  // B. Teater Tutur / Seni Pertunjukan Bernaskah
+  const isTeater = bentuk === 'dialog' || 
+    input.kategoriPenutur === 'Kelompok' || 
+    combinedText.includes('drama tutur') || 
+    combinedText.includes('sandiwara') || 
+    combinedText.includes('wayang') || 
+    combinedText.includes('dalang');
 
-  if (isNyanyian) {
-    jenisUtama = 'Nyanyian Rakyat / Tembang';
-    subJenis = 'Tembang Tradisional / Nyanyian Pengiring Upacara';
-    confidenceScore = 94;
-    ciriKhas.push('Bentuk tuturan ditembangkan/dinyanyikan dengan laras dan irama teratur');
-    ciriKhas.push('Didukung iringan instrumen musik tradisional khas kedaerahan');
-    ciriKhas.push('Memuat nilai estetika tinggi, penghayatan filosofis, dan lirik simbolis');
-  } else if (isMantra) {
+  // C. Nyanyian Rakyat / Tembang (HANYA jika tuturan memang dinyanyikan atau berformat tembang/pupuh)
+  const isNyanyian = (bentuk === 'dinyanyikan') || 
+    combinedText.includes('tembang') || 
+    combinedText.includes('kawih') || 
+    combinedText.includes('pupuh') || 
+    combinedText.includes('kidung') ||
+    (bentuk !== 'diceritakan' && (combinedText.includes('pantun berdendang') || combinedText.includes('nyanyian rakyat')));
+
+  // D. Mite / Mitos (Kahyangan, dewa-dewi, penciptaan alam semesta primordial)
+  const isMitos = !hasSasakalaOrAsalUsul && (
+    combinedText.includes('dewa') || 
+    combinedText.includes('dewi sri') || 
+    combinedText.includes('sanghyang') || 
+    combinedText.includes('batara') || 
+    combinedText.includes('penciptaan alam') || 
+    (suasana.includes('sakral') && combinedText.includes('kahyangan'))
+  );
+
+  // E. Dongeng / Fabel (Fiksi murni, pelipur lara, binatang cerdik)
+  const isDongeng = !hasSasakalaOrAsalUsul && !hasToponimiPhysical && (
+    combinedText.includes('kancil') || 
+    combinedText.includes('fabel') || 
+    combinedText.includes('kabayan') || 
+    combinedText.includes('raksasa') || 
+    combinedText.includes('pelipur lara') || 
+    tujuan.includes('hiburan semata') || 
+    combinedText.includes('dongeng')
+  );
+
+  // Evaluasi klasifikasi dengan presisi tinggi
+  if (isExplicitMantra) {
     jenisUtama = 'Puisi Lisan / Mantra';
     subJenis = 'Mantra Ritual / Formula Magis Sakral';
     confidenceScore = 95;
@@ -101,14 +139,21 @@ export function analyzeMotifDanJenis(input: AnalysisInput): {
   } else if (isTeater) {
     jenisUtama = 'Teater / Drama Tutur';
     subJenis = 'Teater Tutur Tradisional / Seni Pertunjukan Bernarasi';
-    confidenceScore = 91;
+    confidenceScore = 92;
     ciriKhas.push('Melibatkan dialog antartokoh atau penuturan terstruktur oleh juru kisah');
     ciriKhas.push('Mempunyai formasi pertunjukan dan interaksi langsung dengan khalayak');
     ciriKhas.push('Menggabungkan narasi verbal, ekspresi gerak, dan ilustrasi musikal');
+  } else if (isNyanyian) {
+    jenisUtama = 'Nyanyian Rakyat / Tembang';
+    subJenis = 'Tembang Tradisional / Nyanyian Pengiring Upacara';
+    confidenceScore = 93;
+    ciriKhas.push('Bentuk tuturan ditembangkan/dinyanyikan dengan laras dan irama teratur');
+    ciriKhas.push('Didukung iringan instrumen musik tradisional khas kedaerahan');
+    ciriKhas.push('Memuat nilai estetika tinggi, penghayatan filosofis, dan lirik simbolis');
   } else if (isMitos) {
     jenisUtama = 'Mite / Mitos';
     subJenis = 'Mite Kosmologis & Makhluk Adikodrati Sakral';
-    confidenceScore = 93;
+    confidenceScore = 91;
     ciriKhas.push('Melibatkan tokoh berkekuatan dewata, entitas adikodrati, atau dewi kahyangan');
     ciriKhas.push('Diyakini sungguh-sungguh terjadi pada masa primordial oleh masyarakat penganut');
     ciriKhas.push('Menjadi fondasi kosmologis upacara adat dan kesuburan pertanian masyarakat');
@@ -120,27 +165,27 @@ export function analyzeMotifDanJenis(input: AnalysisInput): {
     ciriKhas.push('Menonjolkan kecerdikan akal budi tokoh menghadapi tipu daya lawan');
     ciriKhas.push('Berfungsi sebagai media pendidikan moral dan sarana katarsis / pelipur lara');
   } else {
-    // Default Legenda
+    // Klasifikasi Legenda (Genre Prosa Rakyat Paling Dominan di Nusantara)
     jenisUtama = 'Legenda';
-    if (combinedText.includes('batu') || combinedText.includes('danau') || combinedText.includes('gunung') || 
-        combinedText.includes('sungai') || combinedText.includes('curug') || combinedText.includes('sasakala') || 
-        combinedText.includes('asal usul') || combinedText.includes('bukit') || combinedText.includes('goa')) {
+    if (hasToponimiPhysical || hasSasakalaOrAsalUsul) {
       subJenis = 'Legenda Toponimik (Asal Mula Tempat & Fenomena Alam)';
-      ciriKhas.push('Terkait erat dengan asal-usul toponimi (nama desa, bukit, batu, atau sungai)');
-      ciriKhas.push('Memiliki bukti fisik peninggalan alam yang dapat disaksikan hingga kini');
-    } else if (combinedText.includes('makam') || combinedText.includes('keramat') || combinedText.includes('wali') || 
-               combinedText.includes('pangeran') || combinedText.includes('santang') || combinedText.includes('eyang') || 
-               combinedText.includes('syekh') || combinedText.includes('ulama')) {
+      confidenceScore = 96;
+      ciriKhas.push('Terkait erat dengan asal-usul toponimi (nama desa, bukit, batu, situ, atau sungai)');
+      ciriKhas.push('Memiliki bukti fisik peninggalan alam/situs geologis yang dapat disaksikan hingga kini');
+      ciriKhas.push('Menghubungkan memori kultural masa lalu dengan bentang geografis desa');
+    } else if (hasTokohSejarahOrWali) {
       subJenis = 'Legenda Keagamaan & Tokoh Pejuang Setempat';
-      ciriKhas.push('Mengisahkan keteladanan figur tokoh leluhur atau penyebar agama');
-      ciriKhas.push('Berpusat di sekitar situs makam keramat atau petilasan bersejarah');
+      confidenceScore = 94;
+      ciriKhas.push('Mengisahkan keteladanan figur tokoh leluhur, kesatria, atau penyebar agama');
+      ciriKhas.push('Berpusat di sekitar situs makam keramat atau petilasan bersejarah warga');
+      ciriKhas.push('Diakui sebagai pembawa berkah atau pendiri peradaban desa pertama');
     } else {
       subJenis = 'Legenda Setempat / Perseorangan';
+      confidenceScore = 91;
       ciriKhas.push('Dianggap pernah benar-benar terjadi dalam kurun waktu sejarah lokal');
       ciriKhas.push('Mewariskan memori kolektif yang memperkuat ikatan emosional warga desa');
+      ciriKhas.push('Berfungsi sebagai sarana legitimasi status sosial atau tata aturan adat');
     }
-    confidenceScore = 92;
-    ciriKhas.push('Menghubungkan masa lalu mitologis desa dengan realitas geografis masa kini');
   }
 
   const penjelasanJenis = `Berdasarkan evaluasi komprehensif terhadap bentuk tuturan (${input.bentukTuturan || 'tutur naratif'}), medium penyampaian (${input.iringanMusik || 'tanpa musik'}), suasana (${input.suasanaPertunjukan || 'khidmat'}), serta fungsi upacara (${input.tujuan || 'pelestarian nilai'}), karya tradisi ini terklasifikasi sebagai ${jenisUtama} (${subJenis}). Analisis menunjukkan adanya korelasi organik antara teks tuturan dan memori kultural masyarakat ${input.sukuPemilik || 'setempat'}.`;

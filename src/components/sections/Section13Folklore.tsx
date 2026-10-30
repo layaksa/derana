@@ -1,6 +1,7 @@
-import React from 'react';
-import { Scroll } from 'lucide-react';
+import React, { useMemo } from 'react';
+import { Scroll, Sparkles, Check, BookOpen, Tag } from 'lucide-react';
 import { FolkloreData } from '../../types/linguistic';
+import { analyzeMotifDanJenis } from '../../utils/sastraLisanAnalysis';
 
 interface Section13Props {
   data: FolkloreData;
@@ -8,6 +9,20 @@ interface Section13Props {
 }
 
 export const Section13Folklore: React.FC<Section13Props> = ({ data, onChange }) => {
+  const analysis = useMemo(() => {
+    return analyzeMotifDanJenis({
+      namaSastra: data.judulFolklore || '',
+      deskripsi: data.ringkasanCerita || '',
+      syarat: data.maknaTradisi || '',
+      tujuan: data.maknaTradisi || '',
+      kutipan: data.tokohUtama || ''
+    });
+  }, [data.judulFolklore, data.ringkasanCerita, data.maknaTradisi, data.tokohUtama]);
+
+  const handleApplyCategory = () => {
+    const suggestedCategory = `${analysis.analisisJenis.jenisUtama} (${analysis.analisisJenis.subJenis})`;
+    onChange('kategori', suggestedCategory);
+  };
   return (
     <section id="section-13" className="scroll-mt-36 bg-white rounded-xl border border-slate-200 shadow-2xs p-5 md:p-6 transition-all">
       <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-5">
@@ -103,6 +118,53 @@ export const Section13Folklore: React.FC<Section13Props> = ({ data, onChange }) 
               className="w-full px-3.5 py-2 text-sm bg-slate-50/50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
             />
           </div>
+        </div>
+
+        {/* HASIL ANALISIS OTOMATIS MOTIF & JENIS FOLKLOR */}
+        <div className="mt-4 p-4 rounded-xl bg-indigo-50/60 border border-indigo-100 space-y-2.5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-indigo-100">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-indigo-600" />
+              <span className="text-xs font-bold text-indigo-950 uppercase tracking-wide">
+                Hasil Analisis Otomatis Motif & Jenis Folklor
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-200 text-indigo-900">
+                Akurasi {analysis.analisisJenis.confidenceScore}%
+              </span>
+              <button
+                type="button"
+                onClick={handleApplyCategory}
+                className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white transition-colors cursor-pointer shadow-2xs flex items-center gap-1"
+                title="Terapkan hasil klasifikasi otomatis ini ke kolom Kategori"
+              >
+                <Check className="w-3 h-3" />
+                <span>Terapkan Kategori</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div>
+              <span className="text-slate-500 font-medium block text-[11px]">Klasifikasi Genre:</span>
+              <span className="font-bold text-indigo-950">
+                {analysis.analisisJenis.jenisUtama} — {analysis.analisisJenis.subJenis}
+              </span>
+            </div>
+            <div>
+              <span className="text-slate-500 font-medium block text-[11px]">Motif Dominan (Stith Thompson):</span>
+              <span className="font-bold text-purple-950 font-mono">
+                {analysis.analisisMotif.motifUtama}
+              </span>
+            </div>
+          </div>
+
+          {analysis.analisisJenis.ciriKhas.length > 0 && (
+            <p className="text-[11px] text-slate-600 italic">
+              Karakteristik: {analysis.analisisJenis.ciriKhas.join('; ')}
+            </p>
+          )}
         </div>
       </div>
     </section>

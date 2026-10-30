@@ -318,12 +318,12 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
       {
         title: 'Pengaturan & Akses',
         items: [
-          { 
+          ...(currentRole === 'admin' ? [{ 
             key: 'pengaturan' as ViewKey, 
-            label: 'Pengaturan & Pengguna', 
+            label: 'Manajemen Pengguna', 
             icon: Settings, 
             badge: pendingRequestsCount > 0 ? `${pendingRequestsCount}` : null 
-          },
+          }] : []),
           { key: 'dokumentasi' as ViewKey, label: 'Dokumentasi & Tata Cara', icon: HelpCircle, badge: null }
         ]
       }

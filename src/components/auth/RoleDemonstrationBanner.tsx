@@ -15,7 +15,9 @@ import {
   Lock,
   ChevronDown,
   ChevronUp,
-  BadgeCheck
+  BadgeCheck,
+  Clock,
+  AlertTriangle
 } from 'lucide-react';
 import { AppUser, UserRole } from '../../types/auth';
 import { getRoleBadge } from '../../utils/authStorage';
@@ -39,8 +41,13 @@ export const RoleDemonstrationBanner: React.FC<RoleDemonstrationBannerProps> = (
   const [isExpanded, setIsExpanded] = useState(false);
   const currentRole: UserRole = currentUser?.role || 'tamu';
   const roleBadge = getRoleBadge(currentRole);
+  const isPending = (currentRole === 'surveyor' || (currentRole as any) === 'user') && 
+    (currentUser?.status === 'pending' || currentUser?.isApproved === false);
 
   const getRoleIcon = () => {
+    if (isPending) {
+      return <Clock className="w-4 h-4 text-amber-600 dark:text-amber-400" />;
+    }
     switch (currentRole) {
       case 'admin':
         return <ShieldCheck className="w-4 h-4 text-purple-600 dark:text-purple-400" />;
@@ -56,6 +63,28 @@ export const RoleDemonstrationBanner: React.FC<RoleDemonstrationBannerProps> = (
 
   return (
     <div className="w-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-xl border border-slate-200/80 dark:border-slate-800 px-4 sm:px-6 py-3 sm:py-3.5 shadow-sm transition-all mb-5">
+      {/* PENDING APPROVAL SPECIAL BANNER */}
+      {isPending && (
+        <div className="mb-3.5 p-3.5 rounded-xl bg-amber-500/10 dark:bg-amber-500/15 border border-amber-400 dark:border-amber-600/60 flex items-start sm:items-center justify-between gap-3 text-amber-950 dark:text-amber-100">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-2xs animate-pulse">
+              <Clock className="w-4 h-4" />
+            </div>
+            <div>
+              <div className="text-xs font-bold flex items-center gap-2 flex-wrap">
+                <span>Akun Anda sedang menunggu persetujuan dari Admin Sistem.</span>
+                <span className="px-2 py-0.5 rounded-full text-[10px] bg-amber-200 dark:bg-amber-900 text-amber-900 dark:text-amber-200 font-extrabold uppercase tracking-wider">
+                  Status: Menunggu Persetujuan
+                </span>
+              </div>
+              <p className="text-[11px] text-amber-800 dark:text-amber-300 mt-0.5 leading-snug">
+                Pendaftaran Anda sebagai Surveyor Lapangan telah tercatat dalam sistem. Selama menunggu penugasan dan persetujuan dari Koordinator Utama/Admin Sistem, Anda dapat melihat instrumen, korpus, dan peta dalam mode baca.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Compact Main Row */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
         
