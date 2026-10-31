@@ -20,7 +20,8 @@ import {
   Users,
   Lock,
   Unlock,
-  Check
+  Check,
+  History
 } from 'lucide-react';
 import { calculateOverallProgress } from '../utils/calculations';
 import { InstrumenPemetaanBahasaData, SurveyRecord } from '../types/linguistic';
@@ -50,6 +51,7 @@ interface HeaderProps {
   onOpenProfile?: () => void;
   onOpenUserManagement?: () => void;
   onQuickSwitchUser?: (username: string) => void;
+  onOpenChangeHistory?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -72,7 +74,8 @@ export const Header: React.FC<HeaderProps> = ({
   onLogout,
   onOpenProfile,
   onOpenUserManagement,
-  onQuickSwitchUser
+  onQuickSwitchUser,
+  onOpenChangeHistory
 }) => {
   const { language, t } = useLanguage();
   const progress = calculateOverallProgress(data);
@@ -204,6 +207,18 @@ export const Header: React.FC<HeaderProps> = ({
                   <Compass className="w-3.5 h-3.5 text-emerald-600" />
                   <span className="hidden sm:inline">Peta & Dialektometri</span>
                 </button>
+
+                {onOpenChangeHistory && (
+                  <button
+                    type="button"
+                    onClick={onOpenChangeHistory}
+                    title="Lihat log riwayat perubahan data survei aktif (siapa, kapan, field yang diupdate)"
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-indigo-700 hover:text-indigo-900 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 transition-colors cursor-pointer"
+                  >
+                    <History className="w-3.5 h-3.5 text-indigo-600" />
+                    <span className="hidden sm:inline">Riwayat Perubahan</span>
+                  </button>
+                )}
 
                 <button
                   id="btn-create-new-from-header"
@@ -449,6 +464,18 @@ export const Header: React.FC<HeaderProps> = ({
                     </span>
                   )}
                 </span>
+              )}
+
+              {onOpenChangeHistory && (
+                <button
+                  type="button"
+                  onClick={onOpenChangeHistory}
+                  className="hidden sm:inline-flex items-center gap-1 text-[11px] font-semibold text-indigo-700 hover:text-indigo-900 bg-indigo-50 hover:bg-indigo-100 px-2 py-0.5 rounded-md border border-indigo-200 transition-colors cursor-pointer"
+                  title="Lihat riwayat perubahan data survei aktif (siapa, kapan, dan field yang diupdate)"
+                >
+                  <History className="w-3 h-3 text-indigo-600" />
+                  <span>Riwayat Perubahan</span>
+                </button>
               )}
             </div>
 

@@ -12,7 +12,8 @@ import {
   Check,
   Minimize2,
   Maximize2,
-  Lock
+  Lock,
+  History
 } from 'lucide-react';
 import { 
   InstrumenPemetaanBahasaData, 
@@ -97,6 +98,7 @@ interface PemetaanKuesionerModalWindowProps {
   updateTitikPembanding: (updatedList: any[]) => void;
   updateCatatanDialektometri: (field: any, val: string) => void;
   navigateToDialektometriSection: () => void;
+  onOpenChangeHistory?: () => void;
 }
 
 export const PemetaanKuesionerModalWindow: React.FC<PemetaanKuesionerModalWindowProps> = ({
@@ -114,6 +116,7 @@ export const PemetaanKuesionerModalWindow: React.FC<PemetaanKuesionerModalWindow
   onResetEmpty,
   validationSummary,
   onOpenValidationModal,
+  onOpenChangeHistory,
   data,
   surveys,
   activeSurveyId,
@@ -217,6 +220,18 @@ export const PemetaanKuesionerModalWindow: React.FC<PemetaanKuesionerModalWindow
                 <ListFilter className="w-3.5 h-3.5 text-slate-500" />
                 <span className="hidden md:inline">{formMode === 'screen' ? 'Tampilkan Semua Seksi' : 'Layar Terfokus'}</span>
               </button>
+
+              {onOpenChangeHistory && (
+                <button
+                  type="button"
+                  onClick={onOpenChangeHistory}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 rounded-lg text-xs font-semibold border border-indigo-200 dark:border-indigo-800 shadow-2xs transition-colors cursor-pointer"
+                  title="Lihat riwayat perubahan data survei aktif (siapa, kapan, field apa yang diupdate)"
+                >
+                  <History className="w-3.5 h-3.5 text-indigo-600" />
+                  <span className="hidden lg:inline">Riwayat Perubahan</span>
+                </button>
+              )}
 
               {canEdit ? (
                 <button

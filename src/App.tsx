@@ -67,6 +67,7 @@ import { UserManagementModal } from './components/UserManagementModal';
 import { PengaturanBentoView } from './components/views/PengaturanBentoView';
 import { ProfileModal } from './components/ProfileModal';
 import { PRDDocumentModal } from './components/PRDDocumentModal';
+import { ActiveSurveyChangeHistoryModal } from './components/dashboard/ActiveSurveyChangeHistoryModal';
 import { SurveysLeafletMap } from './components/dashboard/SurveysLeafletMap';
 import { 
   InstrumenPemetaanBahasaData, 
@@ -358,6 +359,7 @@ export default function App() {
   const [formMode, setFormMode] = useState<'screen' | 'all'>('screen');
   const [activeScreenNumber, setActiveScreenNumber] = useState<number>(1);
   const [isExportOpen, setIsExportOpen] = useState<boolean>(false);
+  const [isSurveyHistoryModalOpen, setIsSurveyHistoryModalOpen] = useState<boolean>(false);
   const [lastSavedTime, setLastSavedTime] = useState<string | null>(null);
   const [showToast, setShowToast] = useState<string | null>(null);
   const [dashboardViewMode, setDashboardViewMode] = useState<'ringkasan' | 'peta_survei' | 'narasumber_stats' | 'dialek_stats' | 'korelasi_pendidikan' | 'regresi_usia_bahasa' | 'daftar'>('ringkasan');
@@ -1332,6 +1334,7 @@ export default function App() {
           firebaseStatus={firebaseStatus}
           pendingSyncCount={syncInfo.pendingCount}
           onManualSync={handleManualCloudSync}
+          onOpenChangeHistory={() => setIsSurveyHistoryModalOpen(true)}
         />
 
         {/* Content Container */}
@@ -1817,6 +1820,7 @@ export default function App() {
               onCreateNewSurvey={handleCreateNew}
               onDeleteSurvey={handleDelete}
               onDuplicateSurvey={handleDuplicate}
+              onOpenChangeHistory={() => setIsSurveyHistoryModalOpen(true)}
             />
           )}
 
@@ -2502,6 +2506,14 @@ export default function App() {
       <PRDDocumentModal
         isOpen={isPRDModalOpen}
         onClose={() => setIsPRDModalOpen(false)}
+      />
+
+      {/* Modal Riwayat Perubahan Data Survei Aktif (Who, When, What Fields) */}
+      <ActiveSurveyChangeHistoryModal
+        isOpen={isSurveyHistoryModalOpen}
+        onClose={() => setIsSurveyHistoryModalOpen(false)}
+        survey={activeSurvey}
+        currentUser={currentUser}
       />
     </div>
   );

@@ -44,6 +44,7 @@ import { SECTIONS_META } from './NavigationStepper';
 import { DescriptiveDialectStats } from './dashboard/DescriptiveDialectStats';
 import { NarasumberStatsSummary } from './dashboard/NarasumberStatsSummary';
 import { SurveyorProductivityCard } from './dashboard/SurveyorProductivityCard';
+import { WeeklySurveyTrendsChart } from './dashboard/WeeklySurveyTrendsChart';
 import { ConflictResolutionModal } from './pwa/ConflictResolutionModal';
 
 interface SummaryDashboardProps {
@@ -599,6 +600,12 @@ export const SummaryDashboard: React.FC<SummaryDashboardProps> = ({
         currentUser={currentUser}
         onSelectSurvey={onSelectSurvey}
         onNavigateToForm={onSwitchToEditor}
+      />
+
+      {/* 4b. GRAFIK GARIS RECHARTS: TREN SURVEI DISELESAIKAN MINGGU KE MINGGU */}
+      <WeeklySurveyTrendsChart
+        surveys={surveys}
+        currentUser={currentUser}
       />
 
       {/* 5. PROVINCE-BY-PROVINCE BREAKDOWN & BENTO COMPARISON */}

@@ -60,6 +60,72 @@ const SEED_ACTIVITY_LOGS: SurveyActivityLog[] = [
     source: 'web'
   },
   {
+    id: 'log_seed_002b',
+    timestamp: new Date(Date.now() - 1000 * 60 * 135).toISOString(), // ~2.2 hrs ago
+    surveyId: 'survey_sample_karangwangi',
+    surveyTitle: 'Desa Karangwangi - Bahasa Sunda (Cidaun)',
+    languageName: 'Bahasa Sunda',
+    village: 'Karangwangi',
+    regency: 'Cianjur',
+    action: 'verify_survey',
+    actionLabel: 'Validasi Kurator Linguistik',
+    sectionId: 'verifikasi',
+    sectionName: 'Seksi 16 - Pengesahan',
+    userId: 'user_verifikator_hendra',
+    userName: 'Dr. Hendra Saputra, M.Hum.',
+    userRole: 'verifikator',
+    userEmail: 'hendra.linguist@kemdikbud.go.id',
+    details: 'Memverifikasi akurasi transkripsi fonetis leksikal 200 Swadesh dan mengonfirmasi status kebahasaan Sunda Pesisir Cidaun.',
+    diffSummary: {
+      field: 'isVerified',
+      notes: 'Survei disahkan masuk korpus dialektometri'
+    },
+    source: 'web'
+  },
+  {
+    id: 'log_seed_002c',
+    timestamp: new Date(Date.now() - 1000 * 60 * 240).toISOString(), // 4 hrs ago
+    surveyId: 'survey_sample_karangwangi',
+    surveyTitle: 'Desa Karangwangi - Bahasa Sunda (Cidaun)',
+    languageName: 'Bahasa Sunda',
+    village: 'Karangwangi',
+    regency: 'Cianjur',
+    action: 'update_metadata',
+    actionLabel: 'Pembaruan Data Informan',
+    sectionId: 'titikPengamatan',
+    sectionName: 'Seksi 0 - Titik Pengamatan & Informan',
+    userId: 'user_surveyor_budi',
+    userName: 'Budi Santoso, S.Pd.',
+    userRole: 'surveyor',
+    userEmail: 'budi.surveyor@gmail.com',
+    details: 'Melengkapi profil narasumber ke-3: Ibu Hj. Siti (62 th, penutur asli tidak pernah merantau).',
+    diffSummary: {
+      field: 'narasumberList',
+      itemsChanged: 1,
+      completionDelta: 3.0
+    },
+    source: 'pwa_offline'
+  },
+  {
+    id: 'log_seed_002d',
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 18).toISOString(), // 18 hrs ago
+    surveyId: 'survey_sample_karangwangi',
+    surveyTitle: 'Desa Karangwangi - Bahasa Sunda (Cidaun)',
+    languageName: 'Bahasa Sunda',
+    village: 'Karangwangi',
+    regency: 'Cianjur',
+    action: 'create_survey',
+    actionLabel: 'Pembuatan Titik Survei Baru',
+    sectionId: 'titikPengamatan',
+    sectionName: 'Seksi 0 - Titik Pengamatan',
+    userId: 'user_surveyor_budi',
+    userName: 'Budi Santoso, S.Pd.',
+    userRole: 'surveyor',
+    userEmail: 'budi.surveyor@gmail.com',
+    details: 'Inisiasi titik pengamatan TP-01 Karangwangi Cidaun Cianjur menggunakan instrumen 16 seksi kebahasaan.',
+    source: 'pwa_offline'
+  },
+  {
     id: 'log_seed_003',
     timestamp: new Date(Date.now() - 1000 * 60 * 180).toISOString(), // 3 hours ago
     surveyId: 'survey_sample_rancabuaya',
@@ -80,6 +146,53 @@ const SEED_ACTIVITY_LOGS: SurveyActivityLog[] = [
       field: 'morfologiSintaksis',
       itemsChanged: 6,
       completionDelta: 4.0
+    },
+    source: 'web'
+  },
+  {
+    id: 'log_seed_003b',
+    timestamp: new Date(Date.now() - 1000 * 60 * 360).toISOString(), // 6 hours ago
+    surveyId: 'survey_sample_rancabuaya',
+    surveyTitle: 'Desa Purbayani - Bahasa Sunda Pesisir (Rancabuaya)',
+    languageName: 'Bahasa Sunda Pesisir',
+    village: 'Purbayani',
+    regency: 'Garut Selatan',
+    action: 'update_section',
+    actionLabel: 'Perekaman Audio Kosakata Budaya',
+    sectionId: 'budaya',
+    sectionName: 'Seksi 2 - Kosakata Budaya Pesisir',
+    userId: 'user_surveyor_siti',
+    userName: 'Siti Rahmawati, M.Hum.',
+    userRole: 'surveyor',
+    userEmail: 'siti.surveyor@gmail.com',
+    details: 'Mengunggah 12 audio istilah nelayan pesisir Rancabuaya: "ngajaring", "parahu jungku", "rombongan jukung".',
+    diffSummary: {
+      field: 'kosakataBudaya',
+      itemsChanged: 12,
+      completionDelta: 5.5
+    },
+    source: 'web'
+  },
+  {
+    id: 'log_seed_003c',
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 20).toISOString(), // 20 hours ago
+    surveyId: 'survey_sample_rancabuaya',
+    surveyTitle: 'Desa Purbayani - Bahasa Sunda Pesisir (Rancabuaya)',
+    languageName: 'Bahasa Sunda Pesisir',
+    village: 'Purbayani',
+    regency: 'Garut Selatan',
+    action: 'verify_survey',
+    actionLabel: 'Verifikasi Data Lapangan',
+    sectionId: 'verifikasi',
+    sectionName: 'Kurasi Ilmiah',
+    userId: 'user_verifikator_hendra',
+    userName: 'Dr. Hendra Saputra, M.Hum.',
+    userRole: 'verifikator',
+    userEmail: 'hendra.linguist@kemdikbud.go.id',
+    details: 'Pengesahan verifikasi titik survei Desa Purbayani Rancabuaya tuntas 100%.',
+    diffSummary: {
+      field: 'isVerified',
+      notes: 'Disahkan resmi'
     },
     source: 'web'
   },
@@ -108,6 +221,30 @@ const SEED_ACTIVITY_LOGS: SurveyActivityLog[] = [
     source: 'pwa_offline'
   },
   {
+    id: 'log_seed_004b',
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 30).toISOString(), // 30 hours ago
+    surveyId: 'survey_sample_pangandaran',
+    surveyTitle: 'Desa Babakan - Bahasa Sunda-Jawa (Banyumasan)',
+    languageName: 'Bahasa Sunda-Jawa',
+    village: 'Babakan',
+    regency: 'Pangandaran',
+    action: 'update_section',
+    actionLabel: 'Pengisian Glos Swadesh Kontak Sunda-Jawa',
+    sectionId: 'swadesh',
+    sectionName: 'Seksi 1 - Daftar Swadesh',
+    userId: 'user_surveyor_agus',
+    userName: 'Agus Priyanto, M.Hum.',
+    userRole: 'surveyor',
+    userEmail: 'agus.surveyor@gmail.com',
+    details: 'Mencatat interferensi leksikal Jawa Banyumasan pada leksikon kata ganti: "inyong" [iɲoŋ] dan "rika" [rika].',
+    diffSummary: {
+      field: 'daftarSwadesh',
+      itemsChanged: 15,
+      completionDelta: 8.0
+    },
+    source: 'pwa_offline'
+  },
+  {
     id: 'log_seed_005',
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 46).toISOString(), // ~2 days ago
     surveyId: 'survey_sample_cikaso',
@@ -129,8 +266,43 @@ const SEED_ACTIVITY_LOGS: SurveyActivityLog[] = [
       notes: 'Disetujui oleh kurator linguistik'
     },
     source: 'web'
+  },
+  {
+    id: 'log_seed_005b',
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 52).toISOString(), // ~2.2 days ago
+    surveyId: 'survey_sample_cikaso',
+    surveyTitle: 'Desa Sumberjaya - Bahasa Sunda Dialek Cikaso',
+    languageName: 'Bahasa Sunda',
+    village: 'Sumberjaya',
+    regency: 'Sukabumi',
+    action: 'update_section',
+    actionLabel: 'Pembaruan Seksi Morfologi',
+    sectionId: 'morfologi',
+    sectionName: 'Seksi 3 - Morfologi',
+    userId: 'user_surveyor_budi',
+    userName: 'Budi Santoso, S.Pd.',
+    userRole: 'surveyor',
+    userEmail: 'budi.surveyor@gmail.com',
+    details: 'Menambahkan data afiksasi bentuk pasif ka-an dan pa-an dialek Cikaso Sukabumi.',
+    diffSummary: {
+      field: 'morfologi',
+      itemsChanged: 5,
+      completionDelta: 3.5
+    },
+    source: 'web'
   }
 ];
+
+/**
+ * Filter and fetch the latest audit trail logs for a specific survey
+ */
+export function getAuditTrailForSurvey(surveyId: string, limitCount: number = 5): SurveyActivityLog[] {
+  const allLogs = loadActivityLogs();
+  const filtered = allLogs.filter(log => log.surveyId === surveyId);
+  // Sort descending by timestamp
+  filtered.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+  return filtered.slice(0, limitCount);
+}
 
 /**
  * Load all activity logs from localStorage, initializing with seed if empty

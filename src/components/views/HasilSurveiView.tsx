@@ -28,10 +28,15 @@ import {
   HelpCircle,
   Award,
   Sparkles,
-  FileText
+  FileText,
+  History,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 import { SurveyRecord } from '../../types/linguistic';
 import { AppUser } from '../../types/auth';
+import { AuditTrailTimeline } from '../dashboard/AuditTrailTimeline';
+import { SurveyDetailAuditModal } from '../dashboard/SurveyDetailAuditModal';
 
 interface HasilSurveiViewProps {
   surveys: SurveyRecord[];
@@ -64,8 +69,8 @@ export const HasilSurveiView: React.FC<HasilSurveiViewProps> = ({
   const [searchTerm, setSearchTerm] = useState('');
   const [validationFilter, setValidationFilter] = useState<ValidationFilter>('all');
   const [selectedSurveyor, setSelectedSurveyor] = useState<string>('all');
-  const [selectedProvince, setSelectedProvince] = useState<string>('all');
   const [displayMode, setDisplayMode] = useState<DisplayMode>('cards');
+  const [selectedSurveyForDetail, setSelectedSurveyForDetail] = useState<SurveyRecord | null>(null);
 
   // 1. Calculate Validation KPIs
   const stats = useMemo(() => {
@@ -554,6 +559,7 @@ export const HasilSurveiView: React.FC<HasilSurveiViewProps> = ({
                     canVerify={canVerify}
                     onSelect={() => onSelectSurvey(survey.id)}
                     onNavigateToForm={() => onNavigateToForm(survey.id)}
+                    onViewDetail={() => setSelectedSurveyForDetail(survey)}
                     onToggleVerify={onToggleVerify ? () => onToggleVerify(survey.id) : undefined}
                   />
                 ))}
@@ -594,6 +600,7 @@ export const HasilSurveiView: React.FC<HasilSurveiViewProps> = ({
                     canVerify={canVerify}
                     onSelect={() => onSelectSurvey(survey.id)}
                     onNavigateToForm={() => onNavigateToForm(survey.id)}
+                    onViewDetail={() => setSelectedSurveyForDetail(survey)}
                     onToggleVerify={onToggleVerify ? () => onToggleVerify(survey.id) : undefined}
                   />
                 ))}
@@ -614,6 +621,7 @@ export const HasilSurveiView: React.FC<HasilSurveiViewProps> = ({
               canVerify={canVerify}
               onSelect={() => onSelectSurvey(survey.id)}
               onNavigateToForm={() => onNavigateToForm(survey.id)}
+              onViewDetail={() => setSelectedSurveyForDetail(survey)}
               onToggleVerify={onToggleVerify ? () => onToggleVerify(survey.id) : undefined}
             />
           ))}
@@ -728,6 +736,14 @@ export const HasilSurveiView: React.FC<HasilSurveiViewProps> = ({
                           )}
                           <button
                             type="button"
+                            onClick={() => setSelectedSurveyForDetail(s)}
+                            className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
+                            title="Buka Detail Survei & Audit Trail Timeline"
+                          >
+                            <Eye className="w-4 h-4" />
+                          </button>
+                          <button
+                            type="button"
                             onClick={() => {
                               onSelectSurvey(s.id);
                               onNavigateToForm(s.id);
@@ -748,6 +764,25 @@ export const HasilSurveiView: React.FC<HasilSurveiViewProps> = ({
         </div>
       )}
 
+      {/* 5. MODAL DETAIL SURVEI DENGAN AUDIT TRAIL TIMELINE (5 AKSI TERAKHIR) */}
+      <SurveyDetailAuditModal
+        isOpen={Boolean(selectedSurveyForDetail)}
+        survey={selectedSurveyForDetail}
+        onClose={() => setSelectedSurveyForDetail(null)}
+        onNavigateToForm={() => {
+          if (selectedSurveyForDetail) {
+            onSelectSurvey(selectedSurveyForDetail.id);
+            onNavigateToForm(selectedSurveyForDetail.id);
+            setSelectedSurveyForDetail(null);
+          }
+        }}
+        canVerify={canVerify}
+        onToggleVerify={onToggleVerify && selectedSurveyForDetail ? () => {
+          onToggleVerify(selectedSurveyForDetail.id);
+          setSelectedSurveyForDetail(prev => prev ? { ...prev, isVerified: !prev.isVerified } : null);
+        } : undefined}
+      />
+
     </div>
   );
 };
@@ -761,6 +796,7 @@ interface SurveyItemCardProps {
   canVerify: boolean;
   onSelect: () => void;
   onNavigateToForm: () => void;
+  onViewDetail: () => void;
   onToggleVerify?: () => void;
 }
 
@@ -770,6 +806,7 @@ const SurveyItemCard: React.FC<SurveyItemCardProps> = ({
   canVerify,
   onSelect,
   onNavigateToForm,
+  onViewDetail,
   onToggleVerify
 }) => {
   const isVerified = Boolean(survey.isVerified);
@@ -779,6 +816,8 @@ const SurveyItemCard: React.FC<SurveyItemCardProps> = ({
   const bahasaName = survey.bahasa || survey.data?.titikPengamatan?.bahasaDigunakan || 'Bahasa Belum Diisi';
   const narasumberCount = survey.data?.narasumberList?.filter(n => n.nama && n.nama.trim()).length || 0;
   const swadeshCount = survey.data?.kosakataLengkap?.swadeshList?.filter(w => w.bentukLokal && w.bentukLokal.trim()).length || 0;
+
+  const [showAuditTrail, setShowAuditTrail] = useState(false);
 
   return (
     <div 
@@ -795,7 +834,11 @@ const SurveyItemCard: React.FC<SurveyItemCardProps> = ({
             <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
               {survey.provinsi || survey.data?.titikPengamatan?.provinsi || 'Jawa Barat'} · {survey.kabupatenKota || 'Kabupaten'}
             </span>
-            <h4 className="text-base font-bold text-slate-900 dark:text-white leading-snug">
+            <h4 
+              onClick={onViewDetail}
+              className="text-base font-bold text-slate-900 dark:text-white leading-snug hover:text-indigo-600 dark:hover:text-indigo-400 cursor-pointer transition-colors"
+              title="Klik untuk membuka Detail Survei & Riwayat Audit Trail"
+            >
               Desa {desaName}
             </h4>
           </div>
@@ -882,19 +925,46 @@ const SurveyItemCard: React.FC<SurveyItemCardProps> = ({
         </div>
       </div>
 
+      {/* Audit Trail Timeline Section (Collapsible) */}
+      {showAuditTrail && (
+        <div className="pt-2 border-t border-slate-100 dark:border-slate-800 animate-in fade-in duration-200">
+          <AuditTrailTimeline
+            surveyId={survey.id}
+            maxItems={5}
+            title={`Audit Trail: ${desaName}`}
+            showHeader={false}
+          />
+        </div>
+      )}
+
       {/* Footer Actions */}
-      <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
-        <button
-          type="button"
-          onClick={() => {
-            onSelect();
-            onNavigateToForm();
-          }}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors cursor-pointer"
-        >
-          <Eye className="w-3.5 h-3.5 text-slate-500" />
-          <span>Lihat & Audit</span>
-        </button>
+      <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2">
+        <div className="flex items-center gap-1.5">
+          <button
+            type="button"
+            onClick={onViewDetail}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 text-indigo-700 dark:text-sky-300 border border-indigo-200 dark:border-indigo-800 text-xs font-bold transition-colors cursor-pointer shadow-2xs"
+            title="Buka panel Detail Survei & Riwayat Audit Trail Timeline (5 Riwayat Terakhir)"
+          >
+            <Eye className="w-3.5 h-3.5 text-indigo-600 dark:text-sky-400" />
+            <span>Lihat Detail</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setShowAuditTrail(!showAuditTrail)}
+            className={`inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-medium border transition-colors cursor-pointer ${
+              showAuditTrail
+                ? 'bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800'
+                : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 border-slate-200 dark:border-slate-700'
+            }`}
+            title="Tampilkan 5 riwayat aksi perubahan data terbaru pada survei ini"
+          >
+            <History className="w-3.5 h-3.5 text-indigo-500" />
+            <span>Log (5 Terakhir)</span>
+            {showAuditTrail ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+          </button>
+        </div>
 
         {canVerify && onToggleVerify && (
           <button

@@ -17,7 +17,8 @@ import {
   Database,
   Compass,
   FileText,
-  BookOpen
+  BookOpen,
+  History
 } from 'lucide-react';
 import { SurveyRecord } from '../../types/linguistic';
 import { AppUser } from '../../types/auth';
@@ -55,6 +56,7 @@ interface DashboardNavbarProps {
   firebaseStatus?: FirebaseConnectionStatus;
   pendingSyncCount?: number;
   onManualSync?: () => void;
+  onOpenChangeHistory?: () => void;
 }
 
 export const DashboardNavbar: React.FC<DashboardNavbarProps> = ({
@@ -84,7 +86,8 @@ export const DashboardNavbar: React.FC<DashboardNavbarProps> = ({
   currentViewTitle,
   firebaseStatus = 'connected',
   pendingSyncCount = 0,
-  onManualSync
+  onManualSync,
+  onOpenChangeHistory
 }) => {
   const { language, t } = useLanguage();
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
@@ -195,6 +198,19 @@ export const DashboardNavbar: React.FC<DashboardNavbarProps> = ({
 
         {/* In-App PWA Install Button */}
         <PWAInstallButton variant="compact" />
+
+        {/* Active Survey History Button */}
+        {activeSurveyId && onOpenChangeHistory && (
+          <button
+            type="button"
+            onClick={onOpenChangeHistory}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-indigo-200 dark:border-indigo-850 bg-indigo-50/80 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 text-xs font-semibold shadow-2xs transition-colors cursor-pointer"
+            title="Lihat riwayat perubahan data pada survei aktif (siapa, kapan, field apa saja yang diupdate)"
+          >
+            <History className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+            <span className="hidden sm:inline">Riwayat Perubahan</span>
+          </button>
+        )}
 
         {/* Firebase Cloud Connection & Sync Indicator */}
         <div className="relative" ref={cloudDropdownRef}>
@@ -393,6 +409,19 @@ export const DashboardNavbar: React.FC<DashboardNavbarProps> = ({
                   <User className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                   <span>{t('navbar.profile', 'Profil Peneliti')}</span>
                 </button>
+                {activeSurveyId && onOpenChangeHistory && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onOpenChangeHistory();
+                      setIsUserDropdownOpen(false);
+                    }}
+                    className="w-full flex items-center gap-2 px-3 py-1.5 text-left hover:bg-slate-100 dark:hover:bg-slate-800 text-indigo-700 dark:text-indigo-300 font-medium cursor-pointer"
+                  >
+                    <History className="w-3.5 h-3.5 text-indigo-500" />
+                    <span>Riwayat Perubahan Data</span>
+                  </button>
+                )}
                 {currentUser?.role === 'admin' && (
                   <button
                     type="button"

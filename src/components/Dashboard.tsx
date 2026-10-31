@@ -64,6 +64,9 @@ import { EducationDialectCorrelationAnalysis } from './dashboard/EducationDialec
 import { AgeLanguageRegressionTrendAnalysis } from './dashboard/AgeLanguageRegressionTrendAnalysis';
 import { KecamatanDialectDominanceStats } from './dashboard/KecamatanDialectDominanceStats';
 import { SurveyorProductivityCard } from './dashboard/SurveyorProductivityCard';
+import { AdminTopStatsCard } from './dashboard/AdminTopStatsCard';
+import { WeeklySurveyTrendsChart } from './dashboard/WeeklySurveyTrendsChart';
+import { AuditTrailTimeline } from './dashboard/AuditTrailTimeline';
 import { PetaSastraLisanView } from './views/PetaSastraLisanView';
 import { PetaVitalitasView } from './views/PetaVitalitasView';
 import { PetaRevitalisasiView } from './views/PetaRevitalisasiView';
@@ -72,6 +75,7 @@ import { loadVitalitasResponses } from '../utils/vitalitasStorage';
 import { loadMonevRecords, loadRAPRecords } from '../utils/revitalisasiStorage';
 import { FirebaseConnectionStatus, firebaseConfig } from '../lib/firebase';
 import { motion, AnimatePresence } from 'motion/react';
+import { History } from 'lucide-react';
 
 interface DashboardProps {
   surveys: SurveyRecord[];
@@ -157,6 +161,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
   const [ownershipFilter, setOwnershipFilter] = useState<'all' | 'mine' | 'others'>('all');
   const [sortBy, setSortBy] = useState<'updated_desc' | 'updated_asc' | 'progress_desc' | 'progress_asc' | 'title_asc'>('updated_desc');
   const [expandedChecklists, setExpandedChecklists] = useState<Record<string, boolean>>({});
+  const [expandedAuditTrails, setExpandedAuditTrails] = useState<Record<string, boolean>>({});
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -283,6 +288,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
     }));
   };
 
+  const toggleAuditTrail = (id: string) => {
+    setExpandedAuditTrails(prev => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
+  };
+
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -347,6 +359,19 @@ export const Dashboard: React.FC<DashboardProps> = ({
             )}
           </div>
         </div>
+      )}
+
+      {/* KARTU RINGKASAN BARU DASHBOARD ADMIN: TOTAL DIUNGGAH, SURVEYOR AKTIF MINGGU INI, & PERSENTASE TERVERIFIKASI */}
+      {currentUser?.role === 'admin' && (
+        <AdminTopStatsCard
+          surveys={surveys}
+          currentUser={currentUser}
+          onNavigateToSurveys={() => setViewMode('daftar')}
+          onNavigateToUsers={onNavigateToView ? () => onNavigateToView('pengaturan') : undefined}
+          onNavigateToVerification={onNavigateToView ? () => onNavigateToView('hasil-survei') : undefined}
+          onManualSync={onManualSync}
+          isSyncing={isSyncing}
+        />
       )}
 
       {/* Top Section: Pusat Peta Spasial Tematik Kebahasaan (Peta Bahasa, Sastra Lisan, Vitalitas, & Revitalisasi) */}
@@ -783,6 +808,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
         currentUser={currentUser}
         onSelectSurvey={onSelectSurvey}
         onNavigateToForm={onSwitchToEditor}
+      />
+
+      {/* GRAFIK GARIS RECHARTS: TREN JUMLAH SURVEI DISELESAIKAN DARI MINGGU KE MINGGU */}
+      <WeeklySurveyTrendsChart
+        surveys={surveys}
+        currentUser={currentUser}
       />
 
       {/* BENTO MENU NAVIGASI UTAMA DASHBOARD & MODUL ANALISIS */}
@@ -1716,19 +1747,45 @@ export const Dashboard: React.FC<DashboardProps> = ({
                     </div>
                   </div>
 
-                  {/* Collapsible 16-Section Checklist Toggle */}
-                  <div className="mt-3.5 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                    <button
-                      onClick={() => toggleChecklist(survey.id)}
-                      className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors cursor-pointer"
-                    >
-                      <span>Lihat Rincian Status 16 Bagian</span>
-                      {isExpanded ? (
-                        <ChevronUp className="w-3.5 h-3.5" />
-                      ) : (
-                        <ChevronDown className="w-3.5 h-3.5" />
-                      )}
-                    </button>
+                  {/* Collapsible 16-Section Checklist & Audit Trail Toggles */}
+                  <div className="mt-3.5 pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => toggleChecklist(survey.id)}
+                        className={`inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-lg border transition-colors cursor-pointer ${
+                          isExpanded
+                            ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white border-slate-300 dark:border-slate-600'
+                            : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 border-slate-200 dark:border-slate-700'
+                        }`}
+                      >
+                        <span>Lihat Rincian Status 16 Bagian</span>
+                        {isExpanded ? (
+                          <ChevronUp className="w-3.5 h-3.5" />
+                        ) : (
+                          <ChevronDown className="w-3.5 h-3.5" />
+                        )}
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => toggleAuditTrail(survey.id)}
+                        className={`inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-lg border transition-colors cursor-pointer ${
+                          expandedAuditTrails[survey.id]
+                            ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800'
+                            : 'text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-300 border-slate-200 dark:border-slate-700'
+                        }`}
+                        title="Tampilkan 5 riwayat perubahan data terbaru pada survei ini"
+                      >
+                        <History className="w-3.5 h-3.5 text-indigo-500" />
+                        <span>Audit Trail (5 Terakhir)</span>
+                        {expandedAuditTrails[survey.id] ? (
+                          <ChevronUp className="w-3.5 h-3.5" />
+                        ) : (
+                          <ChevronDown className="w-3.5 h-3.5" />
+                        )}
+                      </button>
+                    </div>
 
                     <div className="flex items-center gap-2">
                       <button
@@ -1780,6 +1837,17 @@ export const Dashboard: React.FC<DashboardProps> = ({
                           </div>
                         ))}
                       </div>
+                    </div>
+                  )}
+
+                  {/* Expanded Audit Trail Timeline (5 Riwayat Aksi Terakhir) */}
+                  {expandedAuditTrails[survey.id] && (
+                    <div className="mt-3">
+                      <AuditTrailTimeline
+                        surveyId={survey.id}
+                        maxItems={5}
+                        title={`Audit Trail: Desa ${survey.desa || survey.data?.titikPengamatan?.namaDesa || 'Survei'}`}
+                      />
                     </div>
                   )}
                 </div>

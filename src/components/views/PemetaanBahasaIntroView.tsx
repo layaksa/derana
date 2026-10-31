@@ -27,11 +27,15 @@ import {
   ShieldCheck,
   Languages,
   Eye,
-  Lock
+  Lock,
+  History,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 import { InstrumenPemetaanBahasaData, SurveyRecord } from '../../types/linguistic';
 import { AppUser } from '../../types/auth';
 import { SECTIONS_META } from '../NavigationStepper';
+import { AuditTrailTimeline } from '../dashboard/AuditTrailTimeline';
 
 interface PemetaanBahasaIntroViewProps {
   data: InstrumenPemetaanBahasaData;
@@ -72,6 +76,7 @@ export const PemetaanBahasaIntroView: React.FC<PemetaanBahasaIntroViewProps> = (
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'completed' | 'in_progress'>('all');
   const [provinceFilter, setProvinceFilter] = useState<string>(selectedProvinceFilter || 'all');
+  const [expandedAuditId, setExpandedAuditId] = useState<string | null>(null);
 
   // Synchronize with parent province filter when changed
   React.useEffect(() => {
@@ -559,11 +564,23 @@ export const PemetaanBahasaIntroView: React.FC<PemetaanBahasaIntroViewProps> = (
                           style={{ width: `${survey.progress}%` }}
                         />
                       </div>
+
+                      {/* Collapsible 5 Recent Audit Trail Logs */}
+                      {expandedAuditId === survey.id && (
+                        <div className="pt-3 border-t border-slate-100 dark:border-slate-800 animate-in fade-in duration-200">
+                          <AuditTrailTimeline
+                            surveyId={survey.id}
+                            maxItems={5}
+                            title={`Audit Trail: ${village}`}
+                            showHeader={true}
+                          />
+                        </div>
+                      )}
                     </div>
 
                     {/* Card Footer Actions */}
-                    <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
-                      <div>
+                    <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2 text-xs">
+                      <div className="flex items-center gap-2 flex-wrap">
                         {!isActive && onSelectSurvey && (
                           <button
                             type="button"
@@ -573,6 +590,21 @@ export const PemetaanBahasaIntroView: React.FC<PemetaanBahasaIntroViewProps> = (
                             Pilih Sebagai Titik Aktif
                           </button>
                         )}
+
+                        <button
+                          type="button"
+                          onClick={() => setExpandedAuditId(expandedAuditId === survey.id ? null : survey.id)}
+                          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium border transition-colors cursor-pointer ${
+                            expandedAuditId === survey.id
+                              ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-sky-300 border-blue-200 dark:border-blue-800'
+                              : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:text-slate-900'
+                          }`}
+                          title="Tampilkan 5 riwayat aksi perubahan data terbaru pada survei ini"
+                        >
+                          <History className="w-3 h-3 text-blue-500" />
+                          <span>Audit Trail (5 Terakhir)</span>
+                          {expandedAuditId === survey.id ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                        </button>
                       </div>
 
                       <div className="flex items-center gap-1.5">

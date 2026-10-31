@@ -19,7 +19,8 @@ import {
   HelpCircle,
   FileText,
   Filter,
-  Lock
+  Lock,
+  History
 } from 'lucide-react';
 import { 
   InstrumenPemetaanBahasaData, 
@@ -100,6 +101,7 @@ interface KuesionerHubViewProps {
   onCreateNewSurvey?: (type: 'empty' | 'sample') => void;
   onDeleteSurvey?: (id: string) => void;
   onDuplicateSurvey?: (id: string) => void;
+  onOpenChangeHistory?: () => void;
 }
 
 export const KuesionerHubView: React.FC<KuesionerHubViewProps> = ({
@@ -112,6 +114,7 @@ export const KuesionerHubView: React.FC<KuesionerHubViewProps> = ({
   currentUser,
   lastSavedTime,
   onSave,
+  onOpenChangeHistory,
   activeScreenNumber,
   onScreenChange,
   formMode,
@@ -242,8 +245,20 @@ export const KuesionerHubView: React.FC<KuesionerHubViewProps> = ({
             </p>
           </div>
 
-          {canEdit ? (
-            <div className="flex items-center gap-2 self-start lg:self-center">
+          <div className="flex flex-wrap items-center gap-2 self-start lg:self-center">
+            {onOpenChangeHistory && (
+              <button
+                type="button"
+                onClick={onOpenChangeHistory}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 rounded-xl text-xs font-bold shadow-2xs transition-colors cursor-pointer"
+                title="Buka log riwayat perubahan data survei aktif (siapa, kapan, dan field yang diupdate)"
+              >
+                <History className="w-4 h-4 text-indigo-600" />
+                <span>Riwayat Perubahan</span>
+              </button>
+            )}
+
+            {canEdit ? (
               <button
                 type="button"
                 onClick={onSave}
@@ -252,15 +267,13 @@ export const KuesionerHubView: React.FC<KuesionerHubViewProps> = ({
                 <Save className="w-4 h-4" />
                 <span>Simpan Formulir</span>
               </button>
-            </div>
-          ) : (
-            <div className="flex items-center gap-2 self-start lg:self-center">
+            ) : (
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-700 text-amber-800 dark:text-amber-300 text-xs font-semibold">
                 <Lock className="w-3.5 h-3.5" />
                 <span>Mode Hanya Baca ({currentUser?.role === 'tamu' ? 'Tamu / Akademisi' : 'Tervalidasi / Terkunci'})</span>
               </span>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         {/* 4 PRIMARY KUESIONER TABS */}
@@ -416,6 +429,7 @@ export const KuesionerHubView: React.FC<KuesionerHubViewProps> = ({
             onResetEmpty={onResetEmpty}
             validationSummary={validationSummary}
             onOpenValidationModal={onOpenValidationModal}
+            onOpenChangeHistory={onOpenChangeHistory}
             data={data}
             surveys={surveys}
             activeSurveyId={activeSurveyId}
