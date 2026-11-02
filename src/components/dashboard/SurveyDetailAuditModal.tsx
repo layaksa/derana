@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { SurveyRecord } from '../../types/linguistic';
 import { AuditTrailTimeline } from './AuditTrailTimeline';
+import { SurveyCountdownBadge } from './SurveyCountdownBadge';
 import { SECTIONS_META } from '../NavigationStepper';
 
 interface SurveyDetailAuditModalProps {
@@ -94,6 +95,15 @@ export const SurveyDetailAuditModal: React.FC<SurveyDetailAuditModalProps> = ({
                       <Clock className="w-3 h-3 text-amber-600 dark:text-amber-400" />
                       <span>Belum Divalidasi</span>
                     </span>
+                  )}
+
+                  {survey.deadline && (
+                    <SurveyCountdownBadge
+                      deadline={survey.deadline}
+                      isVerified={survey.isVerified}
+                      isCompleted={survey.progress === 100}
+                      size="xs"
+                    />
                   )}
                 </div>
 
@@ -232,8 +242,8 @@ export const SurveyDetailAuditModal: React.FC<SurveyDetailAuditModalProps> = ({
                 <span className="font-semibold text-slate-800 dark:text-slate-200 font-mono">{gpsCoords}</span>
               </div>
               <div>
-                <span className="text-slate-400 block text-[11px]">Elevasi / Ketinggian:</span>
-                <span className="font-semibold text-slate-800 dark:text-slate-200">{ketinggian} mdpl</span>
+                <span className="text-slate-400 block text-[11px]">Karakteristik Wilayah:</span>
+                <span className="font-semibold text-slate-800 dark:text-slate-200">{morfologi}</span>
               </div>
               <div>
                 <span className="text-slate-400 block text-[11px]">Waktu Penginputan:</span>

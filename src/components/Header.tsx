@@ -125,11 +125,11 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
 
             {/* View Switcher: Dashboard vs Form vs Comparison */}
-            <div className="flex items-center p-1 bg-slate-100 rounded-xl border border-slate-200 text-xs">
+            <div className="flex items-center p-1 bg-slate-100 rounded-xl border border-slate-200 text-xs overflow-x-auto max-w-full">
               <button
                 id="btn-view-dashboard"
                 onClick={() => onChangeView('dashboard')}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-semibold transition-all ${
+                className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg font-semibold transition-all shrink-0 ${
                   currentView === 'dashboard'
                     ? 'bg-white text-indigo-700 shadow-2xs'
                     : 'text-slate-600 hover:text-slate-900'
@@ -145,7 +145,7 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 id="btn-view-form"
                 onClick={() => onChangeView('form')}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-semibold transition-all ${
+                className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg font-semibold transition-all shrink-0 ${
                   currentView === 'form'
                     ? 'bg-white text-indigo-700 shadow-2xs'
                     : 'text-slate-600 hover:text-slate-900'
@@ -158,14 +158,15 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 id="btn-view-comparison"
                 onClick={() => onChangeView('comparison')}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-semibold transition-all ${
+                className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg font-semibold transition-all shrink-0 ${
                   currentView === 'comparison'
                     ? 'bg-teal-600 text-white shadow-2xs'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 <Scale className="w-3.5 h-3.5 text-teal-500 group-hover:text-teal-600" />
-                <span>Komparasi 2–3 Bahasa</span>
+                <span className="hidden sm:inline">Komparasi 2–3 Bahasa</span>
+                <span className="sm:hidden">Komparasi</span>
               </button>
             </div>
           </div>

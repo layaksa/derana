@@ -69,6 +69,7 @@ export const HasilSurveiView: React.FC<HasilSurveiViewProps> = ({
   const [searchTerm, setSearchTerm] = useState('');
   const [validationFilter, setValidationFilter] = useState<ValidationFilter>('all');
   const [selectedSurveyor, setSelectedSurveyor] = useState<string>('all');
+  const [selectedProvince, setSelectedProvince] = useState<string>('all');
   const [displayMode, setDisplayMode] = useState<DisplayMode>('cards');
   const [selectedSurveyForDetail, setSelectedSurveyForDetail] = useState<SurveyRecord | null>(null);
 

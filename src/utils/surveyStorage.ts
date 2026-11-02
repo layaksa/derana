@@ -53,6 +53,8 @@ export function createRecordFromData(
     isVerified?: boolean;
     verifiedBy?: string;
     verifiedAt?: string;
+    deadline?: string;
+    targetCompletionDate?: string;
   }
 ): SurveyRecord {
   const { score, total, percentage } = getSectionProgressDetails(data);
@@ -72,7 +74,9 @@ export function createRecordFromData(
     progress: percentage,
     completedSectionsCount: score,
     totalSectionsCount: total,
-    isVerified: options?.isVerified ?? false
+    isVerified: options?.isVerified ?? false,
+    deadline: options?.deadline,
+    targetCompletionDate: options?.targetCompletionDate || options?.deadline
   };
 
   if (options?.createdBy) record.createdBy = options.createdBy;
@@ -95,11 +99,29 @@ export function loadAllSurveys(): SurveyRecord[] {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) {
         // Re-verify progress calculations in case data structure updated
-        const updatedParsed = parsed.map((item: any) => {
+        const nowMs = Date.now();
+        const updatedParsed = parsed.map((item: any, idx: number) => {
           if (item && item.data) {
             const { score, total, percentage } = getSectionProgressDetails(item.data);
+            
+            // Assign realistic initial deadline if not present so countdown indicators & urgency alerts are visible
+            let deadline = item.deadline;
+            if (!deadline) {
+              if (idx === 0) {
+                deadline = new Date(nowMs + 36 * 3600 * 1000).toISOString(); // 1.5 hari lagi (< 3 hari)
+              } else if (idx === 1) {
+                deadline = new Date(nowMs + 18 * 3600 * 1000).toISOString(); // 18 jam lagi (kritis)
+              } else if (idx === 2) {
+                deadline = new Date(nowMs + 5 * 86400 * 1000).toISOString(); // 5 hari lagi (aman)
+              } else {
+                deadline = new Date(nowMs - 12 * 3600 * 1000).toISOString(); // Terlambat 12 jam
+              }
+            }
+
             return {
               ...item,
+              deadline,
+              targetCompletionDate: item.targetCompletionDate || deadline,
               title: item.title || generateSurveyTitle(item.data),
               desa: item.data?.titikPengamatan?.namaDesa || item.desa || '',
               bahasa: item.data?.titikPengamatan?.bahasaDigunakan || item.bahasa || '',
@@ -169,6 +191,7 @@ export function loadAllSurveys(): SurveyRecord[] {
     }
 
     // Default initial seed: 4 realistic geographically distributed surveys for dialectometry
+    const nowMs = Date.now();
     const sampleData = getSampleSurveyData();
     const sampleKarangwangi = createRecordFromData(
       'survey_sample_karangwangi',
@@ -181,32 +204,30 @@ export function loadAllSurveys(): SurveyRecord[] {
         createdByRole: 'user',
         isVerified: true,
         verifiedBy: 'Dr. Hendra Saputra, M.Hum.',
-        verifiedAt: '2026-03-10T14:20:00.000Z'
+        verifiedAt: '2026-03-10T14:20:00.000Z',
+        deadline: new Date(nowMs + 36 * 3600 * 1000).toISOString() // 36 jam lagi (< 3 hari)
       }
     );
     const sampleCikaso = createRecordFromData('survey_sample_cikaso', getSampleSurveyCikaso(), {
       customTitle: 'Desa Cikaso - Bahasa Sunda (Priangan Kidul)',
       createdBy: 'user_surveyor_budi',
       createdByName: 'Budi Santoso, S.S.',
-      isVerified: true,
-      verifiedBy: 'Dr. Hendra Saputra, M.Hum.',
-      verifiedAt: '2026-03-10T14:20:00.000Z'
+      isVerified: false,
+      deadline: new Date(nowMs + 18 * 3600 * 1000).toISOString() // 18 jam lagi (< 24 jam)
     });
     const sampleRancabuaya = createRecordFromData('survey_sample_rancabuaya', getSampleSurveyRancabuaya(), {
       customTitle: 'Desa Rancabuaya - Bahasa Sunda (Pesisir Garut)',
       createdBy: 'user_surveyor_siti',
       createdByName: 'Siti Rahmawati, S.Pd.',
-      isVerified: true,
-      verifiedBy: 'Dr. Hendra Saputra, M.Hum.',
-      verifiedAt: '2026-03-10T14:20:00.000Z'
+      isVerified: false,
+      deadline: new Date(nowMs + 6 * 86400 * 1000).toISOString() // 6 hari lagi
     });
     const samplePangandaran = createRecordFromData('survey_sample_pangandaran', getSampleSurveyPangandaran(), {
       customTitle: 'Desa Babakan - Bahasa Sunda-Jawa (Banyumasan)',
       createdBy: 'user_surveyor_agus',
       createdByName: 'Agus Priyanto, M.Hum.',
-      isVerified: true,
-      verifiedBy: 'Dr. Hendra Saputra, M.Hum.',
-      verifiedAt: '2026-03-10T14:20:00.000Z'
+      isVerified: false,
+      deadline: new Date(nowMs - 16 * 3600 * 1000).toISOString() // Terlambat 16 jam
     });
     const initialList = [sampleKarangwangi, sampleCikaso, sampleRancabuaya, samplePangandaran];
     localStorage.setItem(STORAGE_KEY_SURVEYS, JSON.stringify(initialList));

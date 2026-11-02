@@ -10,6 +10,7 @@ import {
   CheckCircle2, 
   Clock, 
   AlertCircle, 
+  AlertTriangle,
   Sparkles, 
   Upload, 
   FileSpreadsheet, 
@@ -76,6 +77,12 @@ import { loadMonevRecords, loadRAPRecords } from '../utils/revitalisasiStorage';
 import { FirebaseConnectionStatus, firebaseConfig } from '../lib/firebase';
 import { motion, AnimatePresence } from 'motion/react';
 import { History } from 'lucide-react';
+import { UrgentSurveyDeadlinesBanner } from './dashboard/UrgentSurveyDeadlinesBanner';
+import { SurveyCountdownBadge } from './dashboard/SurveyCountdownBadge';
+import { ExtendDeadlineModal } from './dashboard/ExtendDeadlineModal';
+import { PopulationDensityDialectAnalysis } from './dashboard/PopulationDensityDialectAnalysis';
+import { logSurveyActivity } from '../utils/activityLogStorage';
+import { persistAllSurveys } from '../utils/surveyStorage';
 
 interface DashboardProps {
   surveys: SurveyRecord[];
@@ -100,7 +107,8 @@ interface DashboardProps {
   onOpenRegionalReport?: () => void;
   onNavigateToPetaCarto?: () => void;
   onNavigateToView?: (viewKey: string) => void;
-  initialViewMode?: 'ringkasan' | 'peta_survei' | 'narasumber_stats' | 'dialek_stats' | 'dominasi_kecamatan' | 'korelasi_pendidikan' | 'regresi_usia_bahasa' | 'daftar';
+  initialViewMode?: 'ringkasan' | 'peta_survei' | 'narasumber_stats' | 'dialek_stats' | 'dominasi_kecamatan' | 'korelasi_pendidikan' | 'regresi_usia_bahasa' | 'kepadatan_penduduk' | 'daftar';
+  onExtendDeadline?: (surveyId: string, additionalDaysOrDate: number | string, notes?: string) => void;
 }
 
 export const Dashboard: React.FC<DashboardProps> = ({
@@ -126,14 +134,53 @@ export const Dashboard: React.FC<DashboardProps> = ({
   onOpenRegionalReport,
   onNavigateToPetaCarto,
   onNavigateToView,
-  initialViewMode = 'ringkasan'
+  initialViewMode = 'ringkasan',
+  onExtendDeadline
 }) => {
   const [isSyncing, setIsSyncing] = useState(false);
-  const [viewMode, setViewMode] = useState<'ringkasan' | 'peta_survei' | 'narasumber_stats' | 'dialek_stats' | 'dominasi_kecamatan' | 'korelasi_pendidikan' | 'regresi_usia_bahasa' | 'daftar'>(initialViewMode);
+  const [viewMode, setViewMode] = useState<'ringkasan' | 'peta_survei' | 'narasumber_stats' | 'dialek_stats' | 'dominasi_kecamatan' | 'korelasi_pendidikan' | 'regresi_usia_bahasa' | 'kepadatan_penduduk' | 'daftar'>(initialViewMode);
   const [topMapTab, setTopMapTab] = useState<'bahasa' | 'sastra_lisan' | 'vitalitas' | 'revitalisasi'>('bahasa');
   const [sastraCount, setSastraCount] = useState<number>(0);
   const [vitalitasCount, setVitalitasCount] = useState<number>(0);
   const [revitalisasiCount, setRevitalisasiCount] = useState<number>(0);
+  const [selectedSurveyForCardExtend, setSelectedSurveyForCardExtend] = useState<SurveyRecord | null>(null);
+
+  const handleExecuteExtendDeadline = (surveyId: string, additionalDaysOrDate: number | string, notes?: string) => {
+    if (onExtendDeadline) {
+      onExtendDeadline(surveyId, additionalDaysOrDate, notes);
+    } else {
+      const targetIndex = surveys.findIndex(s => s.id === surveyId);
+      if (targetIndex === -1) return;
+      const currentSurvey = surveys[targetIndex];
+      let newDeadlineDate: Date;
+      if (typeof additionalDaysOrDate === 'number') {
+        const baseTime = currentSurvey.deadline ? new Date(currentSurvey.deadline).getTime() : Date.now();
+        const refTime = Math.max(baseTime, Date.now());
+        newDeadlineDate = new Date(refTime + additionalDaysOrDate * 24 * 60 * 60 * 1000);
+      } else {
+        newDeadlineDate = new Date(additionalDaysOrDate);
+      }
+      const newDeadlineISO = newDeadlineDate.toISOString();
+      currentSurvey.deadline = newDeadlineISO;
+      currentSurvey.targetCompletionDate = newDeadlineISO;
+      currentSurvey.updatedAt = new Date().toISOString();
+      persistAllSurveys(surveys);
+      if (currentUser) {
+        logSurveyActivity({
+          surveyId: currentSurvey.id,
+          surveyTitle: currentSurvey.title,
+          village: currentSurvey.desa,
+          languageName: currentSurvey.bahasa,
+          action: 'update_metadata',
+          actionLabel: 'Perpanjangan Batas Waktu (Tenggat)',
+          sectionId: 'deadline',
+          sectionName: 'Manajemen Batas Waktu',
+          user: currentUser,
+          details: `Admin memperpanjang batas waktu penyelesaian survei "${currentSurvey.title}" hingga ${newDeadlineDate.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}.${notes ? ` Catatan: ${notes}` : ''}`
+        });
+      }
+    }
+  };
 
   useEffect(() => {
     try {
@@ -157,7 +204,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
   }, [initialViewMode]);
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [statusFilter, setStatusFilter] = useState<'all' | 'completed' | 'in_progress'>('all');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'completed' | 'in_progress' | 'urgent'>('all');
   const [ownershipFilter, setOwnershipFilter] = useState<'all' | 'mine' | 'others'>('all');
   const [sortBy, setSortBy] = useState<'updated_desc' | 'updated_asc' | 'progress_desc' | 'progress_asc' | 'title_asc'>('updated_desc');
   const [expandedChecklists, setExpandedChecklists] = useState<Record<string, boolean>>({});
@@ -216,6 +263,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
     const totalKosakataRecorded = totalSwadeshFilled + totalBudayaFilled;
 
+    // Urgent surveys count: deadline < 3 days (72 hours) or overdue, and unverified
+    const nowMs = Date.now();
+    const urgentCount = surveys.filter(s => {
+      if (!s.deadline || s.isVerified) return false;
+      const diffMs = new Date(s.deadline).getTime() - nowMs;
+      return diffMs < 3 * 24 * 60 * 60 * 1000;
+    }).length;
+
     return { 
       total, 
       completed, 
@@ -229,7 +284,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
       totalSwadeshFilled,
       totalBudayaFilled,
       totalKosakataRecorded,
-      totalAudioRecordings
+      totalAudioRecordings,
+      urgentCount
     };
   }, [surveys]);
 
@@ -259,6 +315,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
         return s.progress === 100;
       } else if (statusFilter === 'in_progress') {
         return s.progress < 100;
+      } else if (statusFilter === 'urgent') {
+        if (!s.deadline || s.isVerified) return false;
+        const diffMs = new Date(s.deadline).getTime() - Date.now();
+        return diffMs < 3 * 24 * 60 * 60 * 1000;
       }
       return true;
     });
@@ -306,7 +366,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
   const currentActiveSurvey = surveys.find(s => s.id === activeSurveyId);
 
   return (
-    <div className="max-w-7xl mx-auto px-0 sm:px-2 lg:px-4 py-2 sm:py-3 space-y-5 sm:space-y-6">
+    <div className="w-full max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 py-2.5 sm:py-4 space-y-4 sm:space-y-6 min-w-0 overflow-x-hidden">
       {/* Hidden File Input for JSON import */}
       <input
         type="file"
@@ -373,6 +433,15 @@ export const Dashboard: React.FC<DashboardProps> = ({
           isSyncing={isSyncing}
         />
       )}
+
+      {/* ELEMEN PERINGATAN VISUAL MENONJOL UNTUK SURVEI DENGAN BATAS WAKTU < 3 HARI BESERTA COUNTDOWN & OPSI PERPANJANG TENGGAT */}
+      <UrgentSurveyDeadlinesBanner
+        surveys={surveys}
+        currentUser={currentUser}
+        onSelectSurvey={onSelectSurvey}
+        onNavigateToForm={onSwitchToEditor}
+        onExtendDeadline={handleExecuteExtendDeadline}
+      />
 
       {/* Top Section: Pusat Peta Spasial Tematik Kebahasaan (Peta Bahasa, Sastra Lisan, Vitalitas, & Revitalisasi) */}
       <div className="bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 rounded-3xl p-3.5 sm:p-5 shadow-xs space-y-4">
@@ -828,7 +897,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
               Menu Navigasi Dashboard & Modul Analisis
             </span>
             <span className="text-[10px] px-2 py-0.5 rounded-full font-bold bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200/80 dark:border-indigo-800">
-              8 Modul Utama
+              9 Modul Analisis & Data
             </span>
           </div>
 
@@ -842,13 +911,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
               {viewMode === 'dominasi_kecamatan' && 'Dominasi Dialek per Kecamatan'}
               {viewMode === 'korelasi_pendidikan' && 'Korelasi Pendidikan & Dialek'}
               {viewMode === 'regresi_usia_bahasa' && 'Regresi Usia & Variabel Bahasa'}
+              {viewMode === 'kepadatan_penduduk' && 'Kepadatan Penduduk & Distribusi Dialek (Recharts)'}
               {viewMode === 'daftar' && 'Daftar Titik Survei'}
             </span>
           </div>
         </div>
 
-        {/* 8 Bento Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        {/* 9 Bento Navigation Cards Grid (Responsive Desktop & Mobile) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-3.5">
           
           {/* 1. Dashboard Ringkasan & 16 Bagian */}
           <button
@@ -1130,7 +1200,47 @@ export const Dashboard: React.FC<DashboardProps> = ({
             </div>
           </button>
 
-          {/* 8. Daftar Titik Survei (10) */}
+          {/* 8. Kepadatan Penduduk & Distribusi Dialek (Recharts) */}
+          <button
+            type="button"
+            onClick={() => setViewMode('kepadatan_penduduk')}
+            className={`p-3.5 rounded-2xl transition-all cursor-pointer flex flex-col justify-between text-left border relative group shadow-2xs ${
+              viewMode === 'kepadatan_penduduk'
+                ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-cyan-500 dark:border-cyan-400 ring-2 ring-cyan-500/20 shadow-xs'
+                : 'bg-white/70 dark:bg-slate-800/60 hover:bg-white dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-cyan-300'
+            }`}
+          >
+            <div className="flex items-start justify-between gap-1.5 mb-2.5">
+              <div className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold shrink-0 transition-transform group-hover:scale-105 ${
+                viewMode === 'kepadatan_penduduk'
+                  ? 'bg-cyan-600 text-white shadow-xs'
+                  : 'bg-cyan-50 dark:bg-cyan-950/70 text-cyan-600 dark:text-cyan-400'
+              }`}>
+                <Users className="w-4 h-4" />
+              </div>
+              <span className="text-[10px] font-bold tracking-wider uppercase text-slate-400 dark:text-slate-500 font-mono">
+                MODUL 08
+              </span>
+            </div>
+            <div>
+              <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-tight">
+                Kepadatan Penduduk & Dialek
+              </h4>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-1">
+                Korelasi demografi wilayah (Recharts)
+              </p>
+            </div>
+            <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
+              <span className="text-[10px] px-2 py-0.5 rounded-full font-mono font-bold bg-cyan-50 dark:bg-cyan-950/80 text-cyan-700 dark:text-cyan-300">
+                Recharts
+              </span>
+              <span className={`text-[10px] font-bold ${viewMode === 'kepadatan_penduduk' ? 'text-cyan-600 dark:text-cyan-400' : 'text-slate-400'}`}>
+                {viewMode === 'kepadatan_penduduk' ? '● Aktif' : 'Buka'}
+              </span>
+            </div>
+          </button>
+
+          {/* 9. Daftar Titik Survei */}
           <button
             type="button"
             onClick={() => setViewMode('daftar')}
@@ -1149,7 +1259,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 <MapPin className="w-4 h-4" />
               </div>
               <span className="text-[10px] font-bold tracking-wider uppercase text-slate-400 dark:text-slate-500 font-mono">
-                MODUL 08
+                MODUL 09
               </span>
             </div>
             <div>
@@ -1263,11 +1373,19 @@ export const Dashboard: React.FC<DashboardProps> = ({
           onSwitchToEditor={onSwitchToEditor}
           onNavigateToDialekPeta={onNavigateToDialekPeta}
         />
+      ) : viewMode === 'kepadatan_penduduk' ? (
+        <PopulationDensityDialectAnalysis
+          surveys={surveys}
+          activeSurveyId={activeSurveyId}
+          onSelectSurvey={onSelectSurvey}
+          onNavigateToForm={onSwitchToEditor}
+          onNavigateToDialekPeta={onNavigateToDialekPeta}
+        />
       ) : (
         <>
 
       {/* Overview Statistics Cards for Daftar Mode */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {/* Card 1: Total Narasumber */}
         <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 shadow-2xs transition-colors">
           <div className="flex items-center justify-between">
@@ -1342,9 +1460,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
       {/* Filter and Search Controls */}
       <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 shadow-2xs space-y-3 transition-colors">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
           {/* Search Input */}
-          <div className="relative flex-1 max-w-md">
+          <div className="relative flex-1 w-full lg:max-w-md">
             <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
@@ -1430,11 +1548,27 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 onClick={() => setStatusFilter('in_progress')}
                 className={`px-3 py-1.5 rounded-md font-medium transition-colors cursor-pointer ${
                   statusFilter === 'in_progress' 
-                    ? 'bg-white dark:bg-slate-900 text-amber-700 dark:text-amber-400 shadow-2xs' 
+                    ? 'bg-white dark:bg-slate-900 text-amber-700 dark:text-amber-400 shadow-2xs font-semibold' 
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                 }`}
               >
                 Proses ({stats.inProgress})
+              </button>
+              <button
+                type="button"
+                onClick={() => setStatusFilter('urgent')}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md font-medium transition-colors cursor-pointer ${
+                  statusFilter === 'urgent' 
+                    ? 'bg-rose-600 text-white shadow-2xs font-bold' 
+                    : 'text-rose-600 dark:text-rose-400 hover:text-rose-700 hover:bg-rose-50/50 dark:hover:bg-rose-950/30'
+                }`}
+                title="Hanya tampilkan survei mendesak dengan batas waktu < 3 hari (< 72 jam)"
+              >
+                <AlertTriangle className={`w-3.5 h-3.5 ${statusFilter === 'urgent' ? 'text-white' : 'text-rose-500'}`} />
+                <span>Mendesak ({stats.urgentCount})</span>
+                {stats.urgentCount > 0 && statusFilter !== 'urgent' && (
+                  <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping shrink-0" />
+                )}
               </button>
             </div>
 
@@ -1476,12 +1610,16 @@ export const Dashboard: React.FC<DashboardProps> = ({
             <AlertCircle className="w-6 h-6" />
           </div>
           <h3 className="text-base font-semibold text-slate-800 dark:text-slate-200">
-            {searchQuery || statusFilter !== 'all' 
+            {statusFilter === 'urgent'
+              ? 'Tidak ada survei mendesak (< 3 hari) saat ini'
+              : searchQuery || statusFilter !== 'all' 
               ? 'Tidak ada formulir yang sesuai kriteria pencarian' 
               : 'Belum ada formulir survei'}
           </h3>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-md mx-auto">
-            {searchQuery || statusFilter !== 'all'
+            {statusFilter === 'urgent'
+              ? 'Semua survei aktif memiliki sisa waktu pengerjaan yang aman (> 3 hari) atau telah selesai divalidasi.'
+              : searchQuery || statusFilter !== 'all'
               ? 'Coba ubah kata kunci pencarian atau ubah filter status survei di atas.'
               : 'Mulai input data pemetaan bahasa dengan membuat formulir baru atau memuat contoh data.'}
           </p>
@@ -1558,6 +1696,15 @@ export const Dashboard: React.FC<DashboardProps> = ({
                             <span>Mode Baca</span>
                           </span>
                         )}
+
+                        {/* Countdown Indicator Badge */}
+                        <SurveyCountdownBadge
+                          deadline={survey.deadline}
+                          isVerified={survey.isVerified}
+                          isCompleted={survey.progress === 100}
+                          canExtend={currentUser?.role === 'admin'}
+                          onExtendClick={() => setSelectedSurveyForCardExtend(survey)}
+                        />
                       </div>
 
                       {/* Survey Title */}
@@ -1895,6 +2042,19 @@ export const Dashboard: React.FC<DashboardProps> = ({
             </div>
           </div>
         </div>
+      )}
+
+      {/* Admin Deadline Extension Modal */}
+      {selectedSurveyForCardExtend && (
+        <ExtendDeadlineModal
+          isOpen={Boolean(selectedSurveyForCardExtend)}
+          onClose={() => setSelectedSurveyForCardExtend(null)}
+          survey={selectedSurveyForCardExtend}
+          onConfirm={(surveyId, additionalDaysOrDate, notes) => {
+            handleExecuteExtendDeadline(surveyId, additionalDaysOrDate, notes);
+            setSelectedSurveyForCardExtend(null);
+          }}
+        />
       )}
     </div>
   );

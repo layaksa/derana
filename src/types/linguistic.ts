@@ -329,6 +329,9 @@ export interface SurveyRecord {
   // Offline & Cloud Sync Status
   syncStatus?: 'synced' | 'pending' | 'syncing' | 'local';
   lastSyncedAt?: string;
+  // Deadline & Timeline Tracking
+  deadline?: string;
+  targetCompletionDate?: string;
 }
 
 export type DifferenceCategory = 'SAMA' | 'BEDA_FONEM' | 'BEDA_LEKSIKAL' | 'BELUM_DIISI';

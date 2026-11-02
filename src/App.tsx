@@ -641,6 +641,64 @@ export default function App() {
       : `Status verifikasi survei "${target?.title}" telah dibatalkan.`);
   };
 
+  // Admin: Extend or adjust survey deadline
+  const handleExtendDeadline = (surveyId: string, additionalDaysOrDate: number | string, notes?: string) => {
+    if (!currentUser || currentUser.role !== 'admin') {
+      triggerToast('Peringatan: Hanya pengguna dengan peran Admin yang berwenang memperpanjang tenggat waktu.');
+      return;
+    }
+
+    const targetIndex = surveys.findIndex(s => s.id === surveyId);
+    if (targetIndex === -1) return;
+
+    const currentSurvey = surveys[targetIndex];
+    let newDeadlineDate: Date;
+
+    if (typeof additionalDaysOrDate === 'number') {
+      const baseTime = currentSurvey.deadline ? new Date(currentSurvey.deadline).getTime() : Date.now();
+      const refTime = Math.max(baseTime, Date.now());
+      newDeadlineDate = new Date(refTime + additionalDaysOrDate * 24 * 60 * 60 * 1000);
+    } else {
+      newDeadlineDate = new Date(additionalDaysOrDate);
+    }
+
+    const newDeadlineISO = newDeadlineDate.toISOString();
+    const updatedSurvey: SurveyRecord = {
+      ...currentSurvey,
+      deadline: newDeadlineISO,
+      targetCompletionDate: newDeadlineISO,
+      updatedAt: new Date().toISOString()
+    };
+
+    const updatedSurveys = [...surveys];
+    updatedSurveys[targetIndex] = updatedSurvey;
+    setSurveys(updatedSurveys);
+    persistAllSurveys(updatedSurveys);
+
+    // Record in Audit Trail
+    logSurveyActivity({
+      surveyId: currentSurvey.id,
+      surveyTitle: currentSurvey.title,
+      village: currentSurvey.desa,
+      languageName: currentSurvey.bahasa,
+      action: 'update_metadata',
+      actionLabel: 'Perpanjangan Batas Waktu (Tenggat)',
+      sectionId: 'deadline',
+      sectionName: 'Manajemen Batas Waktu',
+      user: currentUser,
+      details: `Admin memperpanjang batas waktu penyelesaian survei "${currentSurvey.title}" hingga ${newDeadlineDate.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}.${notes ? ` Catatan: ${notes}` : ''}`,
+      diffSummary: {
+        field: 'deadline',
+        itemsChanged: 1,
+        notes: typeof additionalDaysOrDate === 'number' 
+          ? `Diperpanjang +${additionalDaysOrDate} hari (${newDeadlineDate.toLocaleDateString('id-ID')})` 
+          : `Tenggat disesuaikan ke ${newDeadlineDate.toLocaleDateString('id-ID')}`
+      }
+    });
+
+    triggerToast(`Tenggat survei "${currentSurvey.title}" berhasil diperpanjang hingga ${newDeadlineDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}.`);
+  };
+
   // Quick switch user (Demo testing)
   const handleQuickSwitchUser = (username: string) => {
     const switched = switchUser(username);
@@ -1463,6 +1521,7 @@ export default function App() {
                 setCurrentView('atlas-glottolog');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
+              onExtendDeadline={handleExtendDeadline}
             />
           )}
 
