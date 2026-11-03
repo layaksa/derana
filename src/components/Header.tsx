@@ -29,6 +29,7 @@ import { AppUser } from '../types/auth';
 import { NavigationStepper } from './NavigationStepper';
 import { useLanguage } from '../contexts/LanguageContext';
 import { LanguageSelector } from './LanguageSelector';
+import { NotificationBellDropdown } from './notifications/NotificationBellDropdown';
 
 interface HeaderProps {
   data: InstrumenPemetaanBahasaData;
@@ -250,6 +251,14 @@ export const Header: React.FC<HeaderProps> = ({
                 </button>
               </>
             )}
+
+            {/* In-App Notifications Bell */}
+            <NotificationBellDropdown
+              currentUser={currentUser}
+              onSelectSurvey={onSelectSurvey}
+              onSwitchToEditor={() => onChangeView('form')}
+              onOpenAssignments={() => onChangeView('dashboard')}
+            />
 
             {/* User Profile & Role Dropdown */}
             {currentUser && (

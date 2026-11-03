@@ -81,6 +81,13 @@ import { UrgentSurveyDeadlinesBanner } from './dashboard/UrgentSurveyDeadlinesBa
 import { SurveyCountdownBadge } from './dashboard/SurveyCountdownBadge';
 import { ExtendDeadlineModal } from './dashboard/ExtendDeadlineModal';
 import { PopulationDensityDialectAnalysis } from './dashboard/PopulationDensityDialectAnalysis';
+import { ValidationSummaryPriorityPanel } from './dashboard/ValidationSummaryPriorityPanel';
+import { ResearchAssignmentsList } from './dashboard/ResearchAssignmentsList';
+import { AssignResearchRegionModal } from './dashboard/AssignResearchRegionModal';
+import { AddAdminCommentModal } from './dashboard/AddAdminCommentModal';
+import { SectionProgressNavigationPanel } from './dashboard/SectionProgressNavigationPanel';
+import { NotificationToastBanner } from './notifications/NotificationToastBanner';
+import { MessageSquarePlus } from 'lucide-react';
 import { logSurveyActivity } from '../utils/activityLogStorage';
 import { persistAllSurveys } from '../utils/surveyStorage';
 
@@ -144,6 +151,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
   const [vitalitasCount, setVitalitasCount] = useState<number>(0);
   const [revitalisasiCount, setRevitalisasiCount] = useState<number>(0);
   const [selectedSurveyForCardExtend, setSelectedSurveyForCardExtend] = useState<SurveyRecord | null>(null);
+  const [showAssignRegionModal, setShowAssignRegionModal] = useState(false);
+  const [commentingSurvey, setCommentingSurvey] = useState<SurveyRecord | null>(null);
 
   const handleExecuteExtendDeadline = (surveyId: string, additionalDaysOrDate: number | string, notes?: string) => {
     if (onExtendDeadline) {
@@ -434,6 +443,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
         />
       )}
 
+      {/* NOTIFIKASI IN-APP UNTUK VALIDASI & KOMENTAR ADMIN */}
+      <NotificationToastBanner
+        currentUser={currentUser}
+        onSelectSurvey={onSelectSurvey}
+        onSwitchToEditor={onSwitchToEditor}
+        onOpenAssignments={() => setShowAssignRegionModal(true)}
+      />
+
       {/* ELEMEN PERINGATAN VISUAL MENONJOL UNTUK SURVEI DENGAN BATAS WAKTU < 3 HARI BESERTA COUNTDOWN & OPSI PERPANJANG TENGGAT */}
       <UrgentSurveyDeadlinesBanner
         surveys={surveys}
@@ -441,6 +458,23 @@ export const Dashboard: React.FC<DashboardProps> = ({
         onSelectSurvey={onSelectSurvey}
         onNavigateToForm={onSwitchToEditor}
         onExtendDeadline={handleExecuteExtendDeadline}
+      />
+
+      {/* PANEL RINGKASAN VALIDASI & PRIORITAS KELENGKAPAN DATA */}
+      <ValidationSummaryPriorityPanel
+        surveys={surveys}
+        currentUser={currentUser}
+        onSelectSurvey={onSelectSurvey}
+        onSwitchToEditor={onSwitchToEditor}
+        onNavigateToSection={onNavigateToSection}
+        onToggleVerify={onToggleVerify}
+        onOpenAddComment={(survey: SurveyRecord) => setCommentingSurvey(survey)}
+      />
+
+      {/* DAFTAR PENUGASAN WILAYAH RISET (ADMIN & SURVEYOR) */}
+      <ResearchAssignmentsList
+        currentUser={currentUser}
+        onOpenAssignModal={() => setShowAssignRegionModal(true)}
       />
 
       {/* Top Section: Pusat Peta Spasial Tematik Kebahasaan (Peta Bahasa, Sastra Lisan, Vitalitas, & Revitalisasi) */}
@@ -871,7 +905,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         </div>
       </div>
 
-      {/* KARTU STATISTIK PRODUKTIVITAS PER SURVEYOR (DASHBOARD ADMIN) */}
+      {/* PANEL STATISTIK PERFORMA SURVEYOR (DISELESAIKAN, DALAM PROSES, & RATA-RATA WAKTU PENYELESAIAN) */}
       <SurveyorProductivityCard
         surveys={surveys}
         currentUser={currentUser}
@@ -882,6 +916,16 @@ export const Dashboard: React.FC<DashboardProps> = ({
       {/* GRAFIK GARIS RECHARTS: TREN JUMLAH SURVEI DISELESAIKAN DARI MINGGU KE MINGGU */}
       <WeeklySurveyTrendsChart
         surveys={surveys}
+        currentUser={currentUser}
+      />
+
+      {/* VISUALISASI PROGRES OTOMATIS 16 SEKSI KUESIONER BERDASARKAN PERSENTASE KOLOM TERISI & NAVIGASI CEPAT */}
+      <SectionProgressNavigationPanel
+        surveys={surveys}
+        activeSurveyId={activeSurveyId}
+        onSelectSurvey={onSelectSurvey}
+        onNavigateToSection={onNavigateToSection}
+        onSwitchToEditor={onSwitchToEditor}
         currentUser={currentUser}
       />
 
@@ -1765,6 +1809,22 @@ export const Dashboard: React.FC<DashboardProps> = ({
                             {survey.isVerified ? 'Batalkan Verifikasi' : '✓ Verifikasi Data Lapangan'}
                           </button>
                         )}
+
+                        {/* Admin / Verifikator Review Notes Modal Trigger */}
+                        {canUserVerifySurvey(currentUser) && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setCommentingSurvey(survey);
+                            }}
+                            className="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-0.5 rounded-md border border-amber-300 dark:border-amber-700/70 bg-amber-50/80 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/50 transition-colors cursor-pointer"
+                            title="Beri catatan review atau evaluasi data survei ini"
+                          >
+                            <MessageSquarePlus className="w-3 h-3 text-amber-600 dark:text-amber-400" />
+                            <span>Catatan Review</span>
+                          </button>
+                        )}
                       </div>
                     </div>
 
@@ -2056,6 +2116,30 @@ export const Dashboard: React.FC<DashboardProps> = ({
           }}
         />
       )}
+
+      {/* Modal Penugasan Wilayah Riset Baru oleh Admin */}
+      {showAssignRegionModal && currentUser && (
+        <AssignResearchRegionModal
+          currentUser={currentUser}
+          onClose={() => setShowAssignRegionModal(false)}
+        />
+      )}
+
+      {/* Modal Tambah Catatan Review / Komentar Admin */}
+      {commentingSurvey && currentUser && (
+        <AddAdminCommentModal
+          survey={commentingSurvey}
+          currentUser={currentUser}
+          onClose={() => setCommentingSurvey(null)}
+        />
+      )}
+
+      {/* Floating In-App Notification Toast Banner */}
+      <NotificationToastBanner
+        currentUser={currentUser}
+        onSelectSurvey={onSelectSurvey}
+        onSwitchToEditor={onSwitchToEditor}
+      />
     </div>
   );
 };

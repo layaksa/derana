@@ -298,7 +298,14 @@ export interface SectionProgressInfo {
   id: string;
   number: number;
   title: string;
+  shortTitle?: string;
+  category?: string;
+  filledColumns: number;
+  totalColumns: number;
+  percentage: number;
   isFilled: boolean;
+  isComplete: boolean;
+  status: 'empty' | 'partial' | 'complete';
   summary: string;
 }
 

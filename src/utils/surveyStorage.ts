@@ -10,6 +10,7 @@ import { getSectionProgressDetails } from './calculations';
 import { AppUser, UserRole } from '../types/auth';
 import { saveSurveyToFirestore, deleteSurveyFromFirestore, isFirebaseAuthenticated } from '../lib/firebase';
 import { offlineSyncManager } from './offlineSyncManager';
+import { addInAppNotification } from './notificationStorage';
 
 export const STORAGE_KEY_SURVEYS = 'linguistic_mapping_surveys_collection_v2';
 export const STORAGE_KEY_LEGACY = 'linguistic_mapping_survey_data_v1';
@@ -418,6 +419,26 @@ export function toggleSurveyVerification(
       if (nextVerified) {
         updatedItem.verifiedBy = adminUser.name;
         updatedItem.verifiedAt = new Date().toISOString();
+
+        // Dispatch in-app notification for survey validated
+        try {
+          addInAppNotification({
+            type: 'survey_validated',
+            title: 'Survei Berhasil Tervalidasi',
+            message: `Survei "${s.title}" telah diverifikasi dan statusnya resmi berubah menjadi 'Tervalidasi' oleh ${adminUser.name}.`,
+            authorId: adminUser.id,
+            authorName: adminUser.name,
+            authorRole: adminUser.role,
+            surveyId: s.id,
+            surveyTitle: s.title,
+            targetUserId: s.createdBy || 'all',
+            metadata: {
+              verificationStatus: true
+            }
+          });
+        } catch (e) {
+          console.warn('Failed to dispatch validation notification:', e);
+        }
       } else {
         delete updatedItem.verifiedBy;
         delete updatedItem.verifiedAt;

@@ -244,8 +244,11 @@ export const SummaryDashboard: React.FC<SummaryDashboardProps> = ({
     return details.sections.map(sec => ({
       sectionNumber: `S-${sec.number}`,
       fullName: sec.title,
-      statusVal: sec.isFilled ? 100 : 15,
-      isFilled: sec.isFilled,
+      statusVal: sec.percentage,
+      isFilled: sec.percentage >= 80,
+      percentage: sec.percentage,
+      filledColumns: sec.filledColumns,
+      totalColumns: sec.totalColumns,
       summary: sec.summary
     }));
   }, [targetSurveyRecord]);
@@ -831,14 +834,14 @@ export const SummaryDashboard: React.FC<SummaryDashboardProps> = ({
                         <div className="bg-slate-900 dark:bg-slate-800 text-white p-2.5 rounded-md text-xs shadow-lg space-y-1 border border-slate-700">
                           <div className="font-bold text-indigo-300">{d.sectionNumber}: {d.fullName}</div>
                           <div className="text-[11px] flex items-center gap-1.5">
-                            <span>Status:</span>
-                            <span className={d.isFilled ? 'text-emerald-400 font-semibold' : 'text-amber-400 font-semibold'}>
-                              {d.isFilled ? 'Lengkap Terisi (100%)' : 'Belum Lengkap (<100%)'}
+                            <span>Keterisian Kolom:</span>
+                            <span className={d.statusVal === 100 ? 'text-emerald-400 font-bold' : d.statusVal > 0 ? 'text-amber-400 font-bold' : 'text-slate-400'}>
+                              {d.statusVal}% {d.totalColumns ? `(${d.filledColumns}/${d.totalColumns} kolom)` : ''}
                             </span>
                           </div>
                           {d.summary && (
                             <div className="text-[10px] text-slate-300 border-t border-slate-700 pt-1 mt-1">
-                              Rincian: {d.summary}
+                              {d.summary}
                             </div>
                           )}
                         </div>
@@ -850,12 +853,20 @@ export const SummaryDashboard: React.FC<SummaryDashboardProps> = ({
                 <Bar 
                   dataKey="statusVal" 
                   radius={[3, 3, 0, 0]}
-                  name="Tingkat Keterisian"
+                  name="Tingkat Keterisian (%)"
                 >
                   {sections16ChartData.map((entry, index) => (
                     <Cell 
                       key={`cell-${index}`} 
-                      fill={entry.isFilled ? '#4f46e5' : '#94a3b855'} 
+                      fill={
+                        entry.statusVal === 100 
+                          ? '#10b981' 
+                          : entry.statusVal >= 50 
+                            ? '#4f46e5' 
+                            : entry.statusVal > 0 
+                              ? '#f59e0b' 
+                              : '#94a3b844'
+                      } 
                     />
                   ))}
                 </Bar>
