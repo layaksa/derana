@@ -30,7 +30,9 @@ const SEED_ACTIVITY_LOGS: SurveyActivityLog[] = [
       field: 'daftarSwadesh',
       itemsChanged: 4,
       completionDelta: 2.5,
-      notes: 'Kelengkapan seksi meningkat menjadi 98%'
+      notes: 'Kelengkapan seksi meningkat menjadi 98%',
+      before: '#14 "anjing": (kosong); #15 "burung": (kosong); audio: 0 berkas',
+      after: '#14 "anjing": [aɲd͡ʒiŋ]; #15 "burung": [burʊŋ]; audio: "anjing_cidaun.mp3" (Bpk Dadang)'
     },
     source: 'pwa_offline'
   },
@@ -55,7 +57,9 @@ const SEED_ACTIVITY_LOGS: SurveyActivityLog[] = [
       field: 'sastraLisan',
       itemsChanged: 1,
       completionDelta: 5.0,
-      notes: 'Motif otomatis tervalidasi'
+      notes: 'Motif otomatis tervalidasi',
+      before: 'judul: (belum dicatat); motifThompson: null; audio: 00:00',
+      after: 'judul: "Sasakala Muara Karangwangi"; motif: Mot. A920.1 (Asal Mula Danau); audio: 08:42'
     },
     source: 'web'
   },
@@ -78,7 +82,9 @@ const SEED_ACTIVITY_LOGS: SurveyActivityLog[] = [
     details: 'Memverifikasi akurasi transkripsi fonetis leksikal 200 Swadesh dan mengonfirmasi status kebahasaan Sunda Pesisir Cidaun.',
     diffSummary: {
       field: 'isVerified',
-      notes: 'Survei disahkan masuk korpus dialektometri'
+      notes: 'Survei disahkan masuk korpus dialektometri',
+      before: 'isVerified: false (Draft Lapangan / Belum Disahkan)',
+      after: 'isVerified: true (Disahkan oleh Dr. Hendra Saputra, M.Hum.)'
     },
     source: 'web'
   },
@@ -102,7 +108,9 @@ const SEED_ACTIVITY_LOGS: SurveyActivityLog[] = [
     diffSummary: {
       field: 'narasumberList',
       itemsChanged: 1,
-      completionDelta: 3.0
+      completionDelta: 3.0,
+      before: 'informanCount: 2 orang; narasumber[2]: null (belum terisi)',
+      after: 'informanCount: 3 orang; narasumber[2]: "Ibu Hj. Siti" (62 th, penutur asli)'
     },
     source: 'pwa_offline'
   },
@@ -123,6 +131,11 @@ const SEED_ACTIVITY_LOGS: SurveyActivityLog[] = [
     userRole: 'surveyor',
     userEmail: 'budi.surveyor@gmail.com',
     details: 'Inisiasi titik pengamatan TP-01 Karangwangi Cidaun Cianjur menggunakan instrumen 16 seksi kebahasaan.',
+    diffSummary: {
+      field: 'surveyRecord',
+      before: '(Belum ada berkas survei)',
+      after: 'surveyId: "survey_sample_karangwangi" (TP-01 Karangwangi Cidaun Cianjur)'
+    },
     source: 'pwa_offline'
   },
   {
@@ -145,7 +158,9 @@ const SEED_ACTIVITY_LOGS: SurveyActivityLog[] = [
     diffSummary: {
       field: 'morfologiSintaksis',
       itemsChanged: 6,
-      completionDelta: 4.0
+      completionDelta: 4.0,
+      before: 'afiksasi: {N-} dasar (tanpa klitik pesisir Garut)',
+      after: 'afiksasi: 6 paradigma prefiks {N-} + reduplikasi dwilingga pesisir Garut'
     },
     source: 'web'
   },
@@ -169,7 +184,9 @@ const SEED_ACTIVITY_LOGS: SurveyActivityLog[] = [
     diffSummary: {
       field: 'kosakataBudaya',
       itemsChanged: 12,
-      completionDelta: 5.5
+      completionDelta: 5.5,
+      before: 'kosakataBudayaPesisir: 0 istilah audio terlampir',
+      after: 'kosakataBudayaPesisir: 12 audio istilah nelayan ("ngajaring", "parahu jungku")'
     },
     source: 'web'
   },
@@ -192,7 +209,9 @@ const SEED_ACTIVITY_LOGS: SurveyActivityLog[] = [
     details: 'Pengesahan verifikasi titik survei Desa Purbayani Rancabuaya tuntas 100%.',
     diffSummary: {
       field: 'isVerified',
-      notes: 'Disahkan resmi'
+      notes: 'Disahkan resmi',
+      before: 'isVerified: false (Menunggu Verifikasi Validator)',
+      after: 'isVerified: true (Tervalidasi 100% oleh Dr. Hendra Saputra)'
     },
     source: 'web'
   },
@@ -216,7 +235,9 @@ const SEED_ACTIVITY_LOGS: SurveyActivityLog[] = [
     diffSummary: {
       field: 'titikPengamatan',
       itemsChanged: 2,
-      notes: 'Akurasi GPS 4 meter'
+      notes: 'Akurasi GPS 4 meter',
+      before: 'koordinat: Lat: -7.68, Lon: 108.64; usiaInforman: 60 th',
+      after: 'koordinat: Lat: -7.6842, Lon: 108.6491; usiaInforman: 64 th'
     },
     source: 'pwa_offline'
   },
@@ -240,7 +261,9 @@ const SEED_ACTIVITY_LOGS: SurveyActivityLog[] = [
     diffSummary: {
       field: 'daftarSwadesh',
       itemsChanged: 15,
-      completionDelta: 8.0
+      completionDelta: 8.0,
+      before: 'kataGanti: [abdi], [anjeun] (Sunda Standar)',
+      after: 'kataGanti: [iɲoŋ] (inyong), [rika] (rika) (Kontak Sunda-Banyumasan)'
     },
     source: 'pwa_offline'
   },
@@ -263,7 +286,9 @@ const SEED_ACTIVITY_LOGS: SurveyActivityLog[] = [
     details: 'Memvalidasi kelengkapan fonem segmental dan suprasegmental serta menyatakan data layak masuk basis dialektometri provinsi.',
     diffSummary: {
       field: 'isVerified',
-      notes: 'Disetujui oleh kurator linguistik'
+      notes: 'Disetujui oleh kurator linguistik',
+      before: 'isVerified: false (Pemeriksaan Kurator)',
+      after: 'isVerified: true (Layak masuk basis dialektometri provinsi)'
     },
     source: 'web'
   },
@@ -287,11 +312,84 @@ const SEED_ACTIVITY_LOGS: SurveyActivityLog[] = [
     diffSummary: {
       field: 'morfologi',
       itemsChanged: 5,
-      completionDelta: 3.5
+      completionDelta: 3.5,
+      before: 'bentukPasif: (belum lengkap)',
+      after: 'bentukPasif: ka-an dan pa-an dialek Cikaso Sukabumi (5 entri)'
     },
     source: 'web'
   }
 ];
+
+/**
+ * Helper to ensure an activity log has sensible before and after values for historical diff inspection
+ */
+export function ensureBeforeAfterDiff(log: SurveyActivityLog): { before: string; after: string } {
+  if (log.diffSummary?.before !== undefined && log.diffSummary?.after !== undefined) {
+    return {
+      before: typeof log.diffSummary.before === 'object' ? JSON.stringify(log.diffSummary.before) : String(log.diffSummary.before),
+      after: typeof log.diffSummary.after === 'object' ? JSON.stringify(log.diffSummary.after) : String(log.diffSummary.after)
+    };
+  }
+
+  if (log.beforeValue && log.afterValue) {
+    return { before: log.beforeValue, after: log.afterValue };
+  }
+
+  // Synthesize realistic diff context based on action and details
+  if (log.action === 'verify_survey') {
+    return {
+      before: 'isVerified: false (Draft Lapangan / Belum Disahkan)',
+      after: `isVerified: true (Disahkan oleh ${log.userName} [${log.userRole}])`
+    };
+  }
+  if (log.action === 'unverify_survey') {
+    return {
+      before: 'isVerified: true (Tervalidasi Resmi)',
+      after: 'isVerified: false (Pemeriksaan Ulang / Memerlukan Revisi Lapangan)'
+    };
+  }
+  if (log.action === 'create_survey') {
+    return {
+      before: '(Belum ada berkas survei)',
+      after: `Inisiasi titik survei: ${log.surveyTitle} (${log.surveyId})`
+    };
+  }
+  if (log.action === 'duplicate_survey') {
+    return {
+      before: `Sumber: ${log.surveyId}`,
+      after: `Duplikat baru tersimpan di akun ${log.userName}`
+    };
+  }
+  if (log.action === 'delete_survey') {
+    return {
+      before: `Berkas aktif: ${log.surveyTitle}`,
+      after: '(Berkas telah dihapus dari sistem)'
+    };
+  }
+  if (log.action === 'import_survey') {
+    return {
+      before: '(Eksternal / Berkas JSON)',
+      after: `Impor berkas sukses: ${log.surveyTitle} (${log.details})`
+    };
+  }
+
+  const field = log.diffSummary?.field || log.sectionId || 'kolom';
+  const delta = log.diffSummary?.completionDelta;
+  const items = log.diffSummary?.itemsChanged;
+
+  const beforeStr = items 
+    ? `${field}: data awal belum lengkap (${items} butir kosong/draft)`
+    : `${field}: data sebelumnya belum dimutakhirkan`;
+  
+  const afterStr = log.details 
+    ? log.details 
+    : (delta ? `${field}: progres kelengkapan bertambah +${delta}%` : `${field}: dimutakhirkan oleh ${log.userName}`);
+
+  return {
+    before: beforeStr,
+    after: afterStr
+  };
+}
 
 /**
  * Filter and fetch the latest audit trail logs for a specific survey
@@ -316,13 +414,30 @@ export function loadActivityLogs(): SurveyActivityLog[] {
     }
     const parsed = JSON.parse(raw);
     if (Array.isArray(parsed) && parsed.length > 0) {
-      return parsed;
+      // Ensure all loaded logs have before and after diff values populated and are sorted newest first
+      const mapped = parsed.map((log: SurveyActivityLog) => {
+        if (!log.diffSummary?.before || !log.diffSummary?.after) {
+          const diff = ensureBeforeAfterDiff(log);
+          return {
+            ...log,
+            diffSummary: {
+              ...(log.diffSummary || {}),
+              before: log.diffSummary?.before || diff.before,
+              after: log.diffSummary?.after || diff.after
+            }
+          };
+        }
+        return log;
+      });
+      mapped.sort((a: SurveyActivityLog, b: SurveyActivityLog) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+      return mapped;
     }
-    localStorage.setItem(STORAGE_KEY_ACTIVITY_LOGS, JSON.stringify(SEED_ACTIVITY_LOGS));
-    return SEED_ACTIVITY_LOGS;
+    const sortedSeed = [...SEED_ACTIVITY_LOGS].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+    localStorage.setItem(STORAGE_KEY_ACTIVITY_LOGS, JSON.stringify(sortedSeed));
+    return sortedSeed;
   } catch (err) {
     console.error('Failed to load activity logs from storage:', err);
-    return SEED_ACTIVITY_LOGS;
+    return [...SEED_ACTIVITY_LOGS].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
   }
 }
 
@@ -362,6 +477,8 @@ export function logSurveyActivity(params: {
     itemsChanged?: number;
     completionDelta?: number;
     notes?: string;
+    before?: any;
+    after?: any;
   };
   source?: 'web' | 'pwa_offline' | 'cloud_sync';
 }): SurveyActivityLog {

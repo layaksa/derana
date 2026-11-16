@@ -2513,6 +2513,14 @@ export default function App() {
           setCurrentView('form-screen');
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
+        surveys={surveys}
+        activeSurveyId={activeSurveyId}
+        onSelectSurvey={handleSelectSurvey}
+        onOpenChangeHistory={(surveyId) => {
+          handleSelectSurvey(surveyId);
+          setIsSurveyHistoryModalOpen(true);
+        }}
+        currentUser={currentUser}
       />
 
       {/* User Profile Modal */}

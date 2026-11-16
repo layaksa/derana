@@ -32,7 +32,11 @@ export interface SurveyActivityLog {
     itemsChanged?: number;
     completionDelta?: number;
     notes?: string;
+    before?: any;
+    after?: any;
   };
+  beforeValue?: string;
+  afterValue?: string;
   source?: 'web' | 'pwa_offline' | 'cloud_sync';
 }
 

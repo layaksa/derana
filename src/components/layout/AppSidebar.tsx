@@ -17,7 +17,6 @@ import {
   UserCheck, 
   HelpCircle,
   RefreshCw,
-  FileText,
   Scale,
   ShieldCheck,
   GraduationCap,
@@ -30,9 +29,7 @@ import {
 } from 'lucide-react';
 import { AppUser, UserRole } from '../../types/auth';
 import { ThemeToggle } from '../ThemeToggle';
-import { PWAInstallButton } from '../pwa/PWAInstallButton';
 import { useLanguage } from '../../contexts/LanguageContext';
-import { LanguageSelector } from '../LanguageSelector';
 import { getRoleBadge, getRoleLabel, loadRoleRequests } from '../../utils/authStorage';
 
 export type ViewKey = 
@@ -95,14 +92,13 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
   onOpenProfile,
   onOpenUserManagement,
   onOpenRoleRequest,
-  onOpenPRD,
   onOpenRegionalReport,
   villageName,
   totalSurveys = 1,
   unverifiedSurveysCount = 0,
   kuesionerTab = 'pemetaan'
 }) => {
-  const { language, t } = useLanguage();
+  const { t } = useLanguage();
   const currentRole: UserRole = currentUser?.role || 'tamu';
   const roleBadge = getRoleBadge(currentRole);
 
@@ -506,50 +502,6 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
           <div className="flex justify-center py-1">
             <ThemeToggle variant="icon" />
           </div>
-        )}
-
-        {/* Language selector row */}
-        {(!isCollapsedDesktop || isOpenMobile) ? (
-          <div className="pl-4 pr-1.5 py-1.5 flex items-center justify-between bg-[var(--md-surface-container-lowest)] dark:bg-[var(--md-surface-container-high)] rounded-full">
-            <span className="text-xs font-medium text-[var(--md-on-surface-variant)]">
-              {t('navbar.language', 'Pilihan Bahasa')}
-            </span>
-            <LanguageSelector variant="segmented" />
-          </div>
-        ) : (
-          <div className="flex justify-center py-1">
-            <LanguageSelector variant="pill" />
-          </div>
-        )}
-
-        {/* In-app PWA install button */}
-        {(!isCollapsedDesktop || isOpenMobile) ? (
-          <div className="px-1">
-            <PWAInstallButton variant="sidebar" />
-          </div>
-        ) : (
-          <div className="flex justify-center">
-            <PWAInstallButton variant="icon" />
-          </div>
-        )}
-
-        {/* Dokumen PRD */}
-        {onOpenPRD && (!isCollapsedDesktop || isOpenMobile) && (
-          <button
-            type="button"
-            onClick={() => {
-              onOpenPRD();
-              onCloseMobile();
-            }}
-            className="w-full h-10 flex items-center gap-3 px-4 rounded-full text-sm font-medium text-[var(--md-on-surface-variant)] hover:bg-[var(--md-on-surface)]/[0.08] hover:text-[var(--md-on-surface)] transition-colors text-left cursor-pointer"
-            title="Buka Dokumen PRD"
-          >
-            <FileText className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
-            <span className="flex-1 truncate">Dokumen PRD & Flow</span>
-            <span className="text-[9px] px-1 py-0.2 bg-blue-200 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded font-bold">
-              DOC
-            </span>
-          </button>
         )}
 
         {/* ROLE ACTION BUTTONS IN SIDEBAR */}

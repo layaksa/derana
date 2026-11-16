@@ -154,10 +154,6 @@ export const PemetaanKuesionerModalWindow: React.FC<PemetaanKuesionerModalWindow
   updateCatatanDialektometri,
   navigateToDialektometriSection
 }) => {
-  if (!isOpen) return null;
-
-  const currentMeta = SECTIONS_META[activeScreenNumber - 1] || SECTIONS_META[0];
-
   React.useEffect(() => {
     if (!isOpen) return;
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -166,6 +162,10 @@ export const PemetaanKuesionerModalWindow: React.FC<PemetaanKuesionerModalWindow
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
+  const currentMeta = SECTIONS_META[activeScreenNumber - 1] || SECTIONS_META[0];
 
   const handlePrev = () => {
     if (activeScreenNumber > 1) {
